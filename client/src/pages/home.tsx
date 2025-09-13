@@ -486,19 +486,122 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Elegant Masonry Grid - Perfectly Centered with Generous Spacing */}
+          {/* True Masonry Layout - Sequential Positioning */}
           <div className="max-w-7xl mx-auto">
             <div className="flex justify-center">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-16 max-w-4xl justify-items-center md:justify-items-stretch">
+              {/* Mobile: Single column stack */}
+              <div className="block md:hidden w-full max-w-sm mx-auto">
+                <div className="space-y-8">
+                  {premiumProducts.map((product, index) => (
+                    <div 
+                      key={product.id}
+                      className="relative cursor-pointer group transition-all duration-500 ease-out hover:-translate-y-2 mx-auto"
+                      style={{ 
+                        width: '320px', 
+                        height: '420px'
+                      }}
+                      data-testid={`premium-card-mobile-${product.id}`}
+                    >
+                    {/* Layer 1 - Base Card Background with Enhanced Shadow */}
+                    <div 
+                      className="absolute inset-0 rounded-xl shadow-lg group-hover:shadow-2xl transition-all duration-500"
+                      style={{ 
+                        backgroundColor: '#F5E6D3',
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.05)'
+                      }}
+                    ></div>
+                    
+                    {/* Layer 2 - Price Banner with Elegant Styling */}
+                    <div 
+                      className="absolute left-0 right-0 group-hover:shadow-md transition-all duration-500 z-10"
+                      style={{ 
+                        backgroundColor: '#B8734C',
+                        top: '252px', // 60% of 420px
+                        height: '68px',
+                        borderRadius: '0 0 0.75rem 0.75rem'
+                      }}
+                    >
+                      <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
+                        <span className="text-white font-bold text-xl tracking-wide" data-testid={`premium-price-mobile-${product.id}`}>
+                          {product.price}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* Layer 3 - Product Image with Refined Spacing */}
+                    <div 
+                      className="absolute left-1/2 transform -translate-x-1/2 z-20 group-hover:scale-105 transition-transform duration-500"
+                      style={{ 
+                        top: '24px',
+                        width: '220px',
+                        height: '200px'
+                      }}
+                    >
+                      <div className="w-full h-full flex items-center justify-center">
+                        <img 
+                          src={product.image}
+                          alt={product.alt}
+                          className="max-w-full max-h-full object-contain filter drop-shadow-lg"
+                          data-testid={`premium-image-mobile-${product.id}`}
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Product Name - Positioned Between Image and Price Banner */}
+                    <div 
+                      className="absolute left-6 z-10"
+                      style={{ 
+                        top: '228px',
+                        color: '#2C2C2C'
+                      }}
+                    >
+                      <h4 className="font-serif text-lg font-semibold leading-tight" data-testid={`premium-name-mobile-${product.id}`}>
+                        {product.name}
+                      </h4>
+                    </div>
+                    
+                    {/* Category Label - Enhanced Typography */}
+                    <div 
+                      className="absolute left-6"
+                      style={{ 
+                        bottom: '18px',
+                        color: '#666666' 
+                      }}
+                    >
+                      <p className="text-sm font-medium tracking-wide uppercase" data-testid={`premium-category-mobile-${product.id}`}>
+                        {product.category}
+                      </p>
+                    </div>
+
+                    {/* Subtle Glow Effect on Hover */}
+                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
+                         style={{ 
+                           background: 'linear-gradient(135deg, rgba(184,115,76,0.1) 0%, rgba(245,230,211,0.1) 100%)',
+                           boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2)'
+                         }}>
+                    </div>
+                  </div>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Desktop: True Masonry Positioning */}
+              <div 
+                className="hidden md:block relative" 
+                style={{ 
+                  width: '832px', // Two cards (320px each) + gap (96px) + some padding for centering
+                  height: '1260px' // Calculated height for 5 cards: (4 * 210px) + 420px
+                }}
+              >
                 {premiumProducts.map((product, index) => (
                   <div 
                     key={product.id}
-                    className={`relative cursor-pointer group transition-all duration-500 ease-out hover:-translate-y-2 ${
-                      index % 2 === 1 ? 'md:mt-20' : ''
-                    }`}
+                    className="absolute cursor-pointer group transition-all duration-500 ease-out hover:-translate-y-2"
                     style={{ 
                       width: '320px', 
-                      height: '420px'
+                      height: '420px',
+                      top: `${index * 210}px`, // Each card starts at middle of previous card
+                      left: `${(index % 2) * 416}px` // Alternating columns with proper spacing
                     }}
                     data-testid={`premium-card-${product.id}`}
                   >
