@@ -36,56 +36,53 @@ const bestSellers = [
   }
 ];
 
+// Import furniture images using @assets alias
+import modernChairImg from "@assets/png-transparent-couch-loveseat-furniture-sofa-bed-chair-armchair-blue-angle-leather-thumbnail_1757746248819.png";
+import classicSofaImg from "@assets/png-transparent-couch-chair-sofa-bed-furniture-old-couch-angle-furniture-couch-thumbnail_1757746248820.png";
+import comfortChairImg from "@assets/png-transparent-chair-comfort-furniture-commode-comfortable-chairs-angle-furniture-fashion-thumbnail_1757746248821.png";
+import royalThroneImg from "@assets/png-transparent-tufted-red-armchair-with-gold-wooden-frame-the-chair-king-inc-throne-garden-furniture-antique-furniture-furniture-couch-interior-design-services-thumbnail_1757746248822.png";
+import vintageTableImg from "@assets/png-transparent-table-nightstand-furniture-couch-divan-3d-model-beautiful-furniture-kitchen-household-beautiful-vector-thumbnail_1757746248822.png";
+
 const premiumProducts = [
   {
     id: 1,
-    name: "Pink Blush Accent Chair",
+    name: "Modern Accent Chair",
     category: "Seating",
-    price: "₹5000",
-    image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=400",
-    alt: "Pink blush tufted accent chair with wooden legs",
-    column: "left",
-    height: "h-96"
+    price: "$899",
+    image: modernChairImg,
+    alt: "Modern gray accent chair with wooden legs"
   },
   {
     id: 2,
-    name: "Tripod Floor Lamp",
-    category: "Lighting",
-    price: "₹3500",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=450",
-    alt: "Modern tripod floor lamp with textured shade",
-    column: "right",
-    height: "h-80"
+    name: "Classic Sofa",
+    category: "Seating",
+    price: "$1459",
+    image: classicSofaImg,
+    alt: "Classic brown sofa with decorative pillows"
   },
   {
     id: 3,
-    name: "Navy Victorian Armchair",
+    name: "Comfort Chair",
     category: "Seating",
-    price: "₹7500",
-    image: "https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=420",
-    alt: "Navy blue tufted Victorian-style armchair",
-    column: "left",
-    height: "h-80"
+    price: "$629",
+    image: comfortChairImg,
+    alt: "Comfortable gray dining chair with wooden legs"
   },
   {
     id: 4,
-    name: "Contemporary Lounge Chair",
-    category: "Seating",
-    price: "₹4200",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=380",
-    alt: "Cream contemporary lounge chair with ottoman functionality",
-    column: "right",
-    height: "h-96"
+    name: "Royal Throne Chair",
+    category: "Luxury",
+    price: "$2199",
+    image: royalThroneImg,
+    alt: "Luxury red velvet throne chair with gold frame"
   },
   {
     id: 5,
-    name: "Rattan Hanging Chair",
-    category: "Seating",
-    price: "₹6800",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=460",
-    alt: "Woven rattan hanging egg chair with stand",
-    column: "left",
-    height: "h-72"
+    name: "Vintage Side Table",
+    category: "Tables",
+    price: "$899",
+    image: vintageTableImg,
+    alt: "Vintage wooden side table with ornate details"
   }
 ];
 
@@ -489,14 +486,25 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Masonry Grid */}
+          {/* Masonry Grid Layout - Staggered positioning */}
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {premiumProducts.map((product) => (
+            <div 
+              className="relative" 
+              style={{ 
+                height: `${380 + 190 * Math.floor(premiumProducts.length / 2)}px`,
+                minHeight: '600px'
+              }}
+            >
+              {premiumProducts.map((product, index) => (
                 <div 
                   key={product.id}
-                  className="relative mx-auto cursor-pointer group transition-transform duration-300 hover:scale-105 active:scale-95"
-                  style={{ width: '280px', height: '380px' }}
+                  className="absolute cursor-pointer group transition-transform duration-300 hover:scale-105 active:scale-95"
+                  style={{ 
+                    width: '280px', 
+                    height: '380px',
+                    left: `${(index % 2) * 300}px`,
+                    top: `${Math.floor(index / 2) * 190 + (index % 2) * 190}px`
+                  }}
                   data-testid={`premium-card-${product.id}`}
                 >
                   {/* Layer 1 - Base Card Background */}
@@ -521,7 +529,7 @@ export default function Home() {
                     </div>
                   </div>
                   
-                  {/* Layer 3 - Product SVG Icon (Top layer, overlapping) */}
+                  {/* Layer 3 - Product Image (Top layer, overlapping) */}
                   <div 
                     className="absolute left-1/2 transform -translate-x-1/2 z-20"
                     style={{ 
@@ -530,16 +538,13 @@ export default function Home() {
                       height: '190px'
                     }}
                   >
-                    <div className="w-full h-full flex items-center justify-center text-gray-700">
-                      {product.category === 'Lighting' ? (
-                        <svg width="150" height="150" viewBox="0 0 24 24" fill="currentColor" className="w-38 h-38">
-                          <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.2 3-3.3 3-5.7 0-3.9-3.1-7-7-7z"/>
-                        </svg>
-                      ) : (
-                        <svg width="150" height="150" viewBox="0 0 24 24" fill="currentColor" className="w-38 h-38">
-                          <path d="M7 11v2h10v-2H7zM3 14h2v-2h2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v3h2v2h2v4c0 .6-.4 1-1 1s-1-.4-1-1v-3h-2v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H9v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H5v3c0 .6-.4 1-1 1s-1-.4-1-1v-4z"/>
-                        </svg>
-                      )}
+                    <div className="w-full h-full flex items-center justify-center">
+                      <img 
+                        src={product.image}
+                        alt={product.alt}
+                        className="max-w-full max-h-full object-contain"
+                        data-testid={`premium-image-${product.id}`}
+                      />
                     </div>
                   </div>
                   
