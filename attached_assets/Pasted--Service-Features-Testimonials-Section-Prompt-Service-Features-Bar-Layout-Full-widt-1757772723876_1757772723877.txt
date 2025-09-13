@@ -1,0 +1,83 @@
+## Service Features & Testimonials Section Prompt
+
+### Service Features Bar
+**Layout**: Full-width horizontal bar with 3 equal columns
+**Background**: Warm terracotta/dusty rose (#D4A39C)
+**Height**: 120px
+
+**Feature Structure** (3 columns):
+```
+[Icon]
+Feature Title
+Short description
+```
+
+**Features Content**:
+1. **Free Shipping**
+   - Icon: Globe/World outline (white, 40px)
+   - Text: "Free shipping for order above ₹3000"
+
+2. **Flexible Prices**
+   - Icon: Wallet with card (white, 40px)
+   - Text: "Secure payment options"
+
+3. **24 x 7 Support**
+   - Icon: Headphones (white, 40px)
+   - Text: "We support online all days"
+
+**Typography**: White text, center-aligned, clean sans-serif
+
+### Testimonials Section
+
+**Background**: Light gray/off-white (#F8F8F8)
+**Title**: "Testimonials" 
+- Large serif font, centered
+- Dark gray color (#2C2C2C)
+
+**Background Pattern**: 
+- "Testimonials" text repeated as watermark
+- Very light gray (#F0F0F0), 10% opacity
+- Large font size, diagonal or horizontal pattern
+
+**Review Cards Layout**:
+- Staggered/masonry grid arrangement
+- 3 cards visible (carousel for more)
+- Card positioning: Top-left, center-bottom, top-right
+
+**Individual Review Card**:
+```
+┌─────────────────────────┐
+│ [Avatar] Name           │
+│         ★★★★★ 5.0      │
+│                         │
+│ "Review text goes here  │
+│  Lorem ipsum dolor..."  │
+│                         │
+└─────────────────────────┘
+```
+
+**Card Styling**:
+- White background
+- Rounded corners (12px)
+- Soft shadow: 0 4px 15px rgba(0,0,0,0.08)
+- Padding: 20px
+- Border: 1px solid #E0E0E0
+
+**Avatar**: 
+- Circular image (60px)
+- Brown border (4px solid #8B6F47)
+- Positioned slightly outside card top-left
+
+**Rating**:
+- 5 black stars (filled/outlined based on rating)
+- Rating number "5.0" next to stars
+
+**Review Text**:
+- Dark gray, 14px
+- Line height: 1.6
+- Max 4-5 lines with ellipsis
+
+**Interactive Elements**:
+- Cards have hover effect: slight lift and shadow increase
+- Carousel dots/arrows for navigation
+- Auto-rotate testimonials every 5 seconds

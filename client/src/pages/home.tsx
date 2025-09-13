@@ -3,6 +3,11 @@ import { Link } from "wouter";
 import { Search, User, ShoppingBag, Menu, ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ProductCard } from "@/components/ProductCard";
+import { PremiumTabs } from "@/components/PremiumTabs";
+import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
+import { bestSellers, luxuryProducts, collections } from "@/data/products";
+import { Footer } from "@/components/Footer";
 
 const categories = [
   { id: 1, name: "Rocking Chair", icon: Armchair },
@@ -13,109 +18,6 @@ const categories = [
   { id: 6, name: "Decorative Vase", icon: Flower },
 ];
 
-const bestSellers = [
-  {
-    id: 1,
-    name: "Tufted Leather Sofa",
-    price: "$2,499",
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-    alt: "Burnt orange tufted leather sofa"
-  },
-  {
-    id: 2,
-    name: "Papasan Chair",
-    price: "$899",
-    image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-    alt: "Cream papasan chair with rattan base"
-  },
-  {
-    id: 3,
-    name: "Modern Accent Chair",
-    price: "$649",
-    image: "https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-    alt: "Powder blue modern accent chair with wooden legs"
-  }
-];
-
-// Import furniture images using @assets alias
-import modernChairImg from "@assets/png-transparent-couch-loveseat-furniture-sofa-bed-chair-armchair-blue-angle-leather-thumbnail_1757746248819.png";
-import classicSofaImg from "@assets/png-transparent-couch-chair-sofa-bed-furniture-old-couch-angle-furniture-couch-thumbnail_1757746248820.png";
-import comfortChairImg from "@assets/png-transparent-chair-comfort-furniture-commode-comfortable-chairs-angle-furniture-fashion-thumbnail_1757746248821.png";
-import royalThroneImg from "@assets/png-transparent-tufted-red-armchair-with-gold-wooden-frame-the-chair-king-inc-throne-garden-furniture-antique-furniture-furniture-couch-interior-design-services-thumbnail_1757746248822.png";
-import vintageTableImg from "@assets/png-transparent-table-nightstand-furniture-couch-divan-3d-model-beautiful-furniture-kitchen-household-beautiful-vector-thumbnail_1757746248822.png";
-
-const premiumProducts = [
-  {
-    id: 1,
-    name: "Modern Accent Chair",
-    category: "Seating",
-    price: "$899",
-    image: modernChairImg,
-    alt: "Modern gray accent chair with wooden legs"
-  },
-  {
-    id: 2,
-    name: "Classic Sofa",
-    category: "Seating",
-    price: "$1459",
-    image: classicSofaImg,
-    alt: "Classic brown sofa with decorative pillows"
-  },
-  {
-    id: 3,
-    name: "Comfort Chair",
-    category: "Seating",
-    price: "$629",
-    image: comfortChairImg,
-    alt: "Comfortable gray dining chair with wooden legs"
-  },
-  {
-    id: 4,
-    name: "Royal Throne Chair",
-    category: "Luxury",
-    price: "$2199",
-    image: royalThroneImg,
-    alt: "Luxury red velvet throne chair with gold frame"
-  },
-  {
-    id: 5,
-    name: "Vintage Side Table",
-    category: "Tables",
-    price: "$899",
-    image: vintageTableImg,
-    alt: "Vintage wooden side table with ornate details"
-  }
-];
-
-const collections = [
-  {
-    id: 1,
-    title: "Contemporary Living Collection",
-    description: "Discover our signature collection of contemporary furniture designed for modern living. Each piece is meticulously crafted to blend comfort with sophistication, creating spaces that inspire and delight. From plush sofas to elegant dining sets, our collection embodies the perfect balance of luxury and livability.",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    alt: "Contemporary living room with beige sofa",
-    buttonText: "View Collection",
-    imagePosition: "right"
-  },
-  {
-    id: 2,
-    title: "Bedroom Sanctuary Series",
-    description: "Transform your bedroom into a personal retreat with our Sanctuary Series. Featuring handcrafted bed frames, luxurious textiles, and thoughtfully designed storage solutions, this collection creates a harmonious environment where rest and relaxation take center stage.",
-    image: "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    alt: "Minimalist bedroom with neutral decor",
-    buttonText: "Explore Bedrooms",
-    imagePosition: "left"
-  },
-  {
-    id: 3,
-    title: "Artisan Dining Collection",
-    description: "Elevate your dining experience with our Artisan Collection. Each table, chair, and accent piece is crafted by skilled artisans who understand that dining is about more than just meals—it's about creating memories. Our pieces bring family and friends together in spaces that celebrate both form and function.",
-    image: "https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600",
-    alt: "Modern dining room with wooden table",
-    buttonText: "Shop Dining",
-    imagePosition: "right"
-  }
-];
 
 export default function Home() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
@@ -293,28 +195,12 @@ export default function Home() {
                 <div className="lg:w-[70%]">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {bestSellers.map((product) => (
-                      <div 
+                      <ProductCard 
                         key={product.id}
-                        className="bg-cream rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 group cursor-pointer"
-                        data-testid={`product-card-${product.id}`}
-                      >
-                        <div className="aspect-[4/3] overflow-hidden">
-                          <img 
-                            src={product.image}
-                            alt={product.alt}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            data-testid={`product-image-${product.id}`}
-                          />
-                        </div>
-                        <div className="p-4">
-                          <h4 className="font-serif text-lg font-semibold text-foreground mb-2" data-testid={`product-name-${product.id}`}>
-                            {product.name}
-                          </h4>
-                          <p className="text-terracotta font-semibold text-lg" data-testid={`product-price-${product.id}`}>
-                            {product.price}
-                          </p>
-                        </div>
-                      </div>
+                        product={product}
+                        variant="bestseller"
+                        testIdPrefix="product"
+                      />
                     ))}
                   </div>
                 </div>
@@ -325,35 +211,32 @@ export default function Home() {
       </section>
 
       {/* Luxury Choice Section */}
-      <section className="py-20 bg-background">
+      <section className="py-12 bg-gradient-to-br from-background to-cream">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="border border-cream-dark rounded-2xl p-8 md:p-12">
-              <div className="flex flex-col lg:flex-row gap-12 items-center">
+            <div className="border-2 border-terracotta rounded-2xl p-6 md:p-8 bg-gradient-to-r from-cream to-background shadow-xl">
+              <div className="flex flex-col lg:flex-row gap-8 items-center">
                 {/* Left Product Showcase - 70% */}
                 <div className="lg:w-[70%] order-2 lg:order-1">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {bestSellers.map((product) => (
-                      <div 
-                        key={product.id}
-                        className="bg-cream rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 group cursor-pointer"
-                        data-testid={`luxury-product-card-${product.id}`}
-                      >
-                        <div className="aspect-[4/3] overflow-hidden">
-                          <img 
-                            src={product.image}
-                            alt={product.alt}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            data-testid={`luxury-product-image-${product.id}`}
-                          />
-                        </div>
-                        <div className="p-4">
-                          <h4 className="font-serif text-lg font-semibold text-foreground mb-2" data-testid={`luxury-product-name-${product.id}`}>
-                            {product.name}
-                          </h4>
-                          <p className="text-terracotta font-semibold text-lg" data-testid={`luxury-product-price-${product.id}`}>
-                            {product.price}
-                          </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {luxuryProducts.map((product) => (
+                      <div key={product.id} className="relative group cursor-pointer">
+                        <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow duration-200">
+                          <div className="aspect-square mb-3 overflow-hidden rounded-md">
+                            <img 
+                              src={product.image}
+                              alt={product.alt}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                            />
+                          </div>
+                          <div className="text-xs bg-terracotta text-white px-2 py-1 rounded-full inline-block mb-2">
+                            LUXURY
+                          </div>
+                          <h4 className="font-serif font-semibold text-sm mb-1">{product.name}</h4>
+                          <p className="text-terracotta font-bold text-lg">{product.price}</p>
+                          <Button size="sm" className="w-full mt-2 bg-terracotta hover:bg-terracotta-dark text-xs">
+                            VIEW LUXURY PIECE
+                          </Button>
                         </div>
                       </div>
                     ))}
@@ -361,19 +244,18 @@ export default function Home() {
                 </div>
                 
                 {/* Right Content Area - 30% */}
-                <div className="lg:w-[30%] space-y-6 order-1 lg:order-2">
-                  <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground" data-testid="luxury-choice-title">
+                <div className="lg:w-[30%] space-y-4 order-1 lg:order-2">
+                  <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground tracking-wider" data-testid="luxury-choice-title">
                     LUXURY CHOICE
                   </h3>
                   <p className="text-muted-foreground leading-relaxed" data-testid="luxury-choice-description">
-                    Pizza Ipsum Dolor Meat Lovers Buffalo, Pepperoni Olives Steak Roll Pork Hawaiian, Philly Meatball Green Parmesan Philly.
+                    Discover our exclusive luxury collection featuring handpicked pieces that embody sophistication and elegance. Each item represents the pinnacle of craftsmanship and design excellence.
                   </p>
                   <Button 
-                    variant="outline"
-                    className="border-2 border-terracotta bg-transparent text-terracotta font-semibold px-5 py-2.5 rounded-md hover:bg-terracotta hover:text-white transition-all duration-200"
+                    className="bg-gradient-to-r from-terracotta to-terracotta-dark text-white font-semibold px-6 py-3 rounded-lg hover:shadow-lg transition-all duration-300"
                     data-testid="button-luxury-explore-more"
                   >
-                    Explore More
+                    EXPLORE LUXURY
                   </Button>
                 </div>
               </div>
@@ -473,235 +355,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Premium Collection Section */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-6">
-          {/* Section Header with Decorative Lines */}
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center">
-              <div className="flex-1 h-px bg-foreground opacity-30"></div>
-              <h3 className="font-serif text-3xl md:text-4xl font-bold mx-8 text-foreground tracking-wider" data-testid="premium-collection-title">
-                Premium Collection
-              </h3>
-              <div className="flex-1 h-px bg-foreground opacity-30"></div>
-            </div>
-          </div>
-          
-          {/* True Masonry Layout - Sequential Positioning */}
-          <div className="max-w-7xl mx-auto">
-            <div className="flex justify-center">
-              {/* Mobile: Single column stack */}
-              <div className="block md:hidden w-full max-w-sm mx-auto">
-                <div className="space-y-12">
-                  {premiumProducts.map((product, index) => (
-                    <div 
-                      key={product.id}
-                      className="relative cursor-pointer group transition-all duration-500 ease-out hover:-translate-y-2 mx-auto"
-                      style={{ 
-                        width: '320px', 
-                        height: '340px'
-                      }}
-                      data-testid={`premium-card-mobile-${product.id}`}
-                    >
-                    {/* Layer 1 - Base Card Background with Enhanced Shadow */}
-                    <div 
-                      className="absolute inset-0 rounded-xl shadow-lg group-hover:shadow-2xl transition-all duration-500"
-                      style={{ 
-                        backgroundColor: '#F5E6D3',
-                        boxShadow: '0 10px 25px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.05)'
-                      }}
-                    ></div>
-                    
-                    {/* Layer 2 - Price Banner with Elegant Styling */}
-                    <div 
-                      className="absolute left-0 right-0 group-hover:shadow-md transition-all duration-500 z-10"
-                      style={{ 
-                        backgroundColor: '#B8734C',
-                        top: '204px', // 60% of 340px
-                        height: '68px',
-                        borderRadius: '0 0 0.75rem 0.75rem'
-                      }}
-                    >
-                      <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
-                        <span className="text-white font-bold text-xl tracking-wide" data-testid={`premium-price-mobile-${product.id}`}>
-                          {product.price}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    {/* Layer 3 - Product Image with Refined Spacing */}
-                    <div 
-                      className="absolute left-1/2 transform -translate-x-1/2 z-20 group-hover:scale-105 transition-transform duration-500"
-                      style={{ 
-                        top: '24px',
-                        width: '220px',
-                        height: '200px'
-                      }}
-                    >
-                      <div className="w-full h-full flex items-center justify-center">
-                        <img 
-                          src={product.image}
-                          alt={product.alt}
-                          className="max-w-full max-h-full object-contain filter drop-shadow-lg"
-                          data-testid={`premium-image-mobile-${product.id}`}
-                        />
-                      </div>
-                    </div>
-                    
-                    {/* Product Name - Positioned Between Image and Price Banner */}
-                    <div 
-                      className="absolute left-6 z-10"
-                      style={{ 
-                        top: '180px',
-                        color: '#2C2C2C'
-                      }}
-                    >
-                      <h4 className="font-serif text-lg font-semibold leading-tight" data-testid={`premium-name-mobile-${product.id}`}>
-                        {product.name}
-                      </h4>
-                    </div>
-                    
-                    {/* Category Label - Enhanced Typography */}
-                    <div 
-                      className="absolute left-6"
-                      style={{ 
-                        bottom: '18px',
-                        color: '#666666' 
-                      }}
-                    >
-                      <p className="text-sm font-medium tracking-wide uppercase" data-testid={`premium-category-mobile-${product.id}`}>
-                        {product.category}
-                      </p>
-                    </div>
+      {/* Premium Collection Section with Interactive Tabs */}
+      <PremiumTabs />
 
-                    {/* Subtle Glow Effect on Hover */}
-                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
-                         style={{ 
-                           background: 'linear-gradient(135deg, rgba(184,115,76,0.1) 0%, rgba(245,230,211,0.1) 100%)',
-                           boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2)'
-                         }}>
-                    </div>
-                  </div>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Desktop: True Masonry Positioning */}
-              <div 
-                className="hidden md:block relative" 
-                style={{ 
-                  width: '920px', // Two cards (320px each) + gap (280px) for better spacing
-                  height: '1140px' // Calculated height for 5 cards: (4 * 200px) + 340px
-                }}
-              >
-                {premiumProducts.map((product, index) => (
-                  <div 
-                    key={product.id}
-                    className="absolute cursor-pointer group transition-all duration-500 ease-out hover:-translate-y-2"
-                    style={{ 
-                      width: '320px', 
-                      height: '340px',
-                      top: `${index * 200}px`, // More space between cards in same column
-                      left: `${(index % 2) * 460}px` // Increased horizontal spacing between columns
-                    }}
-                    data-testid={`premium-card-${product.id}`}
-                  >
-                    {/* Layer 1 - Base Card Background with Enhanced Shadow */}
-                    <div 
-                      className="absolute inset-0 rounded-xl shadow-lg group-hover:shadow-2xl transition-all duration-500"
-                      style={{ 
-                        backgroundColor: '#F5E6D3',
-                        boxShadow: '0 10px 25px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.05)'
-                      }}
-                    ></div>
-                    
-                    {/* Layer 2 - Price Banner with Elegant Styling */}
-                    <div 
-                      className="absolute left-0 right-0 group-hover:shadow-md transition-all duration-500 z-10"
-                      style={{ 
-                        backgroundColor: '#B8734C',
-                        top: '204px', // 60% of 340px
-                        height: '68px',
-                        borderRadius: '0 0 0.75rem 0.75rem'
-                      }}
-                    >
-                      <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
-                        <span className="text-white font-bold text-xl tracking-wide" data-testid={`premium-price-${product.id}`}>
-                          {product.price}
-                        </span>
-                      </div>
-                    </div>
-                    
-                    {/* Layer 3 - Product Image with Refined Spacing */}
-                    <div 
-                      className="absolute left-1/2 transform -translate-x-1/2 z-20 group-hover:scale-105 transition-transform duration-500"
-                      style={{ 
-                        top: '24px',
-                        width: '220px',
-                        height: '200px'
-                      }}
-                    >
-                      <div className="w-full h-full flex items-center justify-center">
-                        <img 
-                          src={product.image}
-                          alt={product.alt}
-                          className="max-w-full max-h-full object-contain filter drop-shadow-lg"
-                          data-testid={`premium-image-${product.id}`}
-                        />
-                      </div>
-                    </div>
-                    
-                    {/* Product Name - Positioned Between Image and Price Banner */}
-                    <div 
-                      className="absolute left-6 z-10"
-                      style={{ 
-                        top: '180px',
-                        color: '#2C2C2C'
-                      }}
-                    >
-                      <h4 className="font-serif text-lg font-semibold leading-tight" data-testid={`premium-name-${product.id}`}>
-                        {product.name}
-                      </h4>
-                    </div>
-                    
-                    {/* Category Label - Enhanced Typography */}
-                    <div 
-                      className="absolute left-6"
-                      style={{ 
-                        bottom: '18px',
-                        color: '#666666' 
-                      }}
-                    >
-                      <p className="text-sm font-medium tracking-wide uppercase" data-testid={`premium-category-${product.id}`}>
-                        {product.category}
-                      </p>
-                    </div>
-
-                    {/* Subtle Glow Effect on Hover */}
-                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
-                         style={{ 
-                           background: 'linear-gradient(135deg, rgba(184,115,76,0.1) 0%, rgba(245,230,211,0.1) 100%)',
-                           boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2)'
-                         }}>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Call-to-Action Button with Enhanced Spacing */}
-            <div className="text-center mt-20">
-              <Button 
-                variant="outline"
-                className="border-2 border-terracotta bg-transparent text-terracotta font-semibold px-10 py-4 text-lg rounded-lg hover:bg-terracotta hover:text-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-                data-testid="button-explore-shop"
-              >
-                Explore Shop
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Service Features Bar */}
+      <ServiceFeaturesBar />
 
       {/* Newsletter Section */}
       <section className="py-16 bg-cream">
@@ -733,72 +391,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-foreground text-white py-16">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            <div>
-              <h4 className="font-serif text-2xl font-bold mb-6" data-testid="footer-brand">SM FURNISHINGS</h4>
-              <p className="text-gray-300 leading-relaxed" data-testid="footer-description">
-                Creating affordable luxury for every home. Discover furniture that transforms spaces into sanctuaries of style and comfort.
-              </p>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold text-lg mb-4" data-testid="footer-quick-links-title">Quick Links</h5>
-              <ul className="space-y-2 text-gray-300">
-                <li><a href="#" className="hover:text-white transition-colors" data-testid="footer-link-home">Home</a></li>
-                <li><a href="#" className="hover:text-white transition-colors" data-testid="footer-link-shop">Shop</a></li>
-                <li><a href="#" className="hover:text-white transition-colors" data-testid="footer-link-about">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors" data-testid="footer-link-contact">Contact</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold text-lg mb-4" data-testid="footer-categories-title">Categories</h5>
-              <ul className="space-y-2 text-gray-300">
-                <li><a href="#" className="hover:text-white transition-colors" data-testid="footer-category-living">Living Room</a></li>
-                <li><a href="#" className="hover:text-white transition-colors" data-testid="footer-category-bedroom">Bedroom</a></li>
-                <li><a href="#" className="hover:text-white transition-colors" data-testid="footer-category-dining">Dining Room</a></li>
-                <li><a href="#" className="hover:text-white transition-colors" data-testid="footer-category-accessories">Accessories</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold text-lg mb-4" data-testid="footer-social-title">Follow Us</h5>
-              <div className="flex space-x-4">
-                <a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-social-facebook">
-                  <span className="sr-only">Facebook</span>
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                  </svg>
-                </a>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-social-instagram">
-                  <span className="sr-only">Instagram</span>
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.321-1.297C4.198 14.81 3.708 13.659 3.708 12.362c0-1.297.49-2.448 1.297-3.321.873-.873 2.024-1.297 3.321-1.297 1.297 0 2.448.49 3.321 1.297.873.873 1.297 2.024 1.297 3.321 0 1.297-.49 2.448-1.297 3.321-.873.873-2.024 1.297-3.321 1.297z"/>
-                  </svg>
-                </a>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-social-pinterest">
-                  <span className="sr-only">Pinterest</span>
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.042-3.441.219-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.888-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.357-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
-                  </svg>
-                </a>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors" data-testid="footer-social-twitter">
-                  <span className="sr-only">Twitter</span>
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                  </svg>
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-700 pt-8 text-center text-gray-300">
-            <p data-testid="footer-copyright">&copy; 2024 SM Furnishings. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

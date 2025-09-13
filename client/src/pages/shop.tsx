@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { shopProducts } from '@/data/products';
+import { Footer } from '@/components/Footer';
 import { 
   Heart, 
   Eye, 
@@ -50,64 +52,8 @@ interface Product {
   badge?: string;
 }
 
-// Sample products data
-const sampleProducts: Product[] = [
-  {
-    id: 1,
-    name: "Modern Velvet Sofa",
-    price: 28000,
-    originalPrice: 35000,
-    images: ["https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300", "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300", "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"],
-    category: "Living Room",
-    material: "Velvet",
-    color: "Blue",
-    rating: 4.8,
-    reviews: 124,
-    inStock: true,
-    discount: 20,
-    badge: "20% OFF"
-  },
-  {
-    id: 2,
-    name: "Elegant Dining Table",
-    price: 45000,
-    images: ["https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300", "https://images.unsplash.com/photo-1581539250439-c96689b516dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"],
-    category: "Dining Room",
-    material: "Wood",
-    color: "Brown",
-    rating: 4.6,
-    reviews: 89,
-    inStock: true
-  },
-  {
-    id: 3,
-    name: "Comfortable Office Chair",
-    price: 15000,
-    originalPrice: 18000,
-    images: ["https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300", "https://images.unsplash.com/photo-1581539250439-c96689b516dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300", "https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"],
-    category: "Office",
-    material: "Leather",
-    color: "Black",
-    rating: 4.9,
-    reviews: 156,
-    inStock: false,
-    discount: 17,
-    badge: "OUT OF STOCK"
-  },
-  {
-    id: 4,
-    name: "Luxury King Bed",
-    price: 55000,
-    images: ["https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300", "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300"],
-    category: "Bedroom",
-    material: "Wood",
-    color: "Brown",
-    rating: 4.7,
-    reviews: 67,
-    inStock: true,
-    badge: "PREMIUM"
-  }
-];
+// Use shared products data from our central module
+const allShopProducts = shopProducts;
 
 const categories = [
   { name: "Living Room", count: 45 },
@@ -138,8 +84,8 @@ const colors = [
 ];
 
 export default function ShopPage() {
-  const [products, setProducts] = useState<Product[]>(sampleProducts);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(sampleProducts);
+  const [products, setProducts] = useState<Product[]>(allShopProducts);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>(allShopProducts);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
@@ -406,6 +352,25 @@ export default function ShopPage() {
           </div>
         </div>
       </header>
+
+      {/* Hero Section */}
+      <section 
+        className="relative h-80 flex items-center justify-center bg-cover bg-center"
+        style={{ 
+          backgroundImage: 'url(https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&h=800)'
+        }}
+        data-testid="hero-section"
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="relative z-10 text-center text-white">
+          <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6" data-testid="hero-title">
+            Our Collections
+          </h1>
+          <p className="text-xl md:text-2xl font-light max-w-2xl mx-auto leading-relaxed" data-testid="hero-subtitle">
+            Discover furniture that transforms spaces into sanctuaries of style and comfort
+          </p>
+        </div>
+      </section>
 
       <div className="container mx-auto px-6 py-8">
         <div className="flex gap-8">
@@ -1069,6 +1034,8 @@ export default function ShopPage() {
         </DialogContent>
       </Dialog>
 
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

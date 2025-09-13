@@ -73,6 +73,38 @@
   100% { transform: scale(1); }
 }
 
+/* Premium Tabs Animations */
+@keyframes slideInFromCenter {
+  from {
+    width: 0;
+    transform: scaleX(0);
+  }
+  to {
+    width: 100%;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes fadeInUpStagger {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Utility classes for animations */
+.animate-underline {
+  animation: slideInFromCenter 0.3s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUpStagger 0.5s ease-out forwards;
+}
+
 @keyframes numberFlip {
   0% { transform: rotateX(0); }
   50% { transform: rotateX(-90deg); }
