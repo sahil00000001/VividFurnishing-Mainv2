@@ -273,6 +273,64 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Luxury Choice Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="border border-cream-dark rounded-2xl p-8 md:p-12">
+              <div className="flex flex-col lg:flex-row gap-12 items-center">
+                {/* Left Product Showcase - 70% */}
+                <div className="lg:w-[70%] order-2 lg:order-1">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {bestSellers.map((product) => (
+                      <div 
+                        key={product.id}
+                        className="bg-cream rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 group cursor-pointer"
+                        data-testid={`luxury-product-card-${product.id}`}
+                      >
+                        <div className="aspect-[4/3] overflow-hidden">
+                          <img 
+                            src={product.image}
+                            alt={product.alt}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            data-testid={`luxury-product-image-${product.id}`}
+                          />
+                        </div>
+                        <div className="p-4">
+                          <h4 className="font-serif text-lg font-semibold text-foreground mb-2" data-testid={`luxury-product-name-${product.id}`}>
+                            {product.name}
+                          </h4>
+                          <p className="text-terracotta font-semibold text-lg" data-testid={`luxury-product-price-${product.id}`}>
+                            {product.price}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Right Content Area - 30% */}
+                <div className="lg:w-[30%] space-y-6 order-1 lg:order-2">
+                  <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground" data-testid="luxury-choice-title">
+                    LUXURY CHOICE
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed" data-testid="luxury-choice-description">
+                    Pizza Ipsum Dolor Meat Lovers Buffalo, Pepperoni Olives Steak Roll Pork Hawaiian, Philly Meatball Green Parmesan Philly.
+                  </p>
+                  <Button 
+                    variant="outline"
+                    className="border-2 border-terracotta bg-transparent text-terracotta font-semibold px-5 py-2.5 rounded-md hover:bg-terracotta hover:text-white transition-all duration-200"
+                    data-testid="button-luxury-explore-more"
+                  >
+                    Explore More
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Our Mission Section */}
       <section className="py-20 bg-terracotta text-white">
         <div className="container mx-auto px-6 text-center max-w-4xl">

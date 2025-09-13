@@ -1,0 +1,80 @@
+## Premium Collection Section for SM Furnishings Website
+
+### Section Header
+- **Title**: "Premium Collection" centered
+- **Decorative Elements**: Long horizontal dashes/lines on both sides of the title
+- **Font**: Elegant serif font, black color, large size
+- **Spacing**: 40px margin top and bottom
+
+### Layout Structure
+- **Container**: Full-width section with light background
+- **Grid Type**: Masonry/Pinterest-style staggered grid
+- **Columns**: 2-column asymmetric layout
+- **Card Arrangement**: Staggered heights creating dynamic visual flow
+
+### Product Card Design
+**Card Structure**:
+- **Background**: Soft beige/cream (#F5E6D3)
+- **Shape**: Rectangular with slightly rounded corners (8px)
+- **Shadow**: Subtle drop shadow for depth
+
+**Card Components**:
+1. **Product Image Area** (Top 60%):
+   - High-quality product image
+   - Image extends to card edges
+   - Natural product photography style
+
+2. **Price Banner** (Overlapping):
+   - **Background**: Burnt orange/terracotta (#B8734C)
+   - **Position**: Overlaps bottom of image and extends into text area
+   - **Price Display**: "₹5000" in white, bold font
+   - **Alignment**: Price aligned to right side of banner
+
+3. **Product Info** (Bottom 40%):
+   - **Product Name**: "Product Name" in serif font, dark brown
+   - **Category Label**: "Category" in smaller font below, left-aligned
+   - **Padding**: 15px around text elements
+
+### Featured Products Layout
+**Left Column**:
+1. **Card 1**: Pink blush tufted accent chair with wooden legs
+2. **Card 2**: Navy blue tufted Victorian-style armchair
+3. **Card 3**: Woven rattan hanging egg chair with stand
+
+**Right Column** (Offset/Staggered):
+1. **Card 1**: Modern tripod floor lamp with textured shade
+2. **Card 2**: Cream contemporary lounge chair with ottoman functionality
+
+### Staggered Positioning
+- Right column starts 80px lower than left column
+- Variable card heights create organic flow
+- Gaps between cards: 20px horizontal, 25px vertical
+
+### Call-to-Action
+**Button**: "Explore Shop"
+- **Position**: Centered below the grid
+- **Style**: 
+  - Transparent background
+  - Orange/terracotta border (2px)
+  - Orange/terracotta text
+  - Rounded corners (6px)
+  - Padding: 12px 30px
+- **Margin**: 40px from last product card
+
+### Color Specifications
+- Card Background: #F5E6D3 (Cream/Beige)
+- Price Banner: #B8734C (Burnt Orange)
+- Text Primary: #2C2C2C (Dark Brown)
+- Text Secondary: #666666 (Gray)
+- Price Text: #FFFFFF (White)
+
+### Responsive Behavior
+- **Desktop**: 2-column masonry grid as shown
+- **Tablet**: 2-column grid with adjusted spacing
+- **Mobile**: Single column, cards stack vertically
+- **Image Aspect Ratio**: Maintain original proportions
+
+### Animation (Optional)
+- Cards fade in on scroll with staggered timing
+- Subtle hover effect: slight scale (1.02) and shadow enhancement
+- Smooth transitions: 0.3s ease
