@@ -490,97 +490,86 @@ export default function Home() {
           </div>
           
           {/* Masonry Grid */}
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
-              {/* Left Column */}
-              <div className="space-y-6">
-                {premiumProducts.filter(product => product.column === 'left').map((product) => (
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {premiumProducts.map((product) => (
+                <div 
+                  key={product.id}
+                  className="relative mx-auto cursor-pointer group transition-transform duration-300 hover:scale-105 active:scale-95"
+                  style={{ width: '280px', height: '380px' }}
+                  data-testid={`premium-card-${product.id}`}
+                >
+                  {/* Layer 1 - Base Card Background */}
                   <div 
-                    key={product.id}
-                    className={`relative w-full ${product.height} hover:scale-[1.02] transition-all duration-300 group cursor-pointer`}
-                    data-testid={`premium-card-${product.id}`}
+                    className="absolute inset-0 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300"
+                    style={{ backgroundColor: '#F5E6D3' }}
+                  ></div>
+                  
+                  {/* Layer 2 - Price Banner (Horizontal Bar at 60% height) */}
+                  <div 
+                    className="absolute left-0 right-0 group-hover:brightness-110 transition-all duration-300 z-10"
+                    style={{ 
+                      backgroundColor: '#B8734C',
+                      top: '228px', // 60% of 380px
+                      height: '60px'
+                    }}
                   >
-                    {/* Yellow/Cream Background Box - Tall Rectangle */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-100 to-cream rounded-2xl shadow-lg"></div>
-                    
-                    {/* Chair SVG Icon - Top Center */}
-                    <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-gray-700">
-                      <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" className="w-16 h-16 md:w-20 md:h-20">
-                        <path d="M7 11v2h10v-2H7zM3 14h2v-2h2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v3h2v2h2v4c0 .6-.4 1-1 1s-1-.4-1-1v-3h-2v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H9v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H5v3c0 .6-.4 1-1 1s-1-.4-1-1v-4z"/>
-                      </svg>
-                    </div>
-                    
-                    {/* Product Name - Right Side */}
-                    <div className="absolute top-8 right-4 text-right">
-                      <h4 className="font-serif text-lg font-semibold text-gray-800 leading-tight" data-testid={`premium-name-${product.id}`}>
-                        {product.name}
-                      </h4>
-                    </div>
-                    
-                    {/* Brown Rectangular Box - Bottom Center */}
-                    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-terracotta rounded-lg px-6 py-3 shadow-md">
+                    <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
                       <span className="text-white font-bold text-xl" data-testid={`premium-price-${product.id}`}>
                         {product.price}
                       </span>
                     </div>
-                    
-                    {/* Category Label - Bottom */}
-                    <div className="absolute bottom-2 left-4">
-                      <p className="text-gray-600 text-sm font-medium" data-testid={`premium-category-${product.id}`}>
-                        {product.category}
-                      </p>
-                    </div>
                   </div>
-                ))}
-              </div>
-              
-              {/* Right Column - Offset */}
-              <div className="space-y-6 md:mt-20">
-                {premiumProducts.filter(product => product.column === 'right').map((product) => (
+                  
+                  {/* Layer 3 - Product SVG Icon (Top layer, overlapping) */}
                   <div 
-                    key={product.id}
-                    className={`relative w-full ${product.height} hover:scale-[1.02] transition-all duration-300 group cursor-pointer`}
-                    data-testid={`premium-card-${product.id}`}
+                    className="absolute left-1/2 transform -translate-x-1/2 z-20"
+                    style={{ 
+                      top: '20px',
+                      width: '200px',
+                      height: '190px'
+                    }}
                   >
-                    {/* Yellow/Cream Background Box - Tall Rectangle */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-100 to-cream rounded-2xl shadow-lg"></div>
-                    
-                    {/* Chair/Lamp SVG Icon - Top Center */}
-                    <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-gray-700">
+                    <div className="w-full h-full flex items-center justify-center text-gray-700">
                       {product.category === 'Lighting' ? (
-                        <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" className="w-16 h-16 md:w-20 md:h-20">
+                        <svg width="150" height="150" viewBox="0 0 24 24" fill="currentColor" className="w-38 h-38">
                           <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.2 3-3.3 3-5.7 0-3.9-3.1-7-7-7z"/>
                         </svg>
                       ) : (
-                        <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" className="w-16 h-16 md:w-20 md:h-20">
+                        <svg width="150" height="150" viewBox="0 0 24 24" fill="currentColor" className="w-38 h-38">
                           <path d="M7 11v2h10v-2H7zM3 14h2v-2h2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v3h2v2h2v4c0 .6-.4 1-1 1s-1-.4-1-1v-3h-2v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H9v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H5v3c0 .6-.4 1-1 1s-1-.4-1-1v-4z"/>
                         </svg>
                       )}
                     </div>
-                    
-                    {/* Product Name - Right Side */}
-                    <div className="absolute top-8 right-4 text-right">
-                      <h4 className="font-serif text-lg font-semibold text-gray-800 leading-tight" data-testid={`premium-name-${product.id}`}>
-                        {product.name}
-                      </h4>
-                    </div>
-                    
-                    {/* Brown Rectangular Box - Bottom Center */}
-                    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-terracotta rounded-lg px-6 py-3 shadow-md">
-                      <span className="text-white font-bold text-xl" data-testid={`premium-price-${product.id}`}>
-                        {product.price}
-                      </span>
-                    </div>
-                    
-                    {/* Category Label - Bottom */}
-                    <div className="absolute bottom-2 left-4">
-                      <p className="text-gray-600 text-sm font-medium" data-testid={`premium-category-${product.id}`}>
-                        {product.category}
-                      </p>
-                    </div>
                   </div>
-                ))}
-              </div>
+                  
+                  {/* Product Name - Between image (ends at 210px) and price banner (starts at 228px) */}
+                  <div 
+                    className="absolute left-5 z-10"
+                    style={{ 
+                      top: '212px', // Fits exactly between icon and banner
+                      color: '#2C2C2C'
+                    }}
+                  >
+                    <h4 className="font-serif text-base font-medium leading-none" data-testid={`premium-name-${product.id}`}>
+                      {product.name}
+                    </h4>
+                  </div>
+                  
+                  {/* Category Label - Bottom of card */}
+                  <div 
+                    className="absolute left-5"
+                    style={{ 
+                      bottom: '15px', // 15px from bottom as specified
+                      color: '#666666' 
+                    }}
+                  >
+                    <p className="text-sm" data-testid={`premium-category-${product.id}`}>
+                      {product.category}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
             
             {/* Call-to-Action Button */}
