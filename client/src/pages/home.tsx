@@ -36,6 +36,59 @@ const bestSellers = [
   }
 ];
 
+const premiumProducts = [
+  {
+    id: 1,
+    name: "Pink Blush Accent Chair",
+    category: "Seating",
+    price: "₹5000",
+    image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=400",
+    alt: "Pink blush tufted accent chair with wooden legs",
+    column: "left",
+    height: "h-96"
+  },
+  {
+    id: 2,
+    name: "Tripod Floor Lamp",
+    category: "Lighting",
+    price: "₹3500",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=450",
+    alt: "Modern tripod floor lamp with textured shade",
+    column: "right",
+    height: "h-80"
+  },
+  {
+    id: 3,
+    name: "Navy Victorian Armchair",
+    category: "Seating",
+    price: "₹7500",
+    image: "https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=420",
+    alt: "Navy blue tufted Victorian-style armchair",
+    column: "left",
+    height: "h-80"
+  },
+  {
+    id: 4,
+    name: "Contemporary Lounge Chair",
+    category: "Seating",
+    price: "₹4200",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=380",
+    alt: "Cream contemporary lounge chair with ottoman functionality",
+    column: "right",
+    height: "h-96"
+  },
+  {
+    id: 5,
+    name: "Rattan Hanging Chair",
+    category: "Seating",
+    price: "₹6800",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=350&h=460",
+    alt: "Woven rattan hanging egg chair with stand",
+    column: "left",
+    height: "h-72"
+  }
+];
+
 const collections = [
   {
     id: 1,
@@ -418,6 +471,114 @@ export default function Home() {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Premium Collection Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-6">
+          {/* Section Header with Decorative Lines */}
+          <div className="text-center mb-16">
+            <div className="flex items-center justify-center">
+              <div className="flex-1 h-px bg-foreground opacity-30"></div>
+              <h3 className="font-serif text-3xl md:text-4xl font-bold mx-8 text-foreground tracking-wider" data-testid="premium-collection-title">
+                Premium Collection
+              </h3>
+              <div className="flex-1 h-px bg-foreground opacity-30"></div>
+            </div>
+          </div>
+          
+          {/* Masonry Grid */}
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
+              {/* Left Column */}
+              <div className="space-y-6">
+                {premiumProducts.filter(product => product.column === 'left').map((product) => (
+                  <div 
+                    key={product.id}
+                    className={`relative bg-cream rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group cursor-pointer ${product.height}`}
+                    data-testid={`premium-card-${product.id}`}
+                  >
+                    {/* Product Image */}
+                    <div className="relative h-3/5 overflow-hidden">
+                      <img 
+                        src={product.image}
+                        alt={product.alt}
+                        className="w-full h-full object-cover"
+                        data-testid={`premium-image-${product.id}`}
+                      />
+                      
+                      {/* Price Banner - Overlapping */}
+                      <div className="absolute bottom-0 right-0 bg-terracotta px-4 py-2 transform translate-y-1/2 z-10">
+                        <span className="text-white font-bold text-lg" data-testid={`premium-price-${product.id}`}>
+                          {product.price}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* Product Info */}
+                    <div className="p-4 pt-8 h-2/5 flex flex-col justify-center">
+                      <h4 className="font-serif text-xl font-semibold text-gray-800 mb-2" data-testid={`premium-name-${product.id}`}>
+                        {product.name}
+                      </h4>
+                      <p className="text-gray-600 text-sm" data-testid={`premium-category-${product.id}`}>
+                        {product.category}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Right Column - Offset */}
+              <div className="space-y-6 md:mt-20">
+                {premiumProducts.filter(product => product.column === 'right').map((product) => (
+                  <div 
+                    key={product.id}
+                    className={`relative bg-cream rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group cursor-pointer ${product.height}`}
+                    data-testid={`premium-card-${product.id}`}
+                  >
+                    {/* Product Image */}
+                    <div className="relative h-3/5 overflow-hidden">
+                      <img 
+                        src={product.image}
+                        alt={product.alt}
+                        className="w-full h-full object-cover"
+                        data-testid={`premium-image-${product.id}`}
+                      />
+                      
+                      {/* Price Banner - Overlapping */}
+                      <div className="absolute bottom-0 right-0 bg-terracotta px-4 py-2 transform translate-y-1/2 z-10">
+                        <span className="text-white font-bold text-lg" data-testid={`premium-price-${product.id}`}>
+                          {product.price}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* Product Info */}
+                    <div className="p-4 pt-8 h-2/5 flex flex-col justify-center">
+                      <h4 className="font-serif text-xl font-semibold text-gray-800 mb-2" data-testid={`premium-name-${product.id}`}>
+                        {product.name}
+                      </h4>
+                      <p className="text-gray-600 text-sm" data-testid={`premium-category-${product.id}`}>
+                        {product.category}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Call-to-Action Button */}
+            <div className="text-center mt-16">
+              <Button 
+                variant="outline"
+                className="border-2 border-terracotta bg-transparent text-terracotta font-semibold px-8 py-3 rounded-md hover:bg-terracotta hover:text-white transition-all duration-200"
+                data-testid="button-explore-shop"
+              >
+                Explore Shop
+              </Button>
+            </div>
           </div>
         </div>
       </section>
