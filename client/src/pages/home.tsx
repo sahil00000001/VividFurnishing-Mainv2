@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Search, User, ShoppingBag, Menu, ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -154,7 +155,7 @@ export default function Home() {
               <ul className="flex space-x-12 text-white font-medium">
                 <li><a href="#" className="hover:text-cream transition-colors duration-200" data-testid="nav-home">HOME</a></li>
                 <li><a href="#" className="hover:text-cream transition-colors duration-200" data-testid="nav-category">CATEGORY</a></li>
-                <li><a href="#" className="hover:text-cream transition-colors duration-200" data-testid="nav-shop">SHOP</a></li>
+                <li><Link href="/shop" className="hover:text-cream transition-colors duration-200" data-testid="nav-shop">SHOP</Link></li>
                 <li><a href="#" className="hover:text-cream transition-colors duration-200" data-testid="nav-about">ABOUT US</a></li>
               </ul>
             </nav>
@@ -491,14 +492,14 @@ export default function Home() {
             <div className="flex justify-center">
               {/* Mobile: Single column stack */}
               <div className="block md:hidden w-full max-w-sm mx-auto">
-                <div className="space-y-8">
+                <div className="space-y-12">
                   {premiumProducts.map((product, index) => (
                     <div 
                       key={product.id}
                       className="relative cursor-pointer group transition-all duration-500 ease-out hover:-translate-y-2 mx-auto"
                       style={{ 
                         width: '320px', 
-                        height: '420px'
+                        height: '340px'
                       }}
                       data-testid={`premium-card-mobile-${product.id}`}
                     >
@@ -516,7 +517,7 @@ export default function Home() {
                       className="absolute left-0 right-0 group-hover:shadow-md transition-all duration-500 z-10"
                       style={{ 
                         backgroundColor: '#B8734C',
-                        top: '252px', // 60% of 420px
+                        top: '204px', // 60% of 340px
                         height: '68px',
                         borderRadius: '0 0 0.75rem 0.75rem'
                       }}
@@ -551,7 +552,7 @@ export default function Home() {
                     <div 
                       className="absolute left-6 z-10"
                       style={{ 
-                        top: '228px',
+                        top: '180px',
                         color: '#2C2C2C'
                       }}
                     >
@@ -589,8 +590,8 @@ export default function Home() {
               <div 
                 className="hidden md:block relative" 
                 style={{ 
-                  width: '832px', // Two cards (320px each) + gap (96px) + some padding for centering
-                  height: '1260px' // Calculated height for 5 cards: (4 * 210px) + 420px
+                  width: '920px', // Two cards (320px each) + gap (280px) for better spacing
+                  height: '1140px' // Calculated height for 5 cards: (4 * 200px) + 340px
                 }}
               >
                 {premiumProducts.map((product, index) => (
@@ -599,9 +600,9 @@ export default function Home() {
                     className="absolute cursor-pointer group transition-all duration-500 ease-out hover:-translate-y-2"
                     style={{ 
                       width: '320px', 
-                      height: '420px',
-                      top: `${index * 210}px`, // Each card starts at middle of previous card
-                      left: `${(index % 2) * 416}px` // Alternating columns with proper spacing
+                      height: '340px',
+                      top: `${index * 200}px`, // More space between cards in same column
+                      left: `${(index % 2) * 460}px` // Increased horizontal spacing between columns
                     }}
                     data-testid={`premium-card-${product.id}`}
                   >
@@ -619,7 +620,7 @@ export default function Home() {
                       className="absolute left-0 right-0 group-hover:shadow-md transition-all duration-500 z-10"
                       style={{ 
                         backgroundColor: '#B8734C',
-                        top: '252px', // 60% of 420px
+                        top: '204px', // 60% of 340px
                         height: '68px',
                         borderRadius: '0 0 0.75rem 0.75rem'
                       }}
@@ -654,7 +655,7 @@ export default function Home() {
                     <div 
                       className="absolute left-6 z-10"
                       style={{ 
-                        top: '228px',
+                        top: '180px',
                         color: '#2C2C2C'
                       }}
                     >
