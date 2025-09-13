@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(35, 45%, 95%);
+  --foreground: hsl(25, 25%, 15%);
+  --card: hsl(35, 25%, 98%);
+  --card-foreground: hsl(25, 25%, 15%);
+  --popover: hsl(35, 25%, 98%);
+  --popover-foreground: hsl(25, 25%, 15%);
+  --primary: hsl(22, 40%, 52%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(35, 35%, 85%);
+  --secondary-foreground: hsl(25, 25%, 15%);
+  --muted: hsl(35, 25%, 90%);
+  --muted-foreground: hsl(25, 15%, 45%);
+  --accent: hsl(84, 61%, 52%);
+  --accent-foreground: hsl(25, 25%, 15%);
+  --destructive: hsl(356, 90%, 54%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(35, 25%, 82%);
+  --input: hsl(35, 25%, 90%);
+  --ring: hsl(22, 40%, 52%);
+  --chart-1: hsl(22, 40%, 52%);
+  --chart-2: hsl(84, 61%, 52%);
+  --chart-3: hsl(42, 92%, 56%);
+  --chart-4: hsl(147, 78%, 42%);
+  --chart-5: hsl(341, 75%, 51%);
+  --sidebar: hsl(35, 25%, 98%);
+  --sidebar-foreground: hsl(25, 25%, 15%);
+  --sidebar-primary: hsl(22, 40%, 52%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(35, 35%, 85%);
+  --sidebar-accent-foreground: hsl(25, 25%, 15%);
+  --sidebar-border: hsl(35, 25%, 82%);
+  --sidebar-ring: hsl(22, 40%, 52%);
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-mono: 'JetBrains Mono', monospace;
+  --radius: 8px;
+  --terracotta: hsl(22, 40%, 52%);
+  --terracotta-light: hsl(22, 50%, 65%);
+  --terracotta-dark: hsl(22, 30%, 40%);
+  --cream: hsl(35, 45%, 88%);
+  --cream-light: hsl(35, 55%, 92%);
+  --cream-dark: hsl(35, 35%, 80%);
+}
+
+.dark {
+  --background: hsl(25, 25%, 8%);
+  --foreground: hsl(35, 45%, 92%);
+  --card: hsl(25, 25%, 10%);
+  --card-foreground: hsl(35, 45%, 92%);
+  --popover: hsl(25, 25%, 8%);
+  --popover-foreground: hsl(35, 45%, 92%);
+  --primary: hsl(22, 40%, 52%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(25, 15%, 20%);
+  --secondary-foreground: hsl(35, 45%, 92%);
+  --muted: hsl(25, 15%, 15%);
+  --muted-foreground: hsl(35, 25%, 65%);
+  --accent: hsl(84, 61%, 52%);
+  --accent-foreground: hsl(25, 25%, 15%);
+  --destructive: hsl(356, 90%, 54%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(25, 15%, 18%);
+  --input: hsl(25, 15%, 15%);
+  --ring: hsl(22, 40%, 52%);
+  --sidebar: hsl(25, 25%, 10%);
+  --sidebar-foreground: hsl(35, 45%, 92%);
+  --sidebar-primary: hsl(22, 40%, 52%);
+  --sidebar-primary-foreground: hsl(0, 0%, 100%);
+  --sidebar-accent: hsl(25, 15%, 20%);
+  --sidebar-accent-foreground: hsl(35, 45%, 92%);
+  --sidebar-border: hsl(25, 15%, 18%);
+  --sidebar-ring: hsl(22, 40%, 52%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-gradient-to-b from-background to-white text-foreground;
+  }
+
+  .font-script {
+    font-family: var(--font-script);
+  }
+}
+
+@layer components {
+  .terracotta {
+    color: var(--terracotta);
+  }
+  
+  .bg-terracotta {
+    background-color: var(--terracotta);
+  }
+  
+  .border-terracotta {
+    border-color: var(--terracotta);
+  }
+  
+  .hover\:bg-terracotta-dark:hover {
+    background-color: var(--terracotta-dark);
+  }
+  
+  .cream {
+    color: var(--cream);
+  }
+  
+  .bg-cream {
+    background-color: var(--cream);
+  }
+  
+  .hover\:bg-cream-dark:hover {
+    background-color: var(--cream-dark);
+  }
+}
