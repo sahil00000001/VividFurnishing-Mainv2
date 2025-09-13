@@ -476,7 +476,7 @@ export default function Home() {
       <section className="py-20 bg-background">
         <div className="container mx-auto px-6">
           {/* Section Header with Decorative Lines */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <div className="flex items-center justify-center">
               <div className="flex-1 h-px bg-foreground opacity-30"></div>
               <h3 className="font-serif text-3xl md:text-4xl font-bold mx-8 text-foreground tracking-wider" data-testid="premium-collection-title">
@@ -486,102 +486,110 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Masonry Grid Layout - Staggered positioning */}
+          {/* Elegant Masonry Grid - Perfectly Centered with Generous Spacing */}
           <div className="max-w-7xl mx-auto">
-            <div 
-              className="relative" 
-              style={{ 
-                height: `${380 + 190 * Math.floor(premiumProducts.length / 2)}px`,
-                minHeight: '600px'
-              }}
-            >
-              {premiumProducts.map((product, index) => (
-                <div 
-                  key={product.id}
-                  className="absolute cursor-pointer group transition-transform duration-300 hover:scale-105 active:scale-95"
-                  style={{ 
-                    width: '280px', 
-                    height: '380px',
-                    left: `${(index % 2) * 300}px`,
-                    top: `${Math.floor(index / 2) * 190 + (index % 2) * 190}px`
-                  }}
-                  data-testid={`premium-card-${product.id}`}
-                >
-                  {/* Layer 1 - Base Card Background */}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-16 max-w-4xl justify-items-center md:justify-items-stretch">
+                {premiumProducts.map((product, index) => (
                   <div 
-                    className="absolute inset-0 rounded-lg shadow-md group-hover:shadow-lg transition-shadow duration-300"
-                    style={{ backgroundColor: '#F5E6D3' }}
-                  ></div>
-                  
-                  {/* Layer 2 - Price Banner (Horizontal Bar at 60% height) */}
-                  <div 
-                    className="absolute left-0 right-0 group-hover:brightness-110 transition-all duration-300 z-10"
+                    key={product.id}
+                    className={`relative cursor-pointer group transition-all duration-500 ease-out hover:-translate-y-2 ${
+                      index % 2 === 1 ? 'md:mt-20' : ''
+                    }`}
                     style={{ 
-                      backgroundColor: '#B8734C',
-                      top: '228px', // 60% of 380px
-                      height: '60px'
+                      width: '320px', 
+                      height: '420px'
                     }}
+                    data-testid={`premium-card-${product.id}`}
                   >
-                    <div className="absolute right-5 top-1/2 transform -translate-y-1/2">
-                      <span className="text-white font-bold text-xl" data-testid={`premium-price-${product.id}`}>
-                        {product.price}
-                      </span>
+                    {/* Layer 1 - Base Card Background with Enhanced Shadow */}
+                    <div 
+                      className="absolute inset-0 rounded-xl shadow-lg group-hover:shadow-2xl transition-all duration-500"
+                      style={{ 
+                        backgroundColor: '#F5E6D3',
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.05)'
+                      }}
+                    ></div>
+                    
+                    {/* Layer 2 - Price Banner with Elegant Styling */}
+                    <div 
+                      className="absolute left-0 right-0 group-hover:shadow-md transition-all duration-500 z-10"
+                      style={{ 
+                        backgroundColor: '#B8734C',
+                        top: '252px', // 60% of 420px
+                        height: '68px',
+                        borderRadius: '0 0 0.75rem 0.75rem'
+                      }}
+                    >
+                      <div className="absolute right-6 top-1/2 transform -translate-y-1/2">
+                        <span className="text-white font-bold text-xl tracking-wide" data-testid={`premium-price-${product.id}`}>
+                          {product.price}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    {/* Layer 3 - Product Image with Refined Spacing */}
+                    <div 
+                      className="absolute left-1/2 transform -translate-x-1/2 z-20 group-hover:scale-105 transition-transform duration-500"
+                      style={{ 
+                        top: '24px',
+                        width: '220px',
+                        height: '200px'
+                      }}
+                    >
+                      <div className="w-full h-full flex items-center justify-center">
+                        <img 
+                          src={product.image}
+                          alt={product.alt}
+                          className="max-w-full max-h-full object-contain filter drop-shadow-lg"
+                          data-testid={`premium-image-${product.id}`}
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Product Name - Positioned Between Image and Price Banner */}
+                    <div 
+                      className="absolute left-6 z-10"
+                      style={{ 
+                        top: '228px',
+                        color: '#2C2C2C'
+                      }}
+                    >
+                      <h4 className="font-serif text-lg font-semibold leading-tight" data-testid={`premium-name-${product.id}`}>
+                        {product.name}
+                      </h4>
+                    </div>
+                    
+                    {/* Category Label - Enhanced Typography */}
+                    <div 
+                      className="absolute left-6"
+                      style={{ 
+                        bottom: '18px',
+                        color: '#666666' 
+                      }}
+                    >
+                      <p className="text-sm font-medium tracking-wide uppercase" data-testid={`premium-category-${product.id}`}>
+                        {product.category}
+                      </p>
+                    </div>
+
+                    {/* Subtle Glow Effect on Hover */}
+                    <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
+                         style={{ 
+                           background: 'linear-gradient(135deg, rgba(184,115,76,0.1) 0%, rgba(245,230,211,0.1) 100%)',
+                           boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.2)'
+                         }}>
                     </div>
                   </div>
-                  
-                  {/* Layer 3 - Product Image (Top layer, overlapping) */}
-                  <div 
-                    className="absolute left-1/2 transform -translate-x-1/2 z-20"
-                    style={{ 
-                      top: '20px',
-                      width: '200px',
-                      height: '190px'
-                    }}
-                  >
-                    <div className="w-full h-full flex items-center justify-center">
-                      <img 
-                        src={product.image}
-                        alt={product.alt}
-                        className="max-w-full max-h-full object-contain"
-                        data-testid={`premium-image-${product.id}`}
-                      />
-                    </div>
-                  </div>
-                  
-                  {/* Product Name - Between image (ends at 210px) and price banner (starts at 228px) */}
-                  <div 
-                    className="absolute left-5 z-10"
-                    style={{ 
-                      top: '212px', // Fits exactly between icon and banner
-                      color: '#2C2C2C'
-                    }}
-                  >
-                    <h4 className="font-serif text-base font-medium leading-none" data-testid={`premium-name-${product.id}`}>
-                      {product.name}
-                    </h4>
-                  </div>
-                  
-                  {/* Category Label - Bottom of card */}
-                  <div 
-                    className="absolute left-5"
-                    style={{ 
-                      bottom: '15px', // 15px from bottom as specified
-                      color: '#666666' 
-                    }}
-                  >
-                    <p className="text-sm" data-testid={`premium-category-${product.id}`}>
-                      {product.category}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
             
-            {/* Call-to-Action Button */}
-            <div className="text-center mt-16">
+            {/* Call-to-Action Button with Enhanced Spacing */}
+            <div className="text-center mt-20">
               <Button 
                 variant="outline"
-                className="border-2 border-terracotta bg-transparent text-terracotta font-semibold px-8 py-3 rounded-md hover:bg-terracotta hover:text-white transition-all duration-200"
+                className="border-2 border-terracotta bg-transparent text-terracotta font-semibold px-10 py-4 text-lg rounded-lg hover:bg-terracotta hover:text-white hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                 data-testid="button-explore-shop"
               >
                 Explore Shop
