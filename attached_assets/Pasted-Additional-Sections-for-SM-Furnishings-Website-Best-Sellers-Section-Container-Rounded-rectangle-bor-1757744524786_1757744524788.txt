@@ -1,0 +1,65 @@
+Additional Sections for SM Furnishings Website
+Best Sellers Section
+Container: Rounded rectangle border (thin, light gray/beige) with padding
+Layout: Flexbox with left content area (30%) and right product showcase (70%)
+Left Content Area:
+
+Heading: "BEST SELLERS" in bold serif font, black color, large size
+Description Text: Lorem ipsum placeholder text (can be replaced with: "Pizza Ipsum Dolor Meat Lovers Buffalo, Pepperoni Olives Steak Roll Pork Hawaiian, Philly Meatball Green Parmesan Philly.")
+CTA Button: "Explore More" with:
+
+Transparent background
+Orange/terracotta border (2px)
+Orange/terracotta text color
+Rounded corners (6px)
+Padding: 10px 20px
+
+
+
+Right Product Showcase:
+
+Grid: 3 product cards in horizontal row
+Product Card Design:
+
+Rounded corners (12px)
+Cream/beige background
+Product image with rounded top corners
+"Product" label in elegant font
+"Price" text below in smaller font
+
+
+
+Featured Products:
+
+Card 1: Burnt orange/terracotta tufted leather sofa
+Card 2: Cream papasan chair with rattan base
+Card 3: Powder blue modern accent chair with wooden legs
+
+Luxury Choice Section
+Container: Same rounded rectangle border style as Best Sellers
+Layout: Flexbox reversed - left product showcase (70%) and right content area (30%)
+Left Product Showcase:
+
+Same 3 product cards as above
+Identical card styling
+Same product images
+
+Right Content Area:
+
+Heading: "LUXURY CHOICE" in bold serif font, black color
+Description Text: Lorem ipsum (can be replaced with: "Pizza Ipsum Dolor Meat Lovers Buffalo, Pepperoni Olives Steak Roll Pork Hawaiian, Philly Meatball Green Parmesan Philly.")
+CTA Button: "Explore More" with same styling as Best Sellers section
+
+Spacing & Alignment
+
+Section margin: 40px vertical spacing between sections
+Internal padding: 30px all around
+Product card spacing: 20px gap between cards
+Text alignment: Left-aligned for all text content
+Vertical centering for content areas relative to product cards
+
+Responsive Behavior
+
+On tablet: Stack content and products vertically
+On mobile: Single column layout with products displayed as vertical list
+Maintain aspect ratios for all product images

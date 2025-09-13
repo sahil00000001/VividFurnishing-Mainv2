@@ -12,6 +12,30 @@ const categories = [
   { id: 6, name: "Decorative Vase", icon: Flower },
 ];
 
+const bestSellers = [
+  {
+    id: 1,
+    name: "Tufted Leather Sofa",
+    price: "$2,499",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
+    alt: "Burnt orange tufted leather sofa"
+  },
+  {
+    id: 2,
+    name: "Papasan Chair",
+    price: "$899",
+    image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
+    alt: "Cream papasan chair with rattan base"
+  },
+  {
+    id: 3,
+    name: "Modern Accent Chair",
+    price: "$649",
+    image: "https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
+    alt: "Powder blue modern accent chair with wooden legs"
+  }
+];
+
 const collections = [
   {
     id: 1,
@@ -187,6 +211,64 @@ export default function Home() {
             >
               <ChevronRight className="w-5 h-5" />
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Best Sellers Section */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="border border-cream-dark rounded-2xl p-8 md:p-12">
+              <div className="flex flex-col lg:flex-row gap-12 items-center">
+                {/* Left Content Area - 30% */}
+                <div className="lg:w-[30%] space-y-6">
+                  <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground" data-testid="bestsellers-title">
+                    BEST SELLERS
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed" data-testid="bestsellers-description">
+                    Pizza Ipsum Dolor Meat Lovers Buffalo, Pepperoni Olives Steak Roll Pork Hawaiian, Philly Meatball Green Parmesan Philly.
+                  </p>
+                  <Button 
+                    variant="outline"
+                    className="border-2 border-terracotta bg-transparent text-terracotta font-semibold px-5 py-2.5 rounded-md hover:bg-terracotta hover:text-white transition-all duration-200"
+                    data-testid="button-explore-more"
+                  >
+                    Explore More
+                  </Button>
+                </div>
+                
+                {/* Right Product Showcase - 70% */}
+                <div className="lg:w-[70%]">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {bestSellers.map((product) => (
+                      <div 
+                        key={product.id}
+                        className="bg-cream rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 group cursor-pointer"
+                        data-testid={`product-card-${product.id}`}
+                      >
+                        <div className="aspect-[4/3] overflow-hidden">
+                          <img 
+                            src={product.image}
+                            alt={product.alt}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            data-testid={`product-image-${product.id}`}
+                          />
+                        </div>
+                        <div className="p-4">
+                          <h4 className="font-serif text-lg font-semibold text-foreground mb-2" data-testid={`product-name-${product.id}`}>
+                            {product.name}
+                          </h4>
+                          <p className="text-terracotta font-semibold text-lg" data-testid={`product-price-${product.id}`}>
+                            {product.price}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
