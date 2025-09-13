@@ -497,32 +497,36 @@ export default function Home() {
                 {premiumProducts.filter(product => product.column === 'left').map((product) => (
                   <div 
                     key={product.id}
-                    className={`relative bg-cream rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group cursor-pointer ${product.height}`}
+                    className={`relative w-full ${product.height} hover:scale-[1.02] transition-all duration-300 group cursor-pointer`}
                     data-testid={`premium-card-${product.id}`}
                   >
-                    {/* Product Image */}
-                    <div className="relative h-3/5 overflow-hidden">
-                      <img 
-                        src={product.image}
-                        alt={product.alt}
-                        className="w-full h-full object-cover"
-                        data-testid={`premium-image-${product.id}`}
-                      />
-                      
-                      {/* Price Banner - Overlapping */}
-                      <div className="absolute bottom-0 right-0 bg-terracotta px-4 py-2 transform translate-y-1/2 z-10">
-                        <span className="text-white font-bold text-lg" data-testid={`premium-price-${product.id}`}>
-                          {product.price}
-                        </span>
-                      </div>
+                    {/* Yellow/Cream Background Box - Tall Rectangle */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-100 to-cream rounded-2xl shadow-lg"></div>
+                    
+                    {/* Chair SVG Icon - Top Center */}
+                    <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-gray-700">
+                      <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" className="w-16 h-16 md:w-20 md:h-20">
+                        <path d="M7 11v2h10v-2H7zM3 14h2v-2h2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v3h2v2h2v4c0 .6-.4 1-1 1s-1-.4-1-1v-3h-2v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H9v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H5v3c0 .6-.4 1-1 1s-1-.4-1-1v-4z"/>
+                      </svg>
                     </div>
                     
-                    {/* Product Info */}
-                    <div className="p-4 pt-8 h-2/5 flex flex-col justify-center">
-                      <h4 className="font-serif text-xl font-semibold text-gray-800 mb-2" data-testid={`premium-name-${product.id}`}>
+                    {/* Product Name - Right Side */}
+                    <div className="absolute top-8 right-4 text-right">
+                      <h4 className="font-serif text-lg font-semibold text-gray-800 leading-tight" data-testid={`premium-name-${product.id}`}>
                         {product.name}
                       </h4>
-                      <p className="text-gray-600 text-sm" data-testid={`premium-category-${product.id}`}>
+                    </div>
+                    
+                    {/* Brown Rectangular Box - Bottom Center */}
+                    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-terracotta rounded-lg px-6 py-3 shadow-md">
+                      <span className="text-white font-bold text-xl" data-testid={`premium-price-${product.id}`}>
+                        {product.price}
+                      </span>
+                    </div>
+                    
+                    {/* Category Label - Bottom */}
+                    <div className="absolute bottom-2 left-4">
+                      <p className="text-gray-600 text-sm font-medium" data-testid={`premium-category-${product.id}`}>
                         {product.category}
                       </p>
                     </div>
@@ -535,32 +539,42 @@ export default function Home() {
                 {premiumProducts.filter(product => product.column === 'right').map((product) => (
                   <div 
                     key={product.id}
-                    className={`relative bg-cream rounded-lg overflow-hidden shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group cursor-pointer ${product.height}`}
+                    className={`relative w-full ${product.height} hover:scale-[1.02] transition-all duration-300 group cursor-pointer`}
                     data-testid={`premium-card-${product.id}`}
                   >
-                    {/* Product Image */}
-                    <div className="relative h-3/5 overflow-hidden">
-                      <img 
-                        src={product.image}
-                        alt={product.alt}
-                        className="w-full h-full object-cover"
-                        data-testid={`premium-image-${product.id}`}
-                      />
-                      
-                      {/* Price Banner - Overlapping */}
-                      <div className="absolute bottom-0 right-0 bg-terracotta px-4 py-2 transform translate-y-1/2 z-10">
-                        <span className="text-white font-bold text-lg" data-testid={`premium-price-${product.id}`}>
-                          {product.price}
-                        </span>
-                      </div>
+                    {/* Yellow/Cream Background Box - Tall Rectangle */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-100 to-cream rounded-2xl shadow-lg"></div>
+                    
+                    {/* Chair/Lamp SVG Icon - Top Center */}
+                    <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-gray-700">
+                      {product.category === 'Lighting' ? (
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" className="w-16 h-16 md:w-20 md:h-20">
+                          <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.2 3-3.3 3-5.7 0-3.9-3.1-7-7-7z"/>
+                        </svg>
+                      ) : (
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor" className="w-16 h-16 md:w-20 md:h-20">
+                          <path d="M7 11v2h10v-2H7zM3 14h2v-2h2V9c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v3h2v2h2v4c0 .6-.4 1-1 1s-1-.4-1-1v-3h-2v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H9v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H5v3c0 .6-.4 1-1 1s-1-.4-1-1v-4z"/>
+                        </svg>
+                      )}
                     </div>
                     
-                    {/* Product Info */}
-                    <div className="p-4 pt-8 h-2/5 flex flex-col justify-center">
-                      <h4 className="font-serif text-xl font-semibold text-gray-800 mb-2" data-testid={`premium-name-${product.id}`}>
+                    {/* Product Name - Right Side */}
+                    <div className="absolute top-8 right-4 text-right">
+                      <h4 className="font-serif text-lg font-semibold text-gray-800 leading-tight" data-testid={`premium-name-${product.id}`}>
                         {product.name}
                       </h4>
-                      <p className="text-gray-600 text-sm" data-testid={`premium-category-${product.id}`}>
+                    </div>
+                    
+                    {/* Brown Rectangular Box - Bottom Center */}
+                    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-terracotta rounded-lg px-6 py-3 shadow-md">
+                      <span className="text-white font-bold text-xl" data-testid={`premium-price-${product.id}`}>
+                        {product.price}
+                      </span>
+                    </div>
+                    
+                    {/* Category Label - Bottom */}
+                    <div className="absolute bottom-2 left-4">
+                      <p className="text-gray-600 text-sm font-medium" data-testid={`premium-category-${product.id}`}>
                         {product.category}
                       </p>
                     </div>

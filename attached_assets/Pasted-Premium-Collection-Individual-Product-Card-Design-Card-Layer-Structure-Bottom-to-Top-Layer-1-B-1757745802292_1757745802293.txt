@@ -1,0 +1,85 @@
+Premium Collection - Individual Product Card Design
+Card Layer Structure (Bottom to Top)
+Layer 1 - Base Card Background:
+
+Shape: Vertical rectangle (portrait orientation)
+Color: Light beige/cream (#F5E6D3)
+Dimensions: Approximately 280px width × 380px height
+Border Radius: 8px rounded corners
+Shadow: Soft drop shadow (0 4px 6px rgba(0,0,0,0.1))
+
+Layer 2 - Price Banner (Horizontal Bar):
+
+Shape: Horizontal rectangle overlaid on base card
+Color: Burnt orange/terracotta (#B8734C)
+Position: Placed at approximately 60% height from top
+Dimensions: Full card width × 60px height
+Z-index: Above base card, below product image
+Price Text:
+
+"₹5000" in white bold font
+Right-aligned with 20px padding from right edge
+Vertically centered in the banner
+
+
+
+Layer 3 - Product Image:
+
+Type: SVG or PNG with transparent background
+Position: Overlapping both base card and price banner
+Placement: Centered horizontally, starts from 20px from top
+Size: Approximately 200px × 200px (adjust based on product)
+Z-index: Top layer (above all other elements)
+
+Text Elements
+Product Name:
+
+Position: Above the price banner, below product image
+Font: Serif font, dark brown (#2C2C2C)
+Size: 18px
+Alignment: Left-aligned with 20px padding
+
+Category Label:
+
+Position: Bottom of card
+Font: Sans-serif, gray (#666666)
+Size: 14px
+Alignment: Left-aligned with 20px padding
+Margin: 15px from bottom edge
+
+Visual Hierarchy
+[Product SVG/Image]
+     ↓ overlaps
+[Product Name Text]
+     ↓
+[Orange Price Banner with ₹5000]
+     ↓
+[Category Text]
+All on top of [Beige Background Card]
+Example Products for Cards
+
+Pink Accent Chair - Modern tufted chair with wooden legs
+Navy Armchair - Victorian-style tufted armchair
+Floor Lamp - Tripod lamp with textured shade
+Lounge Chair - Contemporary cream chair
+Hanging Chair - Rattan egg chair with stand
+
+Spacing for Multiple Cards
+
+Grid: 3 columns × 2 rows (or masonry layout)
+Gap: 30px between cards
+Alignment: Cards can be staggered for dynamic look
+
+Interactive States
+
+Hover:
+
+Slight scale transformation (1.05)
+Enhanced shadow
+Orange banner brightens slightly
+
+
+Click: Subtle press effect (scale 0.98)
+
+Key Design Principle
+The layered approach creates depth with the product appearing to "pop out" of the card, while the orange price banner creates a strong visual anchor and clear price visibility.
