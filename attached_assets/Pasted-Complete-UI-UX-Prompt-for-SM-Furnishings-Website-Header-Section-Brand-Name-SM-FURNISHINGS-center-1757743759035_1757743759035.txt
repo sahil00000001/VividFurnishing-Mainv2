@@ -1,0 +1,84 @@
+Complete UI/UX Prompt for SM Furnishings Website
+Header Section
+
+Brand Name: "SM FURNISHINGS" centered at the top in elegant serif font, white color
+Navigation Bar: Transparent background with horizontal menu items:
+
+HOME | CATEGORY | SHOP | ABOUT US (evenly spaced, white text)
+
+
+Right Icons: Search icon, Account/User icon, and Shopping Cart icon aligned to the right edge
+
+Hero Section
+
+Main Headline: "AFFORDABLE · LUXURY" in large, elegant serif font (white)
+Subheading: "For Every Home" in smaller, refined font below the headline
+CTA Button: "Explore Collection" with:
+
+White border (2px)
+Transparent background
+Brown/terracotta text color
+Rectangular shape with subtle padding
+
+
+Background: Full-width hero image featuring:
+
+Modern lime green/chartreuse velvet sofa with white throw pillows
+Warm wooden flooring
+Minimalist white planter with green foliage
+Soft, natural lighting creating shadows
+
+
+
+Shop by Category Section
+
+Section Title: "SHOP BY CATEGORY" with:
+
+Decorative horizontal lines extending from mid-letter 'S' on both sides to page edges
+Dark/black thin lines
+
+
+Category Grid: 6 circular category badges with:
+
+Beige/cream circular backgrounds
+Icons for: Rocking Chair, Side Table, Accent Chair, Ottoman/Pouf, Table Lamp, Decorative Vase
+"category" label beneath each circle
+
+
+Navigation Arrows: Orange/terracotta colored left/right arrows for carousel
+
+Our Mission Section
+
+Background: Warm terracotta/burnt orange color block
+Heading: "Our one Mission" with "one" in italic script font
+Tagline: "Redefining how people experience luxury living."
+Body Text: Mission statement paragraph in white, describing affordable luxury furniture vision
+
+Luxury Content Section
+
+Section Header: "· LUXURY ·" with decorative dots
+Layout Pattern: Alternating text-image layouts:
+
+First row: Text left, Image right
+Second row: Image left, Text right
+Third row: Text left, Image right
+
+
+Content Examples: Product descriptions with titles like luxury furniture collections
+Images: Modern living room setups with neutral beige/cream color palettes, featuring contemporary sofas, abstract wall art, and minimalist decor
+
+Color Palette
+
+Primary: Warm terracotta/burnt orange (#B8734C)
+Secondary: Cream/Beige (#F5E6D3)
+Accent: Lime green (for featured products)
+Text: White on dark backgrounds, dark brown on light backgrounds
+Background: Gradient from light beige to white
+
+Typography
+
+Headers: Elegant serif font (like Playfair Display or similar)
+Body: Clean sans-serif (like Montserrat or similar)
+Special: Script font for decorative elements
+
+This design emphasizes affordable luxury with warm, inviting colors and clean, modern layouts that showcase furniture in aspirational lifestyle settings.
