@@ -1,0 +1,112 @@
+## Cart Page Design for SM Furnishings
+
+### Page Layout
+**Two-column layout**: Left (65%) - Cart Items | Right (35%) - Order Summary
+
+### Left Section - Cart Items
+
+#### Header
+```
+Shopping Cart (3 items)
+[Continue Shopping Button]
+```
+
+#### Cart Item Card
+```
+┌─────────────────────────────────────────┐
+│ [Product Image] │ Modern Velvet Sofa      │
+│  150x150px     │ Color: Navy Blue         │
+│                │ Size: 3-Seater           │
+│                │ SKU: SMF-VS-001          │
+│                │                          │
+│                │ ₹28,000                  │
+│                │ [♡ Save for Later]       │
+│                │ [🗑️ Remove]              │
+│                │                          │
+│                │ Quantity: [-] 1 [+]      │
+│                │ Subtotal: ₹28,000        │
+└─────────────────────────────────────────┘
+```
+
+**Features**:
+- Quantity selector with +/- buttons (live update)
+- "Save for Later" moves to wishlist
+- Remove with confirmation modal
+- Stock indicator: "Only 3 left!"
+- Delivery estimate per item
+
+### Right Section - Order Summary
+
+#### Price Breakdown
+```
+ORDER SUMMARY
+─────────────────────
+Subtotal (3 items):     ₹65,000
+Discount:               -₹5,000
+─────────────────────
+
+APPLY COUPON
+[Enter code] [APPLY]
+✅ SAVE20 applied
+
+─────────────────────
+ESTIMATE SHIPPING
+
+📍 Deliver to:
+[Enter PIN Code] [CHECK]
+
+Delhi - 110001
+Standard (5-7 days):    FREE
+Express (2-3 days):     ₹500
+
+─────────────────────
+GST (18%):              ₹10,800
+─────────────────────
+TOTAL:                  ₹70,800
+You Save:               ₹5,000
+
+[EMI Options Available]
+Starting ₹5,900/month
+
+[PROCEED TO CHECKOUT →]
+```
+
+### Additional Features
+
+#### Saved for Later Section
+```
+SAVED FOR LATER (2 items)
+[Product cards with "Move to Cart" button]
+```
+
+#### Empty Cart State
+```
+Your cart is empty
+[Illustration]
+"Let's fill it with beautiful furniture!"
+[Start Shopping]
+```
+
+#### Trust Badges
+```
+✓ Secure Checkout  ✓ Free Shipping  ✓ Easy Returns
+```
+
+### Interactive Elements
+- **Auto-save**: Cart updates saved automatically
+- **Price Animation**: Smooth transitions when quantities change
+- **Loading States**: Skeleton loaders during updates
+- **Toast Notifications**: "Item removed", "Coupon applied"
+- **Sticky Summary**: Order summary stays visible on scroll
+
+### Mobile View
+- Single column layout
+- Fixed bottom bar with total and checkout button
+- Swipe to remove items
+- Collapsible order summary
+
+### Colors & Theme
+- Maintain terracotta (#B8734C) for CTAs
+- Cream backgrounds (#F5E6D3)
+- Success green for savings/discounts
+- Subtle animations for all interactions

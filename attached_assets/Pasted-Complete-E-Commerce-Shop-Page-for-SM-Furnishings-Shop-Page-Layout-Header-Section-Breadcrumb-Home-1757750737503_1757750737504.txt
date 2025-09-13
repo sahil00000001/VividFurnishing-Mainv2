@@ -1,0 +1,285 @@
+Complete E-Commerce Shop Page for SM Furnishings
+Shop Page Layout
+Header Section
+Breadcrumb: Home > Shop > [Current Category]
+Page Title: "Our Collection" with decorative lines
+Results Count: "Showing 24 of 156 products"
+Main Layout Structure
+[Left Sidebar (20%)] [Product Grid (80%)]
+Left Sidebar - Filter Panel
+Categories Section
+CATEGORIES
+├── Living Room (45)
+│   ├── Sofas (12)
+│   ├── Chairs (18)
+│   ├── Tables (15)
+├── Bedroom (38)
+│   ├── Beds (8)
+│   ├── Wardrobes (15)
+│   ├── Dressers (15)
+├── Dining Room (32)
+│   ├── Dining Tables (10)
+│   ├── Dining Chairs (22)
+└── Office (28)
+    ├── Desks (14)
+    ├── Office Chairs (14)
+Expandable/collapsible with smooth animation
+Checkbox for multi-select
+Product count in parentheses
+Price Range Filter
+PRICE RANGE
+[Dual slider component]
+Min: ₹5,000 — Max: ₹50,000
+[Input fields for manual entry]
+Color Filter
+COLORS
+[Color swatches in grid]
+🟤 Brown  🔵 Blue  ⚫ Black
+🟢 Green  🔴 Red   ⚪ White
+🟡 Yellow 🟣 Purple 🟠 Orange
+Click to select multiple
+Selected colors show checkmark
+Material Filter
+MATERIAL
+□ Wood (45)
+□ Metal (28)
+□ Fabric (52)
+□ Leather (18)
+□ Glass (12)
+□ Marble (8)
+Additional Filters
+AVAILABILITY
+□ In Stock
+□ Out of Stock
+
+DISCOUNT
+□ 10% Off
+□ 20% Off
+□ 30% Off & Above
+
+RATING
+⭐⭐⭐⭐⭐ & Up
+⭐⭐⭐⭐ & Up
+⭐⭐⭐ & Up
+Apply/Clear Buttons
+[Apply Filters] [Clear All]
+Product Grid Section
+Top Bar Controls
+Sort By: [Dropdown Menu]
+├── Featured
+├── Price: Low to High
+├── Price: High to Low
+├── Newest First
+├── Best Rating
+└── Most Popular
+
+View: [Grid 4] [Grid 3] [List View]
+Product Card Design
+Card Structure (Hover Animations)
+html
+<div class="product-card">
+  <!-- Image Container with Carousel -->
+  <div class="image-container">
+    <img src="product1.jpg" class="main-image"/>
+    <!-- Hidden images that show on hover -->
+    <div class="image-carousel">
+      <img src="product1.jpg"/>
+      <img src="product2.jpg"/>
+      <img src="product3.jpg"/>
+      <img src="product4.jpg"/>
+    </div>
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <button class="wishlist">♡</button>
+      <button class="quick-view">👁</button>
+      <button class="compare">⇄</button>
+    </div>
+    <!-- Badge -->
+    <span class="badge">-20% OFF</span>
+  </div>
+  
+  <!-- Product Info -->
+  <div class="product-info">
+    <h3>Modern Velvet Sofa</h3>
+    <div class="rating">⭐⭐⭐⭐⭐ (24)</div>
+    <div class="price">
+      <span class="original">₹35,000</span>
+      <span class="sale">₹28,000</span>
+    </div>
+    <button class="add-to-cart">
+      Add to Cart
+      <span class="cart-animation">🛒</span>
+    </button>
+  </div>
+</div>
+Hover Effects
+css
+/* Image auto-scroll on hover */
+.product-card:hover .image-carousel {
+  animation: scrollImages 3s infinite;
+}
+
+/* Quick actions slide in */
+.product-card:hover .quick-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+Add to Cart Animation
+javascript
+// Flying product to cart animation
+function addToCartAnimation(productElement) {
+  // 1. Product shrinks and flies to cart icon
+  // 2. Cart icon bounces
+  // 3. Cart count updates with pulse effect
+  // 4. Success notification slides in
+}
+Product Detail Page
+Layout Structure
+[Image Gallery (50%)] [Product Details (50%)]
+Left Section - Image Gallery
+Main Image Display
+[Large product image with zoom on hover]
+
+Thumbnail Strip
+[thumb1] [thumb2] [thumb3] [thumb4] [thumb5]
+
+360° View Button | AR View Button
+Right Section - Product Details
+Product Header
+Home > Living Room > Sofas > [Product Name]
+
+MODERN VELVET SOFA
+SKU: SMF-2024-VS-001
+
+⭐⭐⭐⭐⭐ 4.8 (124 Reviews) | 256 Sold
+
+₹28,000  ₹35,000  (Save 20%)
+EMI starts at ₹2,333/month
+Variant Selection
+COLOR: [Selected: Navy Blue]
+[Color swatches with images]
+
+SIZE:
+[2-Seater] [3-Seater] [L-Shape]
+
+MATERIAL:
+[Velvet] [Leather] [Fabric]
+Delivery Checker
+Check Delivery Availability
+[PIN Code Input] [Check Button]
+
+✅ Delivers to 110001
+🚚 Standard Delivery: 5-7 days (FREE)
+⚡ Express Delivery: 2-3 days (₹500)
+Key Features
+✓ Premium Italian Velvet
+✓ High-Density Foam
+✓ 10 Year Warranty
+✓ Easy EMI Options
+✓ Free Installation
+Action Buttons
+[- QTY +] [ADD TO CART] [♡ WISHLIST]
+        [BUY NOW]
+Product Information Tabs
+[Description] [Specifications] [Reviews] [Shipping] [Warranty]
+
+DESCRIPTION:
+Experience luxury with our Modern Velvet Sofa...
+
+SPECIFICATIONS:
+- Dimensions: 180cm × 85cm × 90cm
+- Weight: 45 kg
+- Material: Premium Velvet
+- Frame: Solid Wood
+- Cushions: High-density foam
+Seller Information
+Sold by: SM Furnishings Official
+⭐ 4.9 Seller Rating | 98% Positive Feedback
+[Visit Store] [Contact Seller]
+Similar Products Section
+YOU MAY ALSO LIKE
+[Horizontal scrollable carousel]
+[Product1] [Product2] [Product3] [Product4] →
+Recently Viewed
+RECENTLY VIEWED
+[Product1] [Product2] [Product3] [Product4]
+Animation Specifications
+Page Load Animations
+css
+/* Staggered fade-in for products */
+.product-card {
+  animation: fadeInUp 0.5s ease;
+  animation-delay: calc(var(--index) * 0.1s);
+}
+Interactive Animations
+Filter Panel: Smooth slide and fade transitions
+Product Hover: Image carousel auto-play
+Add to Cart: Product flies to cart with particle trail
+Wishlist: Heart fills with pulse effect
+Quick View: Modal slides up with blur background
+Image Gallery: Smooth zoom and pan on hover
+Quantity Selector: Number flip animation
+Price Update: Smooth number transition
+Micro-interactions
+javascript
+// Button hover effects
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(184, 115, 76, 0.3);
+}
+
+// Loading skeleton while filtering
+.product-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  animation: loading 1.5s infinite;
+}
+Cart Dropdown Preview
+When cart icon clicked:
+┌─────────────────────┐
+│ Your Cart (3 items) │
+├─────────────────────┤
+│ [img] Velvet Sofa   │
+│       ₹28,000 × 1   │
+│ [img] Coffee Table  │
+│       ₹12,000 × 1   │
+├─────────────────────┤
+│ Subtotal: ₹40,000  │
+│ [View Cart] [Checkout]│
+└─────────────────────┘
+Mobile Responsive Features
+Filter: Slides from left as overlay
+Sort: Bottom sheet modal
+Product Grid: 2 columns on mobile
+Image Gallery: Swipeable carousel
+Add to Cart: Fixed bottom bar
+Performance Optimizations
+javascript
+// Lazy loading images
+<img loading="lazy" src="product.jpg"/>
+
+// Virtual scrolling for large catalogs
+// Debounced filter updates
+// Image preloading on hover
+Success Notifications
+✅ Product added to cart!
+♡ Added to wishlist
+🔄 Filters applied
+📦 Only 3 left in stock!
+Color Theme Consistency
+Primary: 
+#B8734C (Terracotta)
+Secondary: 
+#F5E6D3 (Cream)
+Accent: 
+#2C2C2C (Dark)
+Success: 
+#4CAF50
+Sale: 
+#FF5722
+This comprehensive shop page design ensures a premium, user-friendly shopping experience with smooth animations and all modern e-commerce features expected in a furniture website.
+
+
+
+
+
+
