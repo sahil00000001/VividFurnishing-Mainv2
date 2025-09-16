@@ -109,21 +109,23 @@ export default function Home() {
               })}
             </div>
             
-            {/* Navigation Arrows */}
-            <button 
-              onClick={prevCategory}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
-              data-testid="button-prev-category"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button 
-              onClick={nextCategory}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
-              data-testid="button-next-category"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
+            {/* Navigation Arrows - Both positioned on right side top */}
+            <div className="absolute right-0 -top-16 flex gap-4">
+              <button 
+                onClick={prevCategory}
+                className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
+                data-testid="button-prev-category"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button 
+                onClick={nextCategory}
+                className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
+                data-testid="button-next-category"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </section>
