@@ -23,13 +23,30 @@ const categories = [
 export default function Home() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [email, setEmail] = useState("");
-
+  
+  // Number of categories to show at once
+  const categoriesPerView = 6;
+  
   const nextCategory = () => {
-    setCurrentCategoryIndex((prev) => (prev + 1) % categories.length);
+    setCurrentCategoryIndex((prev) => 
+      prev + categoriesPerView >= categories.length ? 0 : prev + 1
+    );
   };
 
   const prevCategory = () => {
-    setCurrentCategoryIndex((prev) => (prev - 1 + categories.length) % categories.length);
+    setCurrentCategoryIndex((prev) => 
+      prev === 0 ? Math.max(0, categories.length - categoriesPerView) : prev - 1
+    );
+  };
+  
+  // Get visible categories based on current index
+  const getVisibleCategories = () => {
+    const visible = [];
+    for (let i = 0; i < categoriesPerView; i++) {
+      const index = (currentCategoryIndex + i) % categories.length;
+      visible.push(categories[index]);
+    }
+    return visible;
   };
 
   const handleSubscribe = () => {
@@ -90,7 +107,7 @@ export default function Home() {
           {/* Category Grid */}
           <div className="relative">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-6xl mx-auto">
-              {categories.map((category) => {
+              {getVisibleCategories().map((category) => {
                 const IconComponent = category.icon;
                 return (
                   <div 
@@ -115,6 +132,7 @@ export default function Home() {
                 onClick={prevCategory}
                 className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
                 data-testid="button-prev-category"
+                aria-label="Previous categories"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -122,10 +140,55 @@ export default function Home() {
                 onClick={nextCategory}
                 className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
                 data-testid="button-next-category"
+                aria-label="Next categories"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Designing Luxury Hero Section */}
+      <section className="py-20 lg:py-32 bg-[#582308] text-center">
+        <div className="container mx-auto px-6 max-w-7xl">
+          {/* Primary Headline - "Designing Luxury" */}
+          <h1 
+            className="text-white font-bold capitalize mb-4"
+            style={{ 
+              fontFamily: '"DM Serif Display", serif',
+              fontSize: 'clamp(3rem, 8vw, 9.375rem)',
+              lineHeight: '1.1'
+            }}
+          >
+            Designing Luxury
+          </h1>
+          
+          {/* Secondary Headline - "affordably" */}
+          <h2 
+            className="text-[#D58A5B] mb-12"
+            style={{
+              fontFamily: '"Dancing Script", cursive',
+              fontSize: 'clamp(3rem, 8vw, 9.375rem)',
+              lineHeight: '1.2',
+              fontStyle: 'italic'
+            }}
+          >
+            affordably
+          </h2>
+          
+          {/* Supporting Text */}
+          <div className="max-w-4xl mx-auto">
+            <p 
+              className="text-white font-bold leading-relaxed text-lg md:text-xl lg:text-2xl"
+              style={{
+                fontFamily: '"Playfair Display", serif'
+              }}
+            >
+              Experience the perfect balance of sophistication and accessibility in our curated collection.
+              <br />
+              Where luxury meets affordability, creating timeless elegance for every home.
+            </p>
           </div>
         </div>
       </section>
