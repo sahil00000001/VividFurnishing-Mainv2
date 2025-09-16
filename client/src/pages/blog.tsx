@@ -7,10 +7,10 @@ export default function Blog() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <Header />
+      <Header className="relative bg-white border-b shadow-sm" variant="solid" />
 
       {/* Hero Section */}
-      <section className="relative h-80 flex items-center justify-center">
+      <section className="relative h-80 flex items-center justify-center mt-24">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
