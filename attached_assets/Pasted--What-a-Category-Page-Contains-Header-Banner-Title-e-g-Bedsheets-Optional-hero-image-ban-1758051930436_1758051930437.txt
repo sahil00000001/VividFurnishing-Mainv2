@@ -1,0 +1,108 @@
+🏷️ What a Category Page Contains
+
+Header / Banner
+
+Title (e.g., Bedsheets)
+
+Optional hero image/banner (festival / seasonal theme / lifestyle photo)
+
+Short description (why buy this category, USP)
+
+Filters & Sorting (left sidebar / top bar)
+
+Filters:
+
+Size (Single, Double, King, Queen)
+
+Material (Cotton, Satin, Linen, Silk, Microfiber)
+
+Thread Count
+
+Color / Pattern
+
+Price Range
+
+Availability (in stock, fast delivery)
+
+Sorting Options:
+
+Newest first
+
+Bestsellers
+
+Price (low → high, high → low)
+
+Customer ratings
+
+Product Grid
+
+Product Image (with hover swap / lifestyle image)
+
+Name + Price + Discount
+
+Swatches (color/material options)
+
+Badges (e.g., Bestseller, Clearance, Limited Stock, New)
+
+Quick Actions:
+
+Add to Cart
+
+Add to Wishlist
+
+Quick View
+
+Pincode Checker
+
+Small input box on each product (or sticky filter area)
+
+Shows delivery ETA / COD availability
+
+Pagination or Infinite Scroll
+
+“Show 24 / 48 / All” toggle
+
+Option to load more products or auto-load
+
+Category Enhancers
+
+Cross-promo banners (e.g., Buy Bedsheet + Pillow Cover Set, Save 20%)
+
+Festive / seasonal highlight at the top
+
+Shop by Room / Shop by Pattern suggestions
+
+SEO Elements
+
+Text block at bottom: Buying Guide, FAQs, material details
+
+Example: “Why choose 100% Cotton Bedsheets?”
+
+Helps Google rank the page
+
+🛠️ User Flow for Category Page
+
+User clicks Bedsheets from Shop/Home.
+
+Lands on Bedsheets Category Page.
+
+Uses filters to narrow down (e.g., King Size, Cotton, White).
+
+Sees products in grid.
+
+Clicks on a product → goes to PDP.
+
+✅ Key Things to Keep Consistent
+
+Always show filters in same position (left or top).
+
+Maintain clean grid (3 or 4 products per row).
+
+Keep CTAs (Add to Cart / Wishlist) visible without clutter.
+
+Ensure mobile version has collapsible filters (accordion style).
+
+👉 Basically, the Category Page = Navigation + Discovery page.
+It lets customers browse and filter all products of a type before picking one.
+
+Do you want me to design a sample wireframe layout (visual structure) for your Category Page so you can directly imagine it?
