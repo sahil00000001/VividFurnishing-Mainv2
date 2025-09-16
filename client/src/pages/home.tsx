@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,14 @@ export default function Home() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [email, setEmail] = useState("");
   
+  // Countdown timer state
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+  
   // Number of categories to show at once
   const categoriesPerView = 6;
   
@@ -48,6 +56,32 @@ export default function Home() {
     }
     return visible;
   };
+
+  // Countdown timer effect
+  useEffect(() => {
+    const targetDate = new Date('2025-09-22T00:00:00');
+    
+    const updateCountdown = () => {
+      const now = new Date();
+      const difference = targetDate.getTime() - now.getTime();
+      
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        
+        setTimeLeft({ days, hours, minutes, seconds });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubscribe = () => {
     if (email) {
@@ -376,6 +410,137 @@ export default function Home() {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Flash Sale Section */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col lg:flex-row gap-6 items-center">
+              {/* Left Section - Flash Sale Container */}
+              <div 
+                className="w-full lg:w-[751px] h-[474px] bg-[#FFEBCE] rounded-[30px] flex flex-col items-center justify-center p-8"
+              >
+                {/* Flash Sale Title */}
+                <h2 
+                  className="text-[#582308] font-bold text-center mb-6"
+                  style={{
+                    fontSize: 'clamp(3rem, 8vw, 6rem)',
+                    fontFamily: 'serif',
+                    lineHeight: '1.1'
+                  }}
+                >
+                  Flash Sale
+                </h2>
+                
+                {/* Subtitle */}
+                <p 
+                  className="text-black text-center mb-8"
+                  style={{
+                    fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+                    fontFamily: 'serif'
+                  }}
+                >
+                  Get 25% off! Limited Free Offer!
+                </p>
+                
+                {/* Countdown Timer */}
+                <div className="flex items-center justify-center gap-4 mb-8">
+                  <div className="text-center">
+                    <div 
+                      className="text-black font-bold"
+                      style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}
+                    >
+                      {String(timeLeft.days).padStart(2, '0')}
+                    </div>
+                    <div className="text-black text-sm font-normal">Days</div>
+                  </div>
+                  <div className="text-black font-bold" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}>:</div>
+                  <div className="text-center">
+                    <div 
+                      className="text-black font-bold"
+                      style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}
+                    >
+                      {String(timeLeft.hours).padStart(2, '0')}
+                    </div>
+                    <div className="text-black text-sm font-normal">Hours</div>
+                  </div>
+                  <div className="text-black font-bold" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}>:</div>
+                  <div className="text-center">
+                    <div 
+                      className="text-black font-bold"
+                      style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}
+                    >
+                      {String(timeLeft.minutes).padStart(2, '0')}
+                    </div>
+                    <div className="text-black text-sm font-normal">Minutes</div>
+                  </div>
+                  <div className="text-black font-bold" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}>:</div>
+                  <div className="text-center">
+                    <div 
+                      className="text-black font-bold"
+                      style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}
+                    >
+                      {String(timeLeft.seconds).padStart(2, '0')}
+                    </div>
+                    <div className="text-black text-sm font-normal">Seconds</div>
+                  </div>
+                </div>
+                
+                {/* CTA Button */}
+                <Button 
+                  className="bg-[#AF4C0F] hover:bg-[#8B3A0C] text-white font-bold px-8 py-3 rounded-full border-4 border-[#AF4C0F]"
+                  style={{ fontSize: '1.5rem' }}
+                >
+                  Explore Deal
+                </Button>
+              </div>
+              
+              {/* Right Section - Product Images */}
+              <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 w-full lg:w-auto">
+                {/* Product Image 1 */}
+                <div className="relative w-full sm:w-[168px] h-[474px] rounded-[30px] overflow-hidden shadow-lg">
+                  <img 
+                    src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
+                    alt="Modern chair"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-[7px] border-4 border-[#FFEBCE] rounded-[30px] pointer-events-none"></div>
+                </div>
+                
+                {/* Product Image 2 */}
+                <div className="relative w-full sm:w-[168px] h-[474px] rounded-[30px] overflow-hidden shadow-lg">
+                  <img 
+                    src="https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
+                    alt="Accent chair"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-[7px] border-4 border-[#FFEBCE] rounded-[30px] pointer-events-none"></div>
+                </div>
+                
+                {/* Product Image 3 */}
+                <div className="relative w-full sm:w-[168px] h-[474px] rounded-[30px] overflow-hidden shadow-lg">
+                  <img 
+                    src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
+                    alt="Papasan chair"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-[7px] border-4 border-[#FFEBCE] rounded-[30px] pointer-events-none"></div>
+                </div>
+                
+                {/* Product Image 4 */}
+                <div className="relative w-full sm:w-[168px] h-[474px] rounded-[30px] overflow-hidden shadow-lg">
+                  <img 
+                    src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
+                    alt="Modern sofa"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-[7px] border-4 border-[#FFEBCE] rounded-[30px] pointer-events-none"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
