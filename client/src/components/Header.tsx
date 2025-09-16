@@ -44,12 +44,15 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
           
           {/* Navigation Container */}
           <div className="w-full max-w-4xl mx-auto">
-            {/* Wishlist Icon - Above top line */}
-            <div className="flex justify-center mb-4">
-              <button className={`transition-colors duration-200 ${
-                variant === "solid" ? "text-foreground hover:text-terracotta" : "text-white hover:text-cream"
-              }`} data-testid="button-wishlist">
+            {/* Liked Button - Above top line */}
+            <div className="flex justify-center mb-6">
+              <button className={`flex items-center space-x-2 px-4 py-2 rounded-full border transition-all duration-200 ${
+                variant === "solid" 
+                  ? "text-foreground border-foreground/20 hover:bg-terracotta hover:text-white hover:border-terracotta" 
+                  : "text-white border-white/30 hover:bg-white hover:text-black hover:border-white"
+              }`} data-testid="button-liked">
                 <Heart className="w-5 h-5" />
+                <span className="text-sm font-medium">LIKED</span>
               </button>
             </div>
             
