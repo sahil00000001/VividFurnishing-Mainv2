@@ -51,8 +51,11 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
           <div className="w-full max-w-4xl mx-auto">
             {/* Navigation section - between lines */}
             <div className="flex items-center justify-between py-2">
-              {/* Main Navigation */}
-              <nav className="hidden md:flex flex-1 justify-center">
+              {/* Left empty space for balance */}
+              <div className="flex-1"></div>
+              
+              {/* Main Navigation - Center */}
+              <nav className="hidden md:flex">
                 <ul className={`flex space-x-12 font-medium ${
                   variant === "solid" ? "text-foreground" : "text-white"
                 }`}>
@@ -71,39 +74,46 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                 </ul>
               </nav>
               
-              {/* Right Icons */}
-              <div className={`flex items-center space-x-6 ${
-                variant === "solid" ? "text-foreground" : "text-white"
-              }`}>
-                <button className={`transition-colors duration-200 ${
-                  variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                }`} data-testid="button-search">
-                  <Search className="w-5 h-5" />
-                </button>
-                <button className={`transition-colors duration-200 ${
-                  variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                }`} data-testid="button-heart">
-                  <Heart className="w-5 h-5" />
-                </button>
-                <button className={`transition-colors duration-200 ${
-                  variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                }`} data-testid="button-account">
-                  <User className="w-5 h-5" />
-                </button>
-                <button 
-                  className={`relative transition-colors duration-200 ${
+              {/* Right side - Search and Heart icons moved right */}
+              <div className="flex-1 flex justify-end">
+                <div className={`flex items-center space-x-6 ${
+                  variant === "solid" ? "text-foreground" : "text-white"
+                }`}>
+                  {/* Search and Heart moved further right */}
+                  <button className={`transition-colors duration-200 ${
                     variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                  }`}
-                  data-testid="button-cart"
-                  onClick={() => setIsCartOpen(true)}
-                >
-                  <ShoppingBag className="w-5 h-5" />
-                  {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-terracotta text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="cart-count">
-                      {cartCount}
-                    </span>
-                  )}
-                </button>
+                  }`} data-testid="button-search">
+                    <Search className="w-5 h-5" />
+                  </button>
+                  <button className={`transition-colors duration-200 ${
+                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                  }`} data-testid="button-heart">
+                    <Heart className="w-5 h-5" />
+                  </button>
+                  
+                  {/* User and Cart icons with some separation */}
+                  <div className="ml-8 flex items-center space-x-6">
+                    <button className={`transition-colors duration-200 ${
+                      variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                    }`} data-testid="button-account">
+                      <User className="w-5 h-5" />
+                    </button>
+                    <button 
+                      className={`relative transition-colors duration-200 ${
+                        variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                      }`}
+                      data-testid="button-cart"
+                      onClick={() => setIsCartOpen(true)}
+                    >
+                      <ShoppingBag className="w-5 h-5" />
+                      {cartCount > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-terracotta text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="cart-count">
+                          {cartCount}
+                        </span>
+                      )}
+                    </button>
+                  </div>
+                </div>
               </div>
               
               {/* Mobile Menu Button */}
