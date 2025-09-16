@@ -1,0 +1,151 @@
+Flash Sale Section Design Prompt
+Section Overview
+Create a two-column Flash Sale section featuring a countdown timer on the left and product showcase on the right.
+Container Specifications
+
+Total Width: 1491px (or full container width)
+Height: 475px
+Background: Split design with left and right sections
+Position: Relative to previous sections
+
+Left Section (Flash Sale Container)
+Dimensions:
+
+Width: 751px
+Height: 474px
+Background: #FFEBCE (warm beige/cream)
+Border-radius: 30px
+Position: Left aligned
+
+Content Layout:
+
+"Flash Sale" Title
+
+Font: Fiona
+Size: 96px
+Color: #582308 (dark brown)
+Position: Centered in upper portion
+Top padding: ~35px from container top
+
+
+Subtitle
+
+Text: "Get 25% off! Limited Free Offer!"
+Font: Fiona
+Size: 40px
+Color: #000000
+Position: Below main title
+
+
+Countdown Timer
+
+JavaScript Functionality: Calculate time remaining to September 22, 2025, 00:00:00
+Display Format: "04 : 14 : 48 : 18"
+Number Style:
+
+Font: Sk-Modernist
+Weight: 700 (bold)
+Size: 64px
+Color: #000000
+
+
+Labels below numbers:
+
+"Days" "Hours" "Minutes" "Seconds"
+Font: Sk-Modernist
+Size: 20px
+Weight: 400
+
+
+Separator colons:
+
+Size: 64px
+Weight: 700
+
+
+
+
+CTA Button
+
+Text: "Explore Deal"
+Width: 191px
+Height: 63px
+Background: #AF4C0F (burnt orange)
+Border: 4px solid #AF4C0F
+Border-radius: 50px
+Text color: #FFFFFF
+Font: Sk-Modernist, 700, 24px
+Position: Centered below timer
+
+
+
+Right Section (Product Images)
+Layout:
+
+4 vertical image containers in a row
+Each container width: 168px
+Height: 474px
+Spacing between: ~17px
+
+Individual Image Container Design:
+
+Outer Container
+
+Background: Product image with #FFEBCE fallback
+Border-radius: 30px
+Box-shadow: Subtle shadow for depth
+
+
+Inner Border Effect
+
+Create inner border using pseudo-element or nested div
+Border: 4px solid #FFEBCE
+Border-radius: 30px
+Inset: 7px from outer edges
+Creates a frame effect within each image
+
+
+
+Product Images:
+
+Modern furniture pieces (chairs, sofas, accent pieces)
+High-quality lifestyle shots
+Consistent color grading to match brand palette
+
+JavaScript Timer Implementation
+javascript// Target date: September 22, 2025, 00:00:00
+const targetDate = new Date('2025-09-22T00:00:00');
+
+function updateCountdown() {
+    const now = new Date();
+    const difference = targetDate - now;
+    
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    
+    // Update DOM elements with padded values
+    document.getElementById('days').textContent = String(days).padStart(2, '0');
+    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+}
+
+// Update every second
+setInterval(updateCountdown, 1000);
+Responsive Considerations
+
+Stack vertically on mobile devices
+Adjust timer font sizes for smaller screens
+Maintain aspect ratio of product images
+Convert 4-column image grid to 2x2 on tablets, single column on mobile
+
+Visual Enhancements
+
+Subtle animation on timer numbers when they change
+Hover effect on product images (slight zoom or overlay)
+Button hover state with darker background
+Optional: Pulsing effect on "Explore Deal" button to draw attention
+
+This section creates urgency with the countdown timer while showcasing premium products, maintaining the luxury-yet-accessible brand positioning.
