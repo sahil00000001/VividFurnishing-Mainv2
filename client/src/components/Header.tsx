@@ -42,14 +42,13 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
             </Link>
           </div>
           
+          {/* Top horizontal line - 80% of page width */}
+          <div className={`w-4/5 h-px mb-3 mx-auto ${
+            variant === "solid" ? "bg-foreground/20" : "bg-white/30"
+          }`}></div>
+          
           {/* Navigation Container */}
           <div className="w-full max-w-4xl mx-auto">
-            
-            {/* Top horizontal line */}
-            <div className={`w-4/5 h-px mb-3 mx-auto ${
-              variant === "solid" ? "bg-foreground/20" : "bg-white/30"
-            }`}></div>
-            
             {/* Navigation section - between lines */}
             <div className="flex items-center justify-between py-2">
               {/* Main Navigation */}
@@ -115,12 +114,12 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
               </button>
             </div>
             
-            {/* Bottom horizontal line */}
-            <div className={`w-4/5 h-px mt-3 mx-auto ${
-              variant === "solid" ? "bg-foreground/20" : "bg-white/30"
-            }`}></div>
-            
           </div>
+          
+          {/* Bottom horizontal line - 80% of page width */}
+          <div className={`w-4/5 h-px mt-3 mx-auto ${
+            variant === "solid" ? "bg-foreground/20" : "bg-white/30"
+          }`}></div>
         </div>
       </header>
 
