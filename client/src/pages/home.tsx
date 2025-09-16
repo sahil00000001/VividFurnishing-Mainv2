@@ -150,15 +150,15 @@ export default function Home() {
       </section>
 
       {/* Designing Luxury Hero Section */}
-      <section className="py-20 lg:py-32 bg-[#582308] text-center">
-        <div className="container mx-auto px-6 max-w-7xl">
+      <section className="py-16 lg:py-20 bg-[#582308] text-center">
+        <div className="container mx-auto px-6 max-w-5xl">
           {/* Primary Headline - "Designing Luxury" */}
           <h1 
-            className="text-white font-bold capitalize mb-4"
+            className="text-white font-bold capitalize mb-1"
             style={{ 
               fontFamily: '"DM Serif Display", serif',
-              fontSize: 'clamp(3rem, 8vw, 9.375rem)',
-              lineHeight: '1.1'
+              fontSize: 'clamp(2.5rem, 6vw, 7rem)',
+              lineHeight: '1.0'
             }}
           >
             Designing Luxury
@@ -166,11 +166,11 @@ export default function Home() {
           
           {/* Secondary Headline - "affordably" */}
           <h2 
-            className="text-[#D58A5B] mb-12"
+            className="text-[#D58A5B] mb-8"
             style={{
               fontFamily: '"Dancing Script", cursive',
-              fontSize: 'clamp(3rem, 8vw, 9.375rem)',
-              lineHeight: '1.2',
+              fontSize: 'clamp(2.5rem, 6vw, 7rem)',
+              lineHeight: '1.1',
               fontStyle: 'italic'
             }}
           >
@@ -178,9 +178,9 @@ export default function Home() {
           </h2>
           
           {/* Supporting Text */}
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             <p 
-              className="text-white font-bold leading-relaxed text-lg md:text-xl lg:text-2xl"
+              className="text-white font-bold leading-relaxed text-base md:text-lg lg:text-xl"
               style={{
                 fontFamily: '"Playfair Display", serif'
               }}
