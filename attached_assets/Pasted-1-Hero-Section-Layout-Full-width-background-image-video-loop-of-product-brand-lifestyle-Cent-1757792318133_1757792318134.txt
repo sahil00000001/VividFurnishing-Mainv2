@@ -1,0 +1,161 @@
+1. Hero Section
+
+Layout:
+
+Full-width background (image/video loop of product/brand lifestyle).
+
+Centered headline + tagline.
+
+CTA buttons (e.g., Shop Now, Join Us).
+
+Style & Animation:
+
+Fade-in headline from bottom (0.6s).
+
+Tagline with typewriter effect.
+
+CTA buttons scale slightly on hover.
+
+Parallax background image scroll effect.
+
+2. Our Story (Timeline)
+
+Layout:
+
+Vertical split section: text on one side, image/illustration on other.
+
+Timeline (milestones) zig-zag alternating left/right.
+
+Style & Animation:
+
+Scroll-triggered line animation that “draws” the timeline.
+
+Milestones slide in from left/right alternately.
+
+Dates pop in with subtle scale-up.
+
+3. Mission, Vision & Values
+
+Layout:
+
+3-column layout (Mission | Vision | Values).
+
+Each with icon + short text.
+
+Style & Animation:
+
+Icons animate with a gentle pulse when hovered.
+
+Text slides in with staggered timing.
+
+Subtle background gradient behind this block.
+
+4. Meet the Team
+
+Layout:
+
+Grid of cards (team member photo + name + role).
+
+On hover → flip card to reveal bio.
+
+Style & Animation:
+
+Team cards stagger fade-in as user scrolls.
+
+Hover → card flips with smooth 3D effect.
+
+5. What Makes Us Different (USP)
+
+Layout:
+
+2-column split (image on left, USP text list on right).
+
+Highlighted badges for awards/certifications.
+
+Style & Animation:
+
+Image parallax scroll effect.
+
+Each USP point slides in sequentially.
+
+Awards badges bounce-in slightly.
+
+6. Customer Love (Testimonials + UGC)
+
+Layout:
+
+Testimonial slider (auto-scroll).
+
+Grid of UGC images below.
+
+Animated counter for stats (e.g., “1M+ Happy Customers”).
+
+Style & Animation:
+
+Testimonials fade in/out with carousel.
+
+Counters animate from 0 → actual number on scroll.
+
+UGC images zoom slightly on hover.
+
+7. Sustainability & Responsibility
+
+Layout:
+
+Full-width section with eco-friendly background graphic.
+
+3-column blocks (Eco Materials | Recyclable Packaging | Community Work).
+
+Style & Animation:
+
+Icons slide upward as they appear.
+
+Subtle floating leaf/globe icons in background.
+
+8. Trust & Recognition
+
+Layout:
+
+Press logos in a horizontal row (carousel if many).
+
+Certificates grid below.
+
+Style & Animation:
+
+Logos grayscale → color on hover.
+
+Certificates scale-in on scroll.
+
+9. Call-to-Action Section
+
+Layout:
+
+Bold headline: “Be Part of Our Journey”
+
+3 Cards: Careers | Collaborations | Newsletter
+
+CTA Buttons.
+
+Style & Animation:
+
+Cards lift slightly on hover with shadow.
+
+Buttons glow/underline animation.
+
+10. Fun & Interactive Section
+
+Layout:
+
+Interactive timeline slider (fun facts + images).
+
+Behind-the-scenes video thumbnail (with animated play button).
+
+“Did You Know?” flip cards.
+
+Style & Animation:
+
+Flip card hover effect.
+
+Play button with pulsing animation.
+
+Timeline icons pop-in as user scrolls.

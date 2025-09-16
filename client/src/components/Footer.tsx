@@ -70,13 +70,13 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <a 
-                    href="#" 
+                  <Link 
+                    href="/about" 
                     className="text-cream hover:text-white transition-colors duration-200"
                     data-testid="footer-link-about"
                   >
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a 

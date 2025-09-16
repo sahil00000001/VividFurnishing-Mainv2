@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { Search, User, ShoppingBag, Menu, ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower } from "lucide-react";
+import { ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Header } from "@/components/Header";
 import { ProductCard } from "@/components/ProductCard";
 import { PremiumTabs } from "@/components/PremiumTabs";
 import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
@@ -41,48 +42,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
-        <div className="container mx-auto px-6 py-6">
-          {/* Brand Name */}
-          <div className="text-center mb-6">
-            <h1 className="font-serif text-3xl md:text-4xl font-bold text-white tracking-wider" data-testid="brand-logo">
-              SM FURNISHINGS
-            </h1>
-          </div>
-          
-          {/* Navigation Container */}
-          <div className="flex items-center justify-between">
-            {/* Main Navigation */}
-            <nav className="hidden md:flex flex-1 justify-center">
-              <ul className="flex space-x-12 text-white font-medium">
-                <li><a href="#" className="hover:text-cream transition-colors duration-200" data-testid="nav-home">HOME</a></li>
-                <li><a href="#" className="hover:text-cream transition-colors duration-200" data-testid="nav-category">CATEGORY</a></li>
-                <li><Link href="/shop" className="hover:text-cream transition-colors duration-200" data-testid="nav-shop">SHOP</Link></li>
-                <li><a href="#" className="hover:text-cream transition-colors duration-200" data-testid="nav-about">ABOUT US</a></li>
-              </ul>
-            </nav>
-            
-            {/* Right Icons */}
-            <div className="flex items-center space-x-6 text-white">
-              <button className="hover:text-cream transition-colors duration-200" data-testid="button-search">
-                <Search className="w-5 h-5" />
-              </button>
-              <button className="hover:text-cream transition-colors duration-200" data-testid="button-account">
-                <User className="w-5 h-5" />
-              </button>
-              <button className="hover:text-cream transition-colors duration-200 relative" data-testid="button-cart">
-                <ShoppingBag className="w-5 h-5" />
-                <span className="absolute -top-2 -right-2 bg-terracotta text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="cart-count">3</span>
-              </button>
-            </div>
-            
-            {/* Mobile Menu Button */}
-            <button className="md:hidden text-white" data-testid="button-mobile-menu">
-              <Menu className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center">

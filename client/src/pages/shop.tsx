@@ -11,6 +11,9 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { shopProducts } from '@/data/products';
 import { Footer } from '@/components/Footer';
+import { Header } from '@/components/Header';
+import { useCart } from '@/lib/cartContext';
+import { useToast } from '@/hooks/use-toast';
 import { 
   Heart, 
   Eye, 
@@ -93,8 +96,6 @@ export default function ShopPage() {
   const [sortBy, setSortBy] = useState<"featured" | "price-low" | "price-high" | "rating" | "newest">("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [wishlist, setWishlist] = useState<number[]>([]);
-  const [cart, setCart] = useState<{[key: number]: number}>({});
-  const [cartCount, setCartCount] = useState(0);
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<{[key: number]: number}>({});
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -104,7 +105,10 @@ export default function ShopPage() {
   const [isQuantityAnimating, setIsQuantityAnimating] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isPriceAnimating, setIsPriceAnimating] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  // Use global cart context
+  const { addToCart: addToGlobalCart, cart: globalCart, cartCount, updateQuantity, removeFromCart, isCartOpen, setIsCartOpen } = useCart();
+  const { toast } = useToast();
   
   // Update total price when quantity or selected product changes
   useEffect(() => {
@@ -135,11 +139,7 @@ export default function ShopPage() {
     return () => window.clearInterval(interval);
   }, [hoveredProduct, products]);
 
-  // Update cart count from cart contents
-  useEffect(() => {
-    const totalItems = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
-    setCartCount(totalItems);
-  }, [cart]);
+  // Removed local cart count management - now handled by global cart context
 
   // Filter products based on selections
   useEffect(() => {
@@ -174,15 +174,32 @@ export default function ShopPage() {
     setFilteredProducts(filtered);
   }, [products, selectedCategories, selectedMaterials, selectedColors, priceRange, sortBy]);
 
-  // Add to Cart Animation with Particle Trail
+  // Add to Cart with Animation
   const addToCart = (productId: number, event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
     
-    const productElement = productRefs.current[productId];
-    const cartElement = cartRef.current;
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
     
-    if (productElement && cartElement) {
+    // Add to global cart context first (always works)
+    addToGlobalCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.images[0]
+    });
+
+    // Show success toast
+    toast({
+      title: "Added to cart",
+      description: `${product.name} has been added to your cart`,
+    });
+    
+    // Animation (optional, only if product element exists)
+    const productElement = productRefs.current[productId];
+    
+    if (productElement) {
       setAnimatingProducts(prev => new Set(Array.from(prev).concat([productId])));
       
       // Create a smaller flying element (thumbnail instead of full card)
@@ -201,81 +218,33 @@ export default function ShopPage() {
       flyingElement.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: white;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="m16 10l-4 4l-4-4"></path></svg></div>`;
       
       const productRect = productElement.getBoundingClientRect();
-      const cartRect = cartElement.getBoundingClientRect();
       
       flyingElement.style.left = (productRect.left + productRect.width / 2 - 30) + 'px';
       flyingElement.style.top = (productRect.top + productRect.height / 2 - 30) + 'px';
       
       document.body.appendChild(flyingElement);
       
-      // Create particle trail
-      const createParticle = (index: number) => {
-        const particle = document.createElement('div');
-        particle.style.position = 'fixed';
-        particle.style.width = '4px';
-        particle.style.height = '4px';
-        particle.style.borderRadius = '50%';
-        particle.style.backgroundColor = '#B8734C';
-        particle.style.pointerEvents = 'none';
-        particle.style.zIndex = '9998';
-        particle.style.transition = 'all 0.8s ease-out';
-        particle.style.opacity = '0.8';
-        
-        const startLeft = productRect.left + productRect.width / 2;
-        const startTop = productRect.top + productRect.height / 2;
-        
-        particle.style.left = startLeft + 'px';
-        particle.style.top = startTop + 'px';
-        
-        document.body.appendChild(particle);
-        
-        setTimeout(() => {
-          const randomOffset = (Math.random() - 0.5) * 100;
-          particle.style.left = (cartRect.left + cartRect.width / 2 + randomOffset) + 'px';
-          particle.style.top = (cartRect.top + cartRect.height / 2 + randomOffset) + 'px';
-          particle.style.opacity = '0';
-          particle.style.transform = 'scale(0)';
-        }, index * 100);
-        
-        setTimeout(() => {
-          document.body.removeChild(particle);
-        }, 1000 + index * 100);
-      };
-      
-      // Create multiple particles for trail effect
-      for (let i = 0; i < 8; i++) {
-        createParticle(i);
-      }
-      
-      // Animate main element to cart
+      // Simple upward animation
       setTimeout(() => {
-        flyingElement.style.left = (cartRect.left + cartRect.width / 2 - 15) + 'px';
-        flyingElement.style.top = (cartRect.top + cartRect.height / 2 - 15) + 'px';
-        flyingElement.style.width = '30px';
-        flyingElement.style.height = '30px';
+        flyingElement.style.top = (productRect.top - 100) + 'px';
         flyingElement.style.opacity = '0';
-        flyingElement.style.transform = 'scale(0.1)';
-      }, 50);
+        flyingElement.style.transform = 'scale(0.5)';
+      }, 100);
       
-      // Clean up and update cart
+      // Clean up after animation
       setTimeout(() => {
         if (document.body.contains(flyingElement)) {
           document.body.removeChild(flyingElement);
         }
-        setAnimatingProducts(prev => new Set(Array.from(prev).filter(id => id !== productId)));
-        
-        // Cart bounce animation
-        if (cartElement) {
-          cartElement.style.animation = 'cartBounce 0.5s ease-out';
-          setTimeout(() => {
-            cartElement.style.animation = '';
-          }, 500);
-        }
+        setAnimatingProducts(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(productId);
+          return newSet;
+        });
       }, 1000);
     }
     
-    // Always update cart state (defensive fallback - outside ref check)
-    setCart(prev => ({ ...prev, [productId]: (prev[productId] || 0) + 1 }));
+    // Cart update is handled by global context through addToGlobalCart
   };
 
   // Toggle Wishlist with Pulse Effect
@@ -302,56 +271,8 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="bg-white border-b shadow-sm">
-        <div className="container mx-auto px-6 py-6">
-          {/* Brand Name */}
-          <div className="text-center mb-6">
-            <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground tracking-wider" data-testid="brand-logo">
-              SM FURNISHINGS
-            </h1>
-          </div>
-          
-          {/* Navigation Container */}
-          <div className="flex items-center justify-between">
-            {/* Main Navigation */}
-            <nav className="hidden md:flex flex-1 justify-center">
-              <ul className="flex space-x-12 text-foreground font-medium">
-                <li><Link href="/" className="hover:text-primary transition-colors duration-200" data-testid="nav-home">HOME</Link></li>
-                <li><a href="#" className="hover:text-primary transition-colors duration-200" data-testid="nav-category">CATEGORY</a></li>
-                <li><span className="text-primary font-semibold" data-testid="nav-shop">SHOP</span></li>
-                <li><a href="#" className="hover:text-primary transition-colors duration-200" data-testid="nav-about">ABOUT US</a></li>
-              </ul>
-            </nav>
-            
-            {/* Right Icons */}
-            <div className="flex items-center space-x-6 text-foreground">
-              <button className="hover:text-primary transition-colors duration-200" data-testid="button-search">
-                <Search className="w-5 h-5" />
-              </button>
-              <button className="hover:text-primary transition-colors duration-200" data-testid="button-account">
-                <User className="w-5 h-5" />
-              </button>
-              <button 
-                className="hover:text-primary transition-colors duration-200 relative" 
-                data-testid="button-cart"
-                ref={cartRef}
-                onClick={() => setIsCartOpen(true)}
-              >
-                <ShoppingBag className="w-5 h-5" />
-                <span className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="cart-count">
-                  {cartCount}
-                </span>
-              </button>
-            </div>
-            
-            {/* Mobile Menu Button */}
-            <button className="md:hidden text-foreground" data-testid="button-mobile-menu">
-              <Menu className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </header>
+      {/* Use shared header component */}
+      <Header className="relative bg-white border-b shadow-sm" variant="solid" />
 
       {/* Hero Section */}
       <section 
@@ -928,12 +849,12 @@ export default function ShopPage() {
               </div>
             ) : (
               <div className="space-y-4">
-                {Object.entries(cart).map(([productId, quantity]) => {
-                  const product = products.find(p => p.id === parseInt(productId));
+                {globalCart.map((item) => {
+                  const product = products.find(p => p.id === item.id);
                   if (!product) return null;
                   
                   return (
-                    <div key={productId} className="flex items-center space-x-4 border-b pb-4">
+                    <div key={item.id} className="flex items-center space-x-4 border-b pb-4">
                       {/* Product Image */}
                       <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
                         <img 
@@ -948,7 +869,7 @@ export default function ShopPage() {
                         <h3 className="font-medium">{product.name}</h3>
                         <p className="text-sm text-muted-foreground">{product.category}</p>
                         <p className="text-lg font-bold text-primary">
-                          ₹{(product.price * quantity).toLocaleString()}
+                          ₹{(product.price * item.quantity).toLocaleString()}
                         </p>
                       </div>
                       
@@ -957,21 +878,15 @@ export default function ShopPage() {
                         <Button 
                           variant="outline" 
                           size="sm"
-                          onClick={() => {
-                            if (quantity > 1) {
-                              setCart(prev => ({ ...prev, [productId]: quantity - 1 }));
-                            }
-                          }}
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
                         >
                           <Minus className="w-3 h-3" />
                         </Button>
-                        <span className="w-8 text-center">{quantity}</span>
+                        <span className="w-8 text-center">{item.quantity}</span>
                         <Button 
                           variant="outline" 
                           size="sm"
-                          onClick={() => {
-                            setCart(prev => ({ ...prev, [productId]: quantity + 1 }));
-                          }}
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
                         >
                           <Plus className="w-3 h-3" />
                         </Button>
@@ -981,13 +896,7 @@ export default function ShopPage() {
                       <Button 
                         variant="ghost" 
                         size="sm"
-                        onClick={() => {
-                          setCart(prev => {
-                            const newCart = { ...prev };
-                            delete newCart[productId];
-                            return newCart;
-                          });
-                        }}
+                        onClick={() => removeFromCart(item.id)}
                         className="text-red-500 hover:text-red-700"
                       >
                         <X className="w-4 h-4" />
@@ -1001,9 +910,8 @@ export default function ShopPage() {
                   <div className="flex justify-between items-center text-lg font-bold">
                     <span>Total:</span>
                     <span className="text-primary">
-                      ₹{Object.entries(cart).reduce((total, [productId, quantity]) => {
-                        const product = products.find(p => p.id === parseInt(productId));
-                        return total + (product ? product.price * quantity : 0);
+                      ₹{globalCart.reduce((total, item) => {
+                        return total + (item.price * item.quantity);
                       }, 0).toLocaleString()}
                     </span>
                   </div>
