@@ -228,7 +228,7 @@ export default function Home() {
       </section>
 
       {/* Best Sellers Section */}
-      <section className="py-12 bg-background">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
             <div className="border border-cream-dark rounded-2xl p-8 md:p-12">
@@ -270,7 +270,7 @@ export default function Home() {
       </section>
 
       {/* Luxury Choice Section */}
-      <section className="py-8 bg-gradient-to-br from-background to-cream">
+      <section className="py-16 bg-gradient-to-br from-background to-cream">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
             <div className="border-2 border-terracotta rounded-2xl p-6 md:p-8 bg-gradient-to-r from-cream to-background shadow-xl">
@@ -325,7 +325,7 @@ export default function Home() {
 
 
       {/* Flash Sale Section */}
-      <section className="py-12 lg:py-16 bg-background">
+      <section className="py-20 lg:py-24 bg-background">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch">
@@ -488,10 +488,12 @@ export default function Home() {
       <PremiumTabs />
 
       {/* Service Features Bar */}
-      <ServiceFeaturesBar />
+      <div className="py-12">
+        <ServiceFeaturesBar />
+      </div>
 
       {/* Newsletter Section */}
-      <section className="py-16 bg-cream">
+      <section className="py-24 bg-cream mt-16">
         <div className="container mx-auto px-6 text-center">
           <h3 className="font-serif text-3xl font-bold text-foreground mb-4" data-testid="newsletter-title">
             Stay Connected
