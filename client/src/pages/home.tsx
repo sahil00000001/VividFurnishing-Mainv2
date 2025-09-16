@@ -7,7 +7,7 @@ import { Header } from "@/components/Header";
 import { ProductCard } from "@/components/ProductCard";
 import { PremiumTabs } from "@/components/PremiumTabs";
 import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
-import { bestSellers, luxuryProducts, collections } from "@/data/products";
+import { bestSellers, luxuryProducts } from "@/data/products";
 import { Footer } from "@/components/Footer";
 
 const categories = [
@@ -323,96 +323,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Our Mission Section */}
-      <section className="py-20 bg-terracotta text-white">
-        <div className="container mx-auto px-6 text-center max-w-4xl">
-          <h3 className="font-serif text-4xl md:text-5xl font-bold mb-6" data-testid="mission-title">
-            Our <span className="font-script italic">one</span> Mission
-          </h3>
-          <p className="text-xl md:text-2xl font-light mb-8 leading-relaxed" data-testid="mission-tagline">
-            Redefining how people experience luxury living.
-          </p>
-          <p className="text-lg leading-relaxed opacity-90 max-w-3xl mx-auto" data-testid="mission-description">
-            At SM Furnishings, we believe that luxury should be accessible to everyone. Our carefully curated collection combines timeless design with contemporary comfort, bringing affordable elegance to every home. We source the finest materials and work with skilled artisans to create furniture that doesn't just fill a space—it transforms it into a sanctuary of style and sophistication.
-          </p>
-        </div>
-      </section>
-
-      {/* Luxury Content Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground" data-testid="luxury-title">
-              <span className="text-terracotta">·</span> LUXURY <span className="text-terracotta">·</span>
-            </h3>
-          </div>
-          
-          {/* Content Rows */}
-          <div className="max-w-7xl mx-auto space-y-20">
-            {collections.map((collection) => (
-              <div 
-                key={collection.id}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${
-                  collection.imagePosition === "left" ? "" : "lg:grid-cols-2"
-                }`}
-              >
-                {collection.imagePosition === "left" ? (
-                  <>
-                    <div>
-                      <img 
-                        src={collection.image}
-                        alt={collection.alt}
-                        className="w-full h-96 object-cover rounded-lg shadow-lg"
-                        data-testid={`collection-image-${collection.id}`}
-                      />
-                    </div>
-                    <div className="space-y-6">
-                      <h4 className="font-serif text-3xl font-bold text-foreground" data-testid={`collection-title-${collection.id}`}>
-                        {collection.title}
-                      </h4>
-                      <p className="text-lg text-muted-foreground leading-relaxed" data-testid={`collection-description-${collection.id}`}>
-                        {collection.description}
-                      </p>
-                      <Button 
-                        className="bg-terracotta text-white px-8 py-3 font-semibold hover:bg-terracotta-dark transition-colors duration-200"
-                        data-testid={`button-view-collection-${collection.id}`}
-                      >
-                        {collection.buttonText}
-                      </Button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="space-y-6">
-                      <h4 className="font-serif text-3xl font-bold text-foreground" data-testid={`collection-title-${collection.id}`}>
-                        {collection.title}
-                      </h4>
-                      <p className="text-lg text-muted-foreground leading-relaxed" data-testid={`collection-description-${collection.id}`}>
-                        {collection.description}
-                      </p>
-                      <Button 
-                        className="bg-terracotta text-white px-8 py-3 font-semibold hover:bg-terracotta-dark transition-colors duration-200"
-                        data-testid={`button-view-collection-${collection.id}`}
-                      >
-                        {collection.buttonText}
-                      </Button>
-                    </div>
-                    <div className="order-first lg:order-last">
-                      <img 
-                        src={collection.image}
-                        alt={collection.alt}
-                        className="w-full h-96 object-cover rounded-lg shadow-lg"
-                        data-testid={`collection-image-${collection.id}`}
-                      />
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Flash Sale Section */}
       <section className="py-12 lg:py-16 bg-background">
