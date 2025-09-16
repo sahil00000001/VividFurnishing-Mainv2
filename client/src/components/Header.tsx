@@ -65,6 +65,9 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                   <li><Link href="/shop" className={`transition-colors duration-200 ${
                     variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
                   }`} data-testid="nav-shop">SHOP</Link></li>
+                  <li><Link href="/blog" className={`transition-colors duration-200 ${
+                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                  }`} data-testid="nav-blog">BLOG</Link></li>
                   <li><Link href="/about" className={`transition-colors duration-200 ${
                     variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
                   }`} data-testid="nav-about">ABOUT US</Link></li>
