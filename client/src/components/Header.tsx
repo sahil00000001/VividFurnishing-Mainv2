@@ -59,9 +59,9 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                   <li><Link href="/" className={`transition-colors duration-200 ${
                     variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
                   }`} data-testid="nav-home">HOME</Link></li>
-                  <li><a href="#" className={`transition-colors duration-200 ${
+                  <li><Link href="/category/living-room" className={`transition-colors duration-200 ${
                     variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                  }`} data-testid="nav-category">CATEGORY</a></li>
+                  }`} data-testid="nav-category">CATEGORY</Link></li>
                   <li><Link href="/shop" className={`transition-colors duration-200 ${
                     variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
                   }`} data-testid="nav-shop">SHOP</Link></li>
