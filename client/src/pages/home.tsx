@@ -530,7 +530,7 @@ export default function Home() {
               {/* Right Section - Product Images */}
               <div className="grid grid-cols-2 lg:flex lg:flex-row gap-3 lg:gap-4 w-full lg:w-auto justify-center">
                 {/* Product Image 1 */}
-                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[300px] lg:h-[400px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[400px] lg:h-[474px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img 
                     src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
                     alt="Modern chair"
@@ -540,7 +540,7 @@ export default function Home() {
                 </div>
                 
                 {/* Product Image 2 */}
-                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[300px] lg:h-[400px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[400px] lg:h-[474px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img 
                     src="https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
                     alt="Accent chair"
@@ -550,7 +550,7 @@ export default function Home() {
                 </div>
                 
                 {/* Product Image 3 */}
-                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[300px] lg:h-[400px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[400px] lg:h-[474px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img 
                     src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
                     alt="Papasan chair"
@@ -560,7 +560,7 @@ export default function Home() {
                 </div>
                 
                 {/* Product Image 4 */}
-                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[300px] lg:h-[400px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[400px] lg:h-[474px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img 
                     src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
                     alt="Modern sofa"
