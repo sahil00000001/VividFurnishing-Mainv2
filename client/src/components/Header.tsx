@@ -44,17 +44,6 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
           
           {/* Navigation Container */}
           <div className="w-full max-w-4xl mx-auto">
-            {/* Liked Button - Above top line */}
-            <div className="flex justify-center mb-6">
-              <button className={`flex items-center space-x-2 px-4 py-2 rounded-full border transition-all duration-200 ${
-                variant === "solid" 
-                  ? "text-foreground border-foreground/20 hover:bg-terracotta hover:text-white hover:border-terracotta" 
-                  : "text-white border-white/30 hover:bg-white hover:text-black hover:border-white"
-              }`} data-testid="button-liked">
-                <Heart className="w-5 h-5" />
-                <span className="text-sm font-medium">LIKED</span>
-              </button>
-            </div>
             
             {/* Top horizontal line */}
             <div className={`w-full h-px mb-6 ${
@@ -94,6 +83,11 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                 </button>
                 <button className={`transition-colors duration-200 ${
                   variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                }`} data-testid="button-heart">
+                  <Heart className="w-5 h-5" />
+                </button>
+                <button className={`transition-colors duration-200 ${
+                  variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
                 }`} data-testid="button-account">
                   <User className="w-5 h-5" />
                 </button>
@@ -125,6 +119,17 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
             <div className={`w-full h-px mt-6 ${
               variant === "solid" ? "bg-foreground/20" : "bg-white/30"
             }`}></div>
+            
+            {/* Liked Button - Below bottom line */}
+            <div className="flex justify-center mt-6">
+              <button className={`flex items-center space-x-2 px-4 py-2 rounded-full border transition-all duration-200 ${
+                variant === "solid" 
+                  ? "text-foreground border-foreground/20 hover:bg-terracotta hover:text-white hover:border-terracotta" 
+                  : "text-white border-white/30 hover:bg-white hover:text-black hover:border-white"
+              }`} data-testid="button-liked">
+                <span className="text-sm font-medium">LIKED</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
