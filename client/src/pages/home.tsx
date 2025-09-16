@@ -415,129 +415,158 @@ export default function Home() {
       </section>
 
       {/* Flash Sale Section */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-6">
+      <section className="py-12 lg:py-16 bg-background">
+        <div className="container mx-auto px-4 lg:px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:flex-row gap-6 items-center">
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch">
               {/* Left Section - Flash Sale Container */}
               <div 
-                className="w-full lg:w-[751px] h-[474px] bg-[#FFEBCE] rounded-[30px] flex flex-col items-center justify-center p-8"
+                className="w-full lg:w-[751px] min-h-[400px] lg:h-[474px] bg-[#FFEBCE] rounded-[30px] flex flex-col items-center justify-center p-6 lg:p-8 shadow-lg"
               >
                 {/* Flash Sale Title */}
-                <h2 
-                  className="text-[#582308] font-bold text-center mb-6"
-                  style={{
-                    fontSize: 'clamp(3rem, 8vw, 6rem)',
-                    fontFamily: 'serif',
-                    lineHeight: '1.1'
-                  }}
-                >
-                  Flash Sale
-                </h2>
+                <div className="text-center mb-4">
+                  <span 
+                    className="text-[#582308] font-bold"
+                    style={{
+                      fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                      fontFamily: 'serif',
+                      lineHeight: '1.1'
+                    }}
+                  >
+                    Flash
+                  </span>{" "}
+                  <span 
+                    className="text-black font-bold"
+                    style={{
+                      fontSize: 'clamp(2.5rem, 6vw, 5rem)',
+                      fontFamily: 'serif',
+                      lineHeight: '1.1'
+                    }}
+                  >
+                    Sale
+                  </span>
+                </div>
                 
                 {/* Subtitle */}
                 <p 
-                  className="text-black text-center mb-8"
+                  className="text-black text-center mb-6 px-4"
                   style={{
-                    fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
-                    fontFamily: 'serif'
+                    fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
+                    fontFamily: 'serif',
+                    fontWeight: '600'
                   }}
                 >
-                  Get 25% off! Limited Free Offer!
+                  🎉 Get 25% off! Limited Time Offer! ⏰
                 </p>
                 
                 {/* Countdown Timer */}
-                <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="flex items-center justify-center gap-2 lg:gap-4 mb-6">
                   <div className="text-center">
                     <div 
-                      className="text-black font-bold"
-                      style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}
+                      className="text-black font-bold bg-white rounded-lg px-2 py-1 shadow-sm"
+                      style={{ 
+                        fontSize: 'clamp(1.5rem, 4vw, 3rem)',
+                        minWidth: 'clamp(3rem, 6vw, 5rem)',
+                        fontFamily: 'monospace'
+                      }}
                     >
                       {String(timeLeft.days).padStart(2, '0')}
                     </div>
-                    <div className="text-black text-sm font-normal">Days</div>
+                    <div className="text-black text-xs lg:text-sm font-medium mt-1">Days</div>
                   </div>
-                  <div className="text-black font-bold" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}>:</div>
+                  <div className="text-black font-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>:</div>
                   <div className="text-center">
                     <div 
-                      className="text-black font-bold"
-                      style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}
+                      className="text-black font-bold bg-white rounded-lg px-2 py-1 shadow-sm"
+                      style={{ 
+                        fontSize: 'clamp(1.5rem, 4vw, 3rem)',
+                        minWidth: 'clamp(3rem, 6vw, 5rem)',
+                        fontFamily: 'monospace'
+                      }}
                     >
                       {String(timeLeft.hours).padStart(2, '0')}
                     </div>
-                    <div className="text-black text-sm font-normal">Hours</div>
+                    <div className="text-black text-xs lg:text-sm font-medium mt-1">Hours</div>
                   </div>
-                  <div className="text-black font-bold" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}>:</div>
+                  <div className="text-black font-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>:</div>
                   <div className="text-center">
                     <div 
-                      className="text-black font-bold"
-                      style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}
+                      className="text-black font-bold bg-white rounded-lg px-2 py-1 shadow-sm"
+                      style={{ 
+                        fontSize: 'clamp(1.5rem, 4vw, 3rem)',
+                        minWidth: 'clamp(3rem, 6vw, 5rem)',
+                        fontFamily: 'monospace'
+                      }}
                     >
                       {String(timeLeft.minutes).padStart(2, '0')}
                     </div>
-                    <div className="text-black text-sm font-normal">Minutes</div>
+                    <div className="text-black text-xs lg:text-sm font-medium mt-1">Minutes</div>
                   </div>
-                  <div className="text-black font-bold" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}>:</div>
+                  <div className="text-black font-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>:</div>
                   <div className="text-center">
                     <div 
-                      className="text-black font-bold"
-                      style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}
+                      className="text-black font-bold bg-white rounded-lg px-2 py-1 shadow-sm"
+                      style={{ 
+                        fontSize: 'clamp(1.5rem, 4vw, 3rem)',
+                        minWidth: 'clamp(3rem, 6vw, 5rem)',
+                        fontFamily: 'monospace'
+                      }}
                     >
                       {String(timeLeft.seconds).padStart(2, '0')}
                     </div>
-                    <div className="text-black text-sm font-normal">Seconds</div>
+                    <div className="text-black text-xs lg:text-sm font-medium mt-1">Seconds</div>
                   </div>
                 </div>
                 
                 {/* CTA Button */}
                 <Button 
-                  className="bg-[#AF4C0F] hover:bg-[#8B3A0C] text-white font-bold px-8 py-3 rounded-full border-4 border-[#AF4C0F]"
-                  style={{ fontSize: '1.5rem' }}
+                  className="bg-[#AF4C0F] hover:bg-[#8B3A0C] text-white font-bold px-6 lg:px-8 py-2 lg:py-3 rounded-full border-4 border-[#AF4C0F] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                  style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
                 >
-                  Explore Deal
+                  🛍️ Explore Deal
                 </Button>
               </div>
               
               {/* Right Section - Product Images */}
-              <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 w-full lg:w-auto">
+              <div className="grid grid-cols-2 lg:flex lg:flex-row gap-3 lg:gap-4 w-full lg:w-auto justify-center">
                 {/* Product Image 1 */}
-                <div className="relative w-full sm:w-[168px] h-[474px] rounded-[30px] overflow-hidden shadow-lg">
+                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[300px] lg:h-[400px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img 
                     src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
                     alt="Modern chair"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-[7px] border-4 border-[#FFEBCE] rounded-[30px] pointer-events-none"></div>
+                  <div className="absolute inset-[5px] lg:inset-[7px] border-3 lg:border-4 border-[#FFEBCE] rounded-[20px] lg:rounded-[30px] pointer-events-none"></div>
                 </div>
                 
                 {/* Product Image 2 */}
-                <div className="relative w-full sm:w-[168px] h-[474px] rounded-[30px] overflow-hidden shadow-lg">
+                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[300px] lg:h-[400px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img 
                     src="https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
                     alt="Accent chair"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-[7px] border-4 border-[#FFEBCE] rounded-[30px] pointer-events-none"></div>
+                  <div className="absolute inset-[5px] lg:inset-[7px] border-3 lg:border-4 border-[#FFEBCE] rounded-[20px] lg:rounded-[30px] pointer-events-none"></div>
                 </div>
                 
                 {/* Product Image 3 */}
-                <div className="relative w-full sm:w-[168px] h-[474px] rounded-[30px] overflow-hidden shadow-lg">
+                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[300px] lg:h-[400px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img 
                     src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
                     alt="Papasan chair"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-[7px] border-4 border-[#FFEBCE] rounded-[30px] pointer-events-none"></div>
+                  <div className="absolute inset-[5px] lg:inset-[7px] border-3 lg:border-4 border-[#FFEBCE] rounded-[20px] lg:rounded-[30px] pointer-events-none"></div>
                 </div>
                 
                 {/* Product Image 4 */}
-                <div className="relative w-full sm:w-[168px] h-[474px] rounded-[30px] overflow-hidden shadow-lg">
+                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[300px] lg:h-[400px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img 
                     src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
                     alt="Modern sofa"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-[7px] border-4 border-[#FFEBCE] rounded-[30px] pointer-events-none"></div>
+                  <div className="absolute inset-[5px] lg:inset-[7px] border-3 lg:border-4 border-[#FFEBCE] rounded-[20px] lg:rounded-[30px] pointer-events-none"></div>
                 </div>
               </div>
             </div>
