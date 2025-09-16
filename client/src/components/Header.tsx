@@ -46,12 +46,12 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
           <div className="w-full max-w-4xl mx-auto">
             
             {/* Top horizontal line */}
-            <div className={`w-full h-px mb-6 ${
+            <div className={`w-full h-px mb-3 ${
               variant === "solid" ? "bg-foreground/20" : "bg-white/30"
             }`}></div>
             
             {/* Navigation section - between lines */}
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-center justify-between py-2">
               {/* Main Navigation */}
               <nav className="hidden md:flex flex-1 justify-center">
                 <ul className={`flex space-x-12 font-medium ${
@@ -116,7 +116,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
             </div>
             
             {/* Bottom horizontal line */}
-            <div className={`w-full h-px mt-6 ${
+            <div className={`w-full h-px mt-3 ${
               variant === "solid" ? "bg-foreground/20" : "bg-white/30"
             }`}></div>
             
