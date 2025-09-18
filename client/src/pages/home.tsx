@@ -512,12 +512,12 @@ export default function Home() {
       <PremiumTabs />
 
       {/* Service Features Bar */}
-      <div className="py-12">
+      <div>
         <ServiceFeaturesBar />
       </div>
 
       {/* Testimonials Section */}
-      <section className="relative py-16 overflow-hidden bg-white">
+      <section className="relative overflow-hidden bg-white">
         {/* Animated Background */}
         <div className="absolute inset-0 z-[1]">
           {/* Row 1 */}
@@ -673,7 +673,7 @@ export default function Home() {
 
       {/* Newsletter Section */}
       <section 
-        className="relative w-full py-12 md:py-16 min-h-[320px] md:min-h-[380px] lg:min-h-[420px] overflow-hidden mt-16"
+        className="relative w-full py-12 md:py-16 min-h-[320px] md:min-h-[380px] lg:min-h-[420px] overflow-hidden"
         style={{
           backgroundImage: `url(${bg1}), url(${bg2}), url(${bg3})`,
           backgroundSize: 'cover, cover, cover',
