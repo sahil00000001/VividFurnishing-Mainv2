@@ -120,8 +120,17 @@ export default function Home() {
         </div>
         
         <div className="relative z-10 text-center text-white px-6">
-          <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-wide" data-testid="hero-headline">
-            AFFORDABLE <span className="text-cream">·</span> LUXURY
+          <h2 
+            className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-wide" 
+            data-testid="hero-headline"
+            style={{
+              background: 'linear-gradient(180deg, #582308 -3.91%, rgba(175, 76, 15, 0.70) 11.73%, rgba(169, 142, 128, 0.71) 41.34%, rgba(255, 255, 255, 0.00) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}
+          >
+            AFFORDABLE <span>·</span> LUXURY
           </h2>
           <p className="text-xl md:text-2xl font-light mb-8 tracking-wider" data-testid="hero-subheading">
             For Every Home
