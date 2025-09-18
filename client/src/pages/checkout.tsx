@@ -160,6 +160,8 @@ export default function Checkout() {
       return;
     }
 
+    // Clear cart and show success
+    clearCart();
     setIsOrderPlaced(true);
   };
 
@@ -187,10 +189,7 @@ export default function Checkout() {
                 
                 <div className="space-y-4">
                   <Button 
-                    onClick={() => {
-                      clearCart();
-                      setLocation('/');
-                    }}
+                    onClick={() => setLocation('/')}
                     className="w-full bg-terracotta hover:bg-terracotta-dark text-white"
                   >
                     Continue Shopping
@@ -228,7 +227,7 @@ export default function Checkout() {
               className="text-terracotta hover:text-terracotta-dark hover:bg-terracotta/10"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Cart
+              Back to Home
             </Button>
           </div>
 
