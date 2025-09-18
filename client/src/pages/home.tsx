@@ -110,33 +110,17 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center">
-        {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: "url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
           }}
-        />
+        >
+          <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+        </div>
         
-        {/* Optional dim overlay for contrast */}
-        <div className="absolute inset-0 z-10 bg-black/20" />
-        
-        {/* Gradient Overlay */}
-        <div 
-          className="absolute inset-0 z-20 pointer-events-none"
-          style={{
-            background: 'linear-gradient(180deg, #582308 -3.91%, rgba(175, 76, 15, 0.70) 11.73%, rgba(169, 142, 128, 0.71) 41.34%, rgba(255, 255, 255, 0.00) 100%)'
-          }}
-        />
-        
-        <div className="relative z-30 text-center text-white px-6">
-          <h2 
-            className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-wide text-white" 
-            data-testid="hero-headline"
-            style={{
-              textShadow: '0 2px 8px rgba(0,0,0,0.5)'
-            }}
-          >
+        <div className="relative z-10 text-center text-white px-6">
+          <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-wide" data-testid="hero-headline">
             AFFORDABLE <span className="text-cream">·</span> LUXURY
           </h2>
           <p className="text-xl md:text-2xl font-light mb-8 tracking-wider" data-testid="hero-subheading">
