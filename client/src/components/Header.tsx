@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart } from "lucide-react";
 import { useCart } from "@/lib/cartContext";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -13,16 +13,23 @@ interface HeaderProps {
 export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-transparent", variant = "transparent" }: HeaderProps) {
   const { cartCount, isCartOpen, setIsCartOpen, cart, updateQuantity, removeFromCart } = useCart();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   const getTotalPrice = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
   const handleCheckout = () => {
-    toast({
-      title: "Checkout",
-      description: "Checkout functionality coming soon!",
-    });
+    if (cart.length === 0) {
+      toast({
+        title: "Empty Cart",
+        description: "Please add items to your cart before checkout.",
+        variant: "destructive"
+      });
+      return;
+    }
+    setIsCartOpen(false);
+    setLocation('/checkout');
   };
 
   return (

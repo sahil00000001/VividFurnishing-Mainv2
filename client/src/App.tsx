@@ -9,6 +9,7 @@ import Shop from "@/pages/shop";
 import About from "@/pages/about";
 import Blog from "@/pages/blog";
 import Category from "@/pages/category";
+import Checkout from "@/pages/checkout";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/category/:category" component={Category} />
       <Route path="/blog" component={Blog} />
       <Route path="/about" component={About} />
+      <Route path="/checkout" component={Checkout} />
       <Route component={NotFound} />
     </Switch>
   );
