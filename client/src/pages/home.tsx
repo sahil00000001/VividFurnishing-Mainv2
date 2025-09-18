@@ -24,6 +24,7 @@ const categories = [
 export default function Home() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [email, setEmail] = useState("");
+  const [isAnimating, setIsAnimating] = useState(false);
   
   // Countdown timer state
   const [timeLeft, setTimeLeft] = useState({
@@ -37,25 +38,30 @@ export default function Home() {
   const categoriesPerView = 6;
   
   const nextCategory = () => {
-    setCurrentCategoryIndex((prev) => 
-      prev + categoriesPerView >= categories.length ? 0 : prev + 1
-    );
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentCategoryIndex((prev) => {
+      const newIndex = prev + 1 >= categories.length ? 0 : prev + 1;
+      setTimeout(() => setIsAnimating(false), 500); // Animation duration
+      return newIndex;
+    });
   };
 
   const prevCategory = () => {
-    setCurrentCategoryIndex((prev) => 
-      prev === 0 ? Math.max(0, categories.length - categoriesPerView) : prev - 1
-    );
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setCurrentCategoryIndex((prev) => {
+      const newIndex = prev === 0 ? categories.length - 1 : prev - 1;
+      setTimeout(() => setIsAnimating(false), 500); // Animation duration
+      return newIndex;
+    });
   };
   
-  // Get visible categories based on current index
-  const getVisibleCategories = () => {
-    const visible = [];
-    for (let i = 0; i < categoriesPerView; i++) {
-      const index = (currentCategoryIndex + i) % categories.length;
-      visible.push(categories[index]);
-    }
-    return visible;
+  // Get all categories for smooth carousel display
+  const getAllCategoriesForCarousel = () => {
+    // Create a longer array for smooth infinite scroll
+    const extendedCategories = [...categories, ...categories, ...categories];
+    return extendedCategories;
   };
 
   // Countdown timer effect
@@ -139,21 +145,28 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Category Grid */}
-          <div className="relative">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-6xl mx-auto">
-              {getVisibleCategories().map((category) => {
+          {/* Category Carousel */}
+          <div className="relative overflow-hidden max-w-6xl mx-auto">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{
+                transform: `translateX(-${(currentCategoryIndex % categories.length) * (100 / categoriesPerView)}%)`,
+                width: `${(getAllCategoriesForCarousel().length * 100) / categoriesPerView}%`
+              }}
+            >
+              {getAllCategoriesForCarousel().map((category, index) => {
                 const IconComponent = category.icon;
                 return (
                   <div 
-                    key={category.id}
-                    className="text-center group cursor-pointer" 
-                    data-testid={`category-${category.id}`}
+                    key={`${category.id}-${Math.floor(index / categories.length)}`}
+                    className="text-center group cursor-pointer flex-shrink-0"
+                    style={{ width: `${100 / getAllCategoriesForCarousel().length}%` }}
+                    data-testid={`category-${category.id}-${index}`}
                   >
                     <div className="w-24 h-24 md:w-32 md:h-32 bg-cream rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-cream-dark transition-colors duration-200">
                       <IconComponent className="text-terracotta text-2xl md:text-3xl w-8 h-8 md:w-12 md:h-12" />
                     </div>
-                    <p className="text-foreground font-medium" data-testid={`category-name-${category.id}`}>
+                    <p className="text-foreground font-medium" data-testid={`category-name-${category.id}-${index}`}>
                       {category.name}
                     </p>
                   </div>
@@ -165,7 +178,8 @@ export default function Home() {
             <div className="absolute right-0 -top-16 flex gap-4">
               <button 
                 onClick={prevCategory}
-                className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
+                disabled={isAnimating}
+                className={`w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200 ${isAnimating ? 'opacity-50 cursor-not-allowed' : ''}`}
                 data-testid="button-prev-category"
                 aria-label="Previous categories"
               >
@@ -173,7 +187,8 @@ export default function Home() {
               </button>
               <button 
                 onClick={nextCategory}
-                className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
+                disabled={isAnimating}
+                className={`w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200 ${isAnimating ? 'opacity-50 cursor-not-allowed' : ''}`}
                 data-testid="button-next-category"
                 aria-label="Next categories"
               >
