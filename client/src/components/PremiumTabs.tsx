@@ -101,14 +101,18 @@ export function PremiumTabs() {
               Array.from({ length: 4 }).map((_, index) => (
                 <div 
                   key={`skeleton-${index}`}
-                  className="bg-cream rounded-2xl p-6 aspect-square animate-pulse"
+                  className="animate-pulse"
                   data-testid={`skeleton-card-${index}`}
                 >
-                  <div className="w-full h-3/4 bg-gray-200 rounded-lg mb-4"></div>
+                  {/* Image skeleton box */}
+                  <div className="bg-cream rounded-2xl p-4 aspect-square mb-3">
+                    <div className="w-full h-full bg-gray-200 rounded-lg"></div>
+                  </div>
+                  {/* Text skeleton outside */}
                   <div className="space-y-2">
-                    <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-1/3"></div>
+                    <div className="h-3 bg-gray-200 rounded w-2/3 mx-auto"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
+                    <div className="h-3 bg-gray-200 rounded w-1/3 mx-auto"></div>
                   </div>
                 </div>
               ))
@@ -123,7 +127,8 @@ export function PremiumTabs() {
                   }}
                   data-testid={`card-product-${product.id}`}
                 >
-                  <div className="bg-cream rounded-2xl p-6 aspect-square flex flex-col justify-center items-center relative overflow-hidden">
+                  {/* Image Background Box */}
+                  <div className="bg-cream rounded-2xl p-4 aspect-square flex items-center justify-center relative overflow-hidden mb-3">
                     {/* Product Badge */}
                     {product.badge && (
                       <div className={`absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-bold tracking-wide text-white z-10 ${
@@ -138,26 +143,24 @@ export function PremiumTabs() {
                     )}
                     
                     {/* Product Image */}
-                    <div className="w-full h-3/4 flex items-center justify-center mb-4">
-                      <img 
-                        src={product.image}
-                        alt={product.alt}
-                        className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    
-                    {/* Product Info */}
-                    <div className="text-center space-y-1">
-                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                        {product.category || 'CATEGORY'}
-                      </p>
-                      <h4 className="font-serif font-bold text-sm text-foreground">
-                        {product.name}
-                      </h4>
-                      <p className="font-bold text-terracotta">
-                        {product.price}
-                      </p>
-                    </div>
+                    <img 
+                      src={product.image}
+                      alt={product.alt}
+                      className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  
+                  {/* Product Info - Outside the box */}
+                  <div className="text-center space-y-1">
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      {product.category || 'SEATING'}
+                    </p>
+                    <h4 className="font-serif font-bold text-sm text-foreground">
+                      {product.name}
+                    </h4>
+                    <p className="font-bold text-terracotta">
+                      {product.price}
+                    </p>
                   </div>
                 </div>
               ))
