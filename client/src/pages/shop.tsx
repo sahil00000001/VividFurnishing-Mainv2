@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -109,6 +109,7 @@ export default function ShopPage() {
   // Use global cart context
   const { addToCart: addToGlobalCart, cart: globalCart, cartCount, updateQuantity, removeFromCart, isCartOpen, setIsCartOpen } = useCart();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   
   // Update total price when quantity or selected product changes
   useEffect(() => {
@@ -920,8 +921,16 @@ export default function ShopPage() {
                     <Button 
                       className="flex-1 bg-primary hover:bg-primary/90"
                       onClick={() => {
-                        // Checkout functionality would go here
-                        alert("Proceeding to checkout...");
+                        if (globalCart.length === 0) {
+                          toast({
+                            title: "Empty Cart",
+                            description: "Please add items to your cart before checkout.",
+                            variant: "destructive"
+                          });
+                          return;
+                        }
+                        setIsCartOpen(false);
+                        setLocation('/checkout');
                       }}
                     >
                       Checkout
