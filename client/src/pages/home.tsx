@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower } from "lucide-react";
+import { ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower, Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Header } from "@/components/Header";
@@ -17,6 +17,7 @@ const categories = [
   { id: 4, name: "Ottoman", icon: Square },
   { id: 5, name: "Table Lamp", icon: Lightbulb },
   { id: 6, name: "Decorative Vase", icon: Flower },
+  { id: 7, name: "Coffee Table", icon: Coffee },
 ];
 
 
