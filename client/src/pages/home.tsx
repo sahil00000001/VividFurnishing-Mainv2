@@ -531,7 +531,7 @@ export default function Home() {
         
         {/* Content Container */}
         <div className="relative z-10 h-full">
-          <div className="container mx-auto max-w-5xl px-6 flex flex-col justify-center items-start text-left gap-4">
+          <div className="container mx-auto max-w-5xl px-6 flex flex-col justify-center items-center text-center gap-4">
             {/* Main Heading */}
             <h1 
               className="text-white mb-2"
@@ -576,7 +576,7 @@ export default function Home() {
             {/* Email Input Section */}
             <form 
               onSubmit={(e) => { e.preventDefault(); handleSubscribe(); }}
-              className="w-full max-w-xl flex flex-col sm:flex-row items-stretch gap-3" 
+              className="w-full max-w-xl flex flex-row items-center gap-3 justify-center" 
               data-testid="form-newsletter"
             >
               <Input 
