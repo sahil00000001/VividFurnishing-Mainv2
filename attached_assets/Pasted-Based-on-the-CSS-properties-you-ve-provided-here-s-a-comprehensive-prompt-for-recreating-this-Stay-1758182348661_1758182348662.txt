@@ -1,0 +1,309 @@
+Based on the CSS properties you've provided, here's a comprehensive prompt for recreating this "Stay Connected" newsletter section:
+Prompt for Creating the Stay Connected Section
+Create a newsletter subscription section with the following specifications:
+Section Layout
+
+Full-width section (1787px wide, 781px height)
+Centered content with absolute positioning elements
+
+Background Design
+
+Multi-layered background setup:
+
+Use 3 background images (can be interior/furniture related from Unsplash)
+Apply a semi-transparent terracotta/orange overlay: rgba(219, 163, 82, 0.64) (64% opacity)
+This creates a warm, branded color wash over the images
+
+
+
+Text Content & Typography
+
+Main Heading:
+
+Text: "LET'S STAY IN TOUCH"
+Font: Prata, 133px size, 180px line-height
+Text transform: Capitalize
+Color: White (#FFFFFF)
+Centered positioning
+
+
+Subheading:
+
+Text: "Subscribe"
+Font: Playfair Display, 48px size, 500 weight
+Color: White
+Positioned below main heading
+
+
+Description Text:
+
+Text: "To our newsletter to receive the latest product drops and coupons"
+Font: Playfair Display, 24px size, 600 weight
+Color: White
+Capitalize text transform
+
+
+
+Email Input Section
+
+Input Field:
+
+Placeholder text: "Enter your Email ......."
+Font: Anonymous Pro, 20px, 700 weight
+White text color
+Underlined with white border (3px solid)
+Width: approximately 577px
+
+
+Subscribe Button:
+
+Text: "Subscribe"
+Font: Anonymous Pro, 24px, 700 weight
+White text color
+Separated by a shorter white line (159px)
+Include a small arrow indicator after the button
+
+
+
+Visual Design Notes
+
+All text should be white for contrast against the orange overlay
+Use decorative white lines to separate the email input and subscribe button
+Maintain elegant, luxury aesthetic consistent with furniture/home decor branding
+Ensure the terracotta overlay color matches the SM Furnishings brand theme
+
+Responsive Considerations
+
+Keep content centered
+Ensure email input and subscribe button are aligned horizontally
+Maintain proper spacing between all elements for visual hierarchy
+
+This section should create an inviting, warm atmosphere that encourages newsletter signups while maintaining the luxury furniture brand aesthetic.Retry/* Group 57 */
+
+position: absolute;
+width: 3170px;
+height: 665px;
+left: -524px;
+top: 6155px;
+
+
+
+/* Group 52 */
+
+position: absolute;
+width: 2752px;
+height: 133px;
+left: -106px;
+top: 6155px;
+
+
+
+/* · Testimonials · */
+
+position: absolute;
+width: 709px;
+height: 133px;
+left: -106px;
+top: 6155px;
+
+font-fapastedDSNow we have to create another section in that section. Basically we need to show the testimonials, so. We should need to make a small animation at the background like the testimonials. Should be in bold firstly it is in bold and the dark in color and after that another testimony should be there like it should be like this the testimonial.testimonial.testimonial.testimony. But one is the darkest, another one will get fader. And last one is just a busy pulmonary. And this is how. Thao animation the carousel animation should be coming. The tech should be coming from the right hand side and disappear at the left hand side. This kind of animation should be there in the background and similarly the testing modules. This kind of animation run in the four rows. 5 rows. Similarly like that and in each row the folder text alignment should be different like. In first two testimonial darker one coming in the mid another and 2nd line it should get fast and 3rd line it should be at last. Something like that and all the things running at the same time. For the Lions running at the same time. These are the continuous animation that we have to make. And above that you need to show square boxes in which the name should be on top of the boxing. After that the rating will be there. And after that a small line and. After that. Description or the testimonials that a person gives. In top left of rectangle in In circle we have to show the images of a users. And. Around that image. We need to have an image. I'll show you how I want. The rectangle should be there. And the background animation should be there but the in front and down top these rectangles will be static and the stable. But at the background the animation should be rending this. Kind of animation. This kind of section so create a prompt for this in detail how to achieve this pulsar share one image. To get the better idea of things.EditEngineered dynamic testimonial section with layered background animationThe user wants to create a testimonials section with:
+
+Background animation:
+
+Multiple rows of the word "Testimonials" repeating
+Text moves from right to left (carousel/marquee effect)
+Different opacity levels (one darker, others fading)
+5 rows with different timing/positions
+Continuous animation running simultaneously
+
+
+Foreground testimonial cards:
+
+Static rectangular boxes on top of the animation
+User image in a circle at the top-left corner of each rectangle
+Name at the top of the box
+Star rating below the name
+A divider line
+Testimonial text/description
+
+
+Color scheme seems to be using brown/terracotta colors based on the CSS: rgba(88, 35, 8, various-opacity)
+
+The user has also shared an image showing the layout with testimonial cards.
+I'll create a detailed prompt for this section.Based on your requirements and the CSS/image provided, here's a comprehensive prompt for creating this animated testimonials section:
+Prompt for Creating Animated Testimonials Section
+Section Overview
+Create a testimonials section with a dynamic animated background and static testimonial cards in the foreground.
+Background Animation Design
+Marquee Text Animation Setup:
+
+Text Content: "· Testimonials ·" (with middle dots as separators)
+Font: Playfair Display, 900 weight, 100px size
+Color: Brown base color rgb(88, 35, 8) with varying opacities
+Animation Type: Continuous horizontal scroll (right to left marquee)
+
+Row Configuration (5 rows total):
+
+Row 1 (top: 6155px):
+
+4 instances of "· Testimonials ·"
+Opacity variations: 0.07, 0.31 (darker/highlighted), 0.07, 0.07
+Staggered positioning for visual rhythm
+
+
+Row 2 (top: 6288px):
+
+Opacity variations: 0.31 (highlighted at different position), 0.07, 0.07, 0.07
+Offset starting position from Row 1
+
+
+Row 3 (top: 6421px):
+
+Opacity variations: 0.07, 0.07, 0.11, 0.07
+Different highlight position
+
+
+Row 4 (top: 6554px):
+
+Opacity variations: 0.07, 0.13, 0.07, 0.13
+Two semi-highlighted texts
+
+
+Row 5 (top: 6687px):
+
+All at 0.07 opacity for subtle background effect
+
+
+
+Animation Properties:
+
+Each row scrolls independently but simultaneously
+Seamless loop - when text exits left, it re-enters from right
+Speed variations between rows for dynamic effect
+Use CSS keyframes or JavaScript for smooth animation
+Consider using transform: translateX() for performance
+
+Foreground Testimonial Cards
+Card Structure:
+[Circle Image] [Name]
+              [★★★★☆ Rating]
+              ________________
+              
+              [Testimonial text content
+               spanning multiple lines...]
+Card Design Specifications:
+
+Container:
+
+White or light background with subtle shadow
+Rounded corners (8-12px radius)
+Padding: 20-30px
+Fixed width: ~400px
+Min-height to accommodate content
+
+
+User Image:
+
+Circular profile image
+Position: Top-left corner, slightly overlapping card edge
+Size: 60-80px diameter
+Border: 3px solid white or brand color
+Box-shadow for depth
+
+
+User Name:
+
+Font: Similar to main headings (Playfair Display or Prata)
+Position: Right of profile image
+Font-size: 18-20px
+Font-weight: 600
+Color: Dark brown #582308
+
+
+Rating:
+
+5-star rating system
+Filled stars: Terracotta/orange color #DBA352
+Empty stars: Light gray
+Position: Below name
+Include rating number (e.g., "5.0")
+
+
+Divider Line:
+
+Thin horizontal line
+Color: Light gray or terracotta with low opacity
+Margin: 10-15px top and bottom
+
+
+Testimonial Text:
+
+Font: Clean, readable (system font or Playfair Display)
+Font-size: 14-16px
+Line-height: 1.6
+Color: Dark gray or brown
+Text-align: left or justify
+
+
+
+Layout Arrangement
+
+Grid Layout: 2-3 cards per row on desktop
+Cards positioning: Centered over the animated background
+Z-index management:
+
+Background animation: z-index: 1
+Testimonial cards: z-index: 10
+
+
+Responsive: Stack cards vertically on mobile
+
+Implementation Notes
+
+Performance Optimization:
+
+Use CSS will-change: transform for animated elements
+Consider using requestAnimationFrame for smoother JS animations
+Implement lazy loading for images
+
+
+Accessibility:
+
+Add aria-label for ratings
+Ensure text contrast meets WCAG standards
+Consider adding pause button for animation (accessibility requirement)
+
+
+Interactive Elements:
+
+Optional: Add hover effects on cards (subtle scale or shadow)
+Optional: Click to pause/play animation
+Optional: Auto-rotate testimonial cards every 5-7 seconds
+
+
+
+Color Palette
+
+Primary Brown: #582308
+Terracotta/Orange: #DBA352
+Background animation opacity range: 0.07 to 0.31
+Card background: White or #FDFCFA
+Text colors: Dark brown for headings, medium brown for body text
+
+Example Animation CSS Structure
+css@keyframes scrollTestimonials {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.testimonial-row {
+  animation: scrollTestimonials 20s linear infinite;
+  white-space: nowrap;
+}
+
+.testimonial-row:nth-child(2) {
+  animation-duration: 25s;
+  animation-delay: -5s;
+}
+/* Different speeds and delays for each row */
+This creates an elegant, luxury furniture brand aesthetic with dynamic background movement while keeping the testimonials readable and prominent in the foreground.

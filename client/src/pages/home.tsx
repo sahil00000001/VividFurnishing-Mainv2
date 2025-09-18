@@ -12,6 +12,9 @@ import { Footer } from "@/components/Footer";
 import bg1 from '@assets/stock_images/modern_luxury_furnit_28c5223d.jpg';
 import bg2 from '@assets/stock_images/modern_luxury_furnit_7b0844ce.jpg';
 import bg3 from '@assets/stock_images/modern_luxury_furnit_9ce74e99.jpg';
+import testimonial1 from '@assets/stock_images/professional_headsho_2c9b4b4e.jpg';
+import testimonial2 from '@assets/stock_images/professional_headsho_cb073ce7.jpg';
+import testimonial3 from '@assets/stock_images/professional_headsho_15da0e42.jpg';
 
 const categories = [
   { id: 1, name: "Rocking Chair", icon: Armchair },
@@ -512,6 +515,161 @@ export default function Home() {
       <div className="py-12">
         <ServiceFeaturesBar />
       </div>
+
+      {/* Testimonials Section */}
+      <section className="relative py-16 overflow-hidden bg-white">
+        {/* Animated Background */}
+        <div className="absolute inset-0 z-[1]">
+          {/* Row 1 */}
+          <div className="absolute top-16 w-full testimonial-marquee-row-1">
+            <div className="flex whitespace-nowrap">
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.31 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.31 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+            </div>
+          </div>
+          
+          {/* Row 2 */}
+          <div className="absolute top-32 w-full testimonial-marquee-row-2">
+            <div className="flex whitespace-nowrap">
+              <span className="testimonial-text" style={{ opacity: 0.31 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.31 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+            </div>
+          </div>
+          
+          {/* Row 3 */}
+          <div className="absolute top-48 w-full testimonial-marquee-row-3">
+            <div className="flex whitespace-nowrap">
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.11 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.11 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+            </div>
+          </div>
+          
+          {/* Row 4 */}
+          <div className="absolute top-64 w-full testimonial-marquee-row-4">
+            <div className="flex whitespace-nowrap">
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.13 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.13 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.13 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.13 }}>· Testimonials ·</span>
+            </div>
+          </div>
+          
+          {/* Row 5 */}
+          <div className="absolute top-80 w-full testimonial-marquee-row-5">
+            <div className="flex whitespace-nowrap">
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Foreground Testimonial Cards */}
+        <div className="relative z-10 container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            
+            {/* Testimonial Card 1 */}
+            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-start mb-4">
+                <img 
+                  src={testimonial1} 
+                  alt="Sarah Johnson" 
+                  className="testimonial-avatar w-16 h-16 rounded-full object-cover border-3 border-white shadow-md mr-4"
+                />
+                <div className="flex-1">
+                  <h4 className="font-serif text-lg font-semibold text-[#582308] mb-1">Sarah Johnson</h4>
+                  <div className="flex items-center mb-2">
+                    <div className="flex text-[#DBA352]">
+                      <span>★★★★★</span>
+                    </div>
+                    <span className="ml-2 text-sm text-gray-600">5.0</span>
+                  </div>
+                </div>
+              </div>
+              <hr className="border-gray-200 mb-4" />
+              <p className="text-gray-700 leading-relaxed text-sm">
+                "Absolutely love my new dining set from SM Furnishings! The quality is exceptional and the design perfectly complements my home. The delivery was prompt and the customer service was outstanding."
+              </p>
+            </div>
+
+            {/* Testimonial Card 2 */}
+            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-start mb-4">
+                <img 
+                  src={testimonial2} 
+                  alt="Michael Chen" 
+                  className="testimonial-avatar w-16 h-16 rounded-full object-cover border-3 border-white shadow-md mr-4"
+                />
+                <div className="flex-1">
+                  <h4 className="font-serif text-lg font-semibold text-[#582308] mb-1">Michael Chen</h4>
+                  <div className="flex items-center mb-2">
+                    <div className="flex text-[#DBA352]">
+                      <span>★★★★☆</span>
+                    </div>
+                    <span className="ml-2 text-sm text-gray-600">4.5</span>
+                  </div>
+                </div>
+              </div>
+              <hr className="border-gray-200 mb-4" />
+              <p className="text-gray-700 leading-relaxed text-sm">
+                "Great furniture at reasonable prices. I purchased a living room set and couldn't be happier. The pieces are well-made and stylish. Highly recommend SM Furnishings for quality home furniture."
+              </p>
+            </div>
+
+            {/* Testimonial Card 3 */}
+            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="flex items-start mb-4">
+                <img 
+                  src={testimonial3} 
+                  alt="Emily Rodriguez" 
+                  className="testimonial-avatar w-16 h-16 rounded-full object-cover border-3 border-white shadow-md mr-4"
+                />
+                <div className="flex-1">
+                  <h4 className="font-serif text-lg font-semibold text-[#582308] mb-1">Emily Rodriguez</h4>
+                  <div className="flex items-center mb-2">
+                    <div className="flex text-[#DBA352]">
+                      <span>★★★★★</span>
+                    </div>
+                    <span className="ml-2 text-sm text-gray-600">5.0</span>
+                  </div>
+                </div>
+              </div>
+              <hr className="border-gray-200 mb-4" />
+              <p className="text-gray-700 leading-relaxed text-sm">
+                "SM Furnishings transformed my bedroom with their beautiful furniture collection. The attention to detail and craftsmanship is remarkable. Their 24/7 support made the entire experience seamless."
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
       {/* Newsletter Section */}
       <section 

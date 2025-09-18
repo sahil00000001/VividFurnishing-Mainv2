@@ -273,6 +273,57 @@
   }
 }
 
+/* Testimonials Marquee Animations */
+@keyframes scrollTestimonials {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.testimonial-marquee-row-1 {
+  animation: scrollTestimonials 20s linear infinite;
+}
+
+.testimonial-marquee-row-2 {
+  animation: scrollTestimonials 25s linear infinite;
+  animation-delay: -5s;
+}
+
+.testimonial-marquee-row-3 {
+  animation: scrollTestimonials 22s linear infinite;
+  animation-delay: -8s;
+}
+
+.testimonial-marquee-row-4 {
+  animation: scrollTestimonials 28s linear infinite;
+  animation-delay: -12s;
+}
+
+.testimonial-marquee-row-5 {
+  animation: scrollTestimonials 24s linear infinite;
+  animation-delay: -3s;
+}
+
+.testimonial-text {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 100px;
+  color: rgb(88, 35, 8);
+  margin-right: 200px;
+  will-change: transform;
+}
+
+.testimonial-card {
+  will-change: transform;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-2px);
+}
+
+.testimonial-avatar {
+  flex-shrink: 0;
+}
+
 @layer components {
   .terracotta {
     color: var(--terracotta);
