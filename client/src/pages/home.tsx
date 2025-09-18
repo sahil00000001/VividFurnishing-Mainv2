@@ -146,36 +146,9 @@ export default function Home() {
           </div>
           
           {/* Category Carousel */}
-          <div className="relative overflow-hidden max-w-6xl mx-auto">
-            <div 
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{
-                transform: `translateX(-${(currentCategoryIndex % categories.length) * (100 / categoriesPerView)}%)`,
-                width: `${(getAllCategoriesForCarousel().length * 100) / categoriesPerView}%`
-              }}
-            >
-              {getAllCategoriesForCarousel().map((category, index) => {
-                const IconComponent = category.icon;
-                return (
-                  <div 
-                    key={`${category.id}-${Math.floor(index / categories.length)}`}
-                    className="text-center group cursor-pointer flex-shrink-0"
-                    style={{ width: `${100 / getAllCategoriesForCarousel().length}%` }}
-                    data-testid={`category-${category.id}-${index}`}
-                  >
-                    <div className="w-24 h-24 md:w-32 md:h-32 bg-cream rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-cream-dark transition-colors duration-200">
-                      <IconComponent className="text-terracotta text-2xl md:text-3xl w-8 h-8 md:w-12 md:h-12" />
-                    </div>
-                    <p className="text-foreground font-medium" data-testid={`category-name-${category.id}-${index}`}>
-                      {category.name}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-            
-            {/* Navigation Arrows - Both positioned on right side top */}
-            <div className="absolute right-0 -top-16 flex gap-4">
+          <div className="relative max-w-6xl mx-auto">
+            {/* Navigation Arrows - Positioned above the carousel */}
+            <div className="flex justify-end mb-8 gap-4">
               <button 
                 onClick={prevCategory}
                 disabled={isAnimating}
@@ -194,6 +167,35 @@ export default function Home() {
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
+            </div>
+            
+            <div className="overflow-hidden">
+              <div 
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(-${(currentCategoryIndex % categories.length) * (100 / categoriesPerView)}%)`,
+                  width: `${(getAllCategoriesForCarousel().length * 100) / categoriesPerView}%`
+                }}
+              >
+                {getAllCategoriesForCarousel().map((category, index) => {
+                  const IconComponent = category.icon;
+                  return (
+                    <div 
+                      key={`${category.id}-${Math.floor(index / categories.length)}`}
+                      className="text-center group cursor-pointer flex-shrink-0"
+                      style={{ width: `${100 / getAllCategoriesForCarousel().length}%` }}
+                      data-testid={`category-${category.id}-${index}`}
+                    >
+                      <div className="w-24 h-24 md:w-32 md:h-32 bg-cream rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-cream-dark transition-colors duration-200">
+                        <IconComponent className="text-terracotta text-2xl md:text-3xl w-8 h-8 md:w-12 md:h-12" />
+                      </div>
+                      <p className="text-foreground font-medium" data-testid={`category-name-${category.id}-${index}`}>
+                        {category.name}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
