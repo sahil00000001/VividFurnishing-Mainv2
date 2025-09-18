@@ -194,14 +194,6 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                       >
                         <Plus className="w-3 h-3" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeFromCart(item.id)}
-                        className="ml-2 text-red-500 hover:text-red-700"
-                      >
-                        <X className="w-4 h-4" />
-                      </Button>
                     </div>
                   </div>
                 ))}
