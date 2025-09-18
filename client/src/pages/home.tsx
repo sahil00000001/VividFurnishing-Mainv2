@@ -591,7 +591,7 @@ export default function Home() {
               <Button 
                 type="submit" 
                 onClick={handleSubscribe} 
-                className="bg-terracotta hover:bg-terracotta-dark text-white h-12 px-6 rounded-md shrink-0" 
+                className="bg-terracotta hover:bg-terracotta-dark text-white h-14 px-8 text-lg rounded-md shrink-0" 
                 data-testid="button-subscribe-newsletter"
               >
                 Subscribe
