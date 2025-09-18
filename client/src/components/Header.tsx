@@ -137,16 +137,8 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <div className="space-y-6">
             {/* Cart Header */}
-            <div className="flex items-center justify-between border-b pb-4">
+            <div className="border-b pb-4">
               <h2 className="text-2xl font-serif font-bold">Shopping Cart ({cartCount} items)</h2>
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => setIsCartOpen(false)}
-                data-testid="close-cart"
-              >
-                <X className="w-4 h-4" />
-              </Button>
             </div>
 
             {/* Cart Items */}
