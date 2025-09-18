@@ -592,11 +592,11 @@ export default function Home() {
         </div>
 
         {/* Foreground Testimonial Cards */}
-        <div className="relative z-10 container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="relative z-10 container mx-auto px-6 py-16">
+          <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto items-start">
             
             {/* Testimonial Card 1 */}
-            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex-1 mt-0">
               <div className="flex items-start mb-4">
                 <img 
                   src={testimonial1} 
@@ -620,7 +620,7 @@ export default function Home() {
             </div>
 
             {/* Testimonial Card 2 */}
-            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex-1 mt-0 lg:mt-16">
               <div className="flex items-start mb-4">
                 <img 
                   src={testimonial2} 
@@ -644,7 +644,7 @@ export default function Home() {
             </div>
 
             {/* Testimonial Card 3 */}
-            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex-1 mt-0">
               <div className="flex items-start mb-4">
                 <img 
                   src={testimonial3} 
