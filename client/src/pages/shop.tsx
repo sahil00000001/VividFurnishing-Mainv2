@@ -607,15 +607,6 @@ export default function ShopPage() {
                         >
                           <Eye className="w-4 h-4 text-gray-600" />
                         </Button>
-                        
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="w-10 h-10 rounded-full p-0 backdrop-blur-sm bg-white/80 hover:bg-white transition-all duration-300"
-                          data-testid={`zoom-${product.id}`}
-                        >
-                          <ZoomIn className="w-4 h-4 text-gray-600" />
-                        </Button>
                       </div>
 
                       {/* Badge */}
