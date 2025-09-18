@@ -10,7 +10,7 @@ export default function Blog() {
       <Header className="relative bg-white border-b shadow-sm" variant="solid" />
 
       {/* Hero Section */}
-      <section className="relative h-80 flex items-center justify-center mt-24">
+      <section className="relative h-80 flex items-center justify-center">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
