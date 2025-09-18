@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 
 export function Footer() {
   return (
-    <footer className="bg-terracotta text-white py-16">
+    <footer className="text-white py-16" style={{backgroundColor: '#582308'}}>
       <div className="container mx-auto px-6">
         <div className="max-w-7xl mx-auto">
           {/* Main Footer Content */}
