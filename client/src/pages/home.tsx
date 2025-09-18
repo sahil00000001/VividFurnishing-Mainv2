@@ -9,6 +9,9 @@ import { PremiumTabs } from "@/components/PremiumTabs";
 import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
 import { bestSellers, luxuryProducts } from "@/data/products";
 import { Footer } from "@/components/Footer";
+import bg1 from '@assets/stock_images/modern_luxury_furnit_28c5223d.jpg';
+import bg2 from '@assets/stock_images/modern_luxury_furnit_7b0844ce.jpg';
+import bg3 from '@assets/stock_images/modern_luxury_furnit_9ce74e99.jpg';
 
 const categories = [
   { id: 1, name: "Rocking Chair", icon: Armchair },
@@ -512,13 +515,9 @@ export default function Home() {
 
       {/* Newsletter Section */}
       <section 
-        className="relative w-full h-[781px] overflow-hidden mt-16"
+        className="relative w-full py-12 md:py-16 min-h-[320px] md:min-h-[380px] lg:min-h-[420px] overflow-hidden mt-16"
         style={{
-          backgroundImage: `
-            url('/attached_assets/stock_images/modern_luxury_furnit_28c5223d.jpg'),
-            url('/attached_assets/stock_images/modern_luxury_furnit_7b0844ce.jpg'),
-            url('/attached_assets/stock_images/modern_luxury_furnit_9ce74e99.jpg')
-          `,
+          backgroundImage: `url(${bg1}), url(${bg2}), url(${bg3})`,
           backgroundSize: 'cover, cover, cover',
           backgroundPosition: 'center center, left center, right center',
           backgroundBlendMode: 'multiply, normal, overlay'
@@ -531,115 +530,73 @@ export default function Home() {
         ></div>
         
         {/* Content Container */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
-          {/* Main Heading */}
-          <h1 
-            className="text-white text-center mb-6"
-            style={{
-              fontFamily: 'Prata, serif',
-              fontSize: '133px',
-              lineHeight: '180px',
-              textTransform: 'capitalize',
-              letterSpacing: '-2px'
-            }}
-            data-testid="newsletter-title"
-          >
-            LET'S STAY IN TOUCH
-          </h1>
-          
-          {/* Subheading */}
-          <h2 
-            className="text-white text-center mb-4"
-            style={{
-              fontFamily: 'Playfair Display, serif',
-              fontSize: '48px',
-              fontWeight: '500',
-              marginBottom: '16px'
-            }}
-          >
-            Subscribe
-          </h2>
-          
-          {/* Description Text */}
-          <p 
-            className="text-white text-center mb-12"
-            style={{
-              fontFamily: 'Playfair Display, serif',
-              fontSize: '24px',
-              fontWeight: '600',
-              textTransform: 'capitalize',
-              maxWidth: '600px',
-              lineHeight: '1.5'
-            }}
-            data-testid="newsletter-description"
-          >
-            To our newsletter to receive the latest product drops and coupons
-          </p>
-          
-          {/* Email Input Section */}
-          <div className="flex flex-col items-center space-y-6">
-            {/* Email Input */}
-            <div className="relative">
-              <input
-                type="email"
-                placeholder="Enter your Email ......."
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-transparent text-white placeholder-white outline-none border-none text-center"
-                style={{
-                  fontFamily: 'Anonymous Pro, monospace',
-                  fontSize: '20px',
-                  fontWeight: '700',
-                  width: '577px',
-                  padding: '12px 0',
-                  borderBottom: '3px solid white'
-                }}
-                data-testid="input-newsletter-email"
-              />
-            </div>
+        <div className="relative z-10 h-full">
+          <div className="container mx-auto max-w-5xl px-6 flex flex-col justify-center items-start text-left gap-4">
+            {/* Main Heading */}
+            <h1 
+              className="text-white mb-2"
+              style={{
+                fontFamily: 'Prata, serif',
+                fontSize: 'clamp(28px, 5vw, 54px)',
+                lineHeight: '1.1',
+                letterSpacing: '-0.5px'
+              }}
+              data-testid="newsletter-title"
+            >
+              LET'S STAY IN TOUCH
+            </h1>
             
-            {/* Subscribe Button with Separator Line */}
-            <div className="flex items-center space-x-4">
-              <div 
-                className="bg-white"
-                style={{ width: '159px', height: '2px' }}
-              ></div>
-              <button
-                onClick={handleSubscribe}
-                className="text-white flex items-center space-x-2 hover:opacity-80 transition-opacity duration-200"
-                style={{
-                  fontFamily: 'Anonymous Pro, monospace',
-                  fontSize: '24px',
-                  fontWeight: '700',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
+            {/* Subheading */}
+            <h2 
+              className="text-white mb-2"
+              style={{
+                fontFamily: 'Playfair Display, serif',
+                fontSize: '24px',
+                fontWeight: '500'
+              }}
+            >
+              Subscribe
+            </h2>
+            
+            {/* Description Text */}
+            <p 
+              className="text-white mb-4"
+              style={{
+                fontFamily: 'Playfair Display, serif',
+                fontSize: '20px',
+                fontWeight: '600',
+                maxWidth: '600px',
+                lineHeight: '1.5'
+              }}
+              data-testid="newsletter-description"
+            >
+              To our newsletter to receive the latest product drops and coupons
+            </p>
+            
+            {/* Email Input Section */}
+            <form 
+              onSubmit={(e) => { e.preventDefault(); handleSubscribe(); }}
+              className="w-full max-w-xl flex flex-col sm:flex-row items-stretch gap-3" 
+              data-testid="form-newsletter"
+            >
+              <Input 
+                type="email" 
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                placeholder="Enter your email" 
+                aria-label="Email" 
+                className="bg-white/90 text-foreground placeholder-muted-foreground h-12 px-4 rounded-md flex-1" 
+                data-testid="input-newsletter-email" 
+              />
+              <Button 
+                type="submit" 
+                onClick={handleSubscribe} 
+                className="bg-terracotta hover:bg-terracotta-dark text-white h-12 px-6 rounded-md shrink-0" 
                 data-testid="button-subscribe-newsletter"
               >
-                <span>Subscribe</span>
-                <svg 
-                  width="20" 
-                  height="16" 
-                  viewBox="0 0 20 16" 
-                  fill="none" 
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="ml-2"
-                >
-                  <path 
-                    d="M12 1L19 8L12 15M19 8H1" 
-                    stroke="white" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <div 
-                className="bg-white"
-                style={{ width: '159px', height: '2px' }}
-              ></div>
-            </div>
+                Subscribe
+              </Button>
+            </form>
           </div>
         </div>
       </section>
