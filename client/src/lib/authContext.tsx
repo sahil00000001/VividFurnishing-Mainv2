@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { apiUrl } from "./config";
 
 export interface User {
   id: string;
@@ -58,7 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const login = async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch(apiUrl("/api/login"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -84,7 +85,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signup = async (name: string, email: string, password: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const response = await fetch("/api/signup", {
+      const response = await fetch(apiUrl("/api/signup"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -116,7 +117,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const sendOTP = async (email: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const response = await fetch("/api/send-otp", {
+      const response = await fetch(apiUrl("/api/send-otp"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -139,7 +140,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const verifyOTP = async (email: string, otp: string): Promise<{ success: boolean; error?: string }> => {
     try {
-      const response = await fetch("/api/verify-otp", {
+      const response = await fetch(apiUrl("/api/verify-otp"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

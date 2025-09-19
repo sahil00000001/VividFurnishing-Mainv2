@@ -17,7 +17,7 @@ export function Footer() {
                 SM FURNISHINGS
               </h3>
               <p className="text-cream leading-relaxed" data-testid="footer-description">
-                Transforming homes with affordable luxury furniture. Each piece is carefully curated to bring elegance and comfort to every space.
+                SM Furnishings is more than a home décor brand — it's a family legacy. Inspired by Shakuntala & Manohar's values of love, comfort, and quality, we design luxury that feels personal, timeless, and affordable.
               </p>
               <div className="flex space-x-4">
                 <Button
@@ -79,22 +79,22 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <a 
-                    href="#" 
+                  <Link 
+                    href="/contact" 
                     className="text-cream hover:text-white transition-colors duration-200"
                     data-testid="footer-link-contact"
                   >
                     Contact
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a 
-                    href="#" 
+                  <Link 
+                    href="/faq" 
                     className="text-cream hover:text-white transition-colors duration-200"
                     data-testid="footer-link-faq"
                   >
                     FAQ
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -104,49 +104,49 @@ export function Footer() {
               <h4 className="font-semibold text-lg" data-testid="footer-categories-title">Categories</h4>
               <ul className="space-y-3">
                 <li>
-                  <a 
-                    href="#" 
+                  <Link 
+                    href="/category/living-room" 
                     className="text-cream hover:text-white transition-colors duration-200"
                     data-testid="footer-category-living"
                   >
                     Living Room
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a 
-                    href="#" 
+                  <Link 
+                    href="/category/bedroom" 
                     className="text-cream hover:text-white transition-colors duration-200"
                     data-testid="footer-category-bedroom"
                   >
                     Bedroom
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a 
-                    href="#" 
+                  <Link 
+                    href="/category/dining-room" 
                     className="text-cream hover:text-white transition-colors duration-200"
                     data-testid="footer-category-dining"
                   >
                     Dining Room
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a 
-                    href="#" 
+                  <Link 
+                    href="/category/office" 
                     className="text-cream hover:text-white transition-colors duration-200"
                     data-testid="footer-category-office"
                   >
                     Office
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a 
-                    href="#" 
+                  <Link 
+                    href="/category/outdoor" 
                     className="text-cream hover:text-white transition-colors duration-200"
                     data-testid="footer-category-outdoor"
                   >
                     Outdoor
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -156,25 +156,21 @@ export function Footer() {
               <h4 className="font-semibold text-lg" data-testid="footer-contact-title">Contact Us</h4>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-cream">
-                  <Phone className="w-4 h-4" />
-                  <span data-testid="footer-phone">+1 (555) 123-4567</span>
-                </div>
-                <div className="flex items-center space-x-3 text-cream">
                   <Mail className="w-4 h-4" />
                   <span data-testid="footer-email">hello@smfurnishings.com</span>
                 </div>
                 <div className="flex items-start space-x-3 text-cream">
                   <MapPin className="w-4 h-4 mt-1" />
                   <span data-testid="footer-address">
-                    123 Furniture Ave<br />
-                    Design District, NY 10001
+                    233, Model Town, Tosham Road<br />
+                    Hisar, 1250001
                   </span>
                 </div>
               </div>
               
               {/* Newsletter Signup */}
               <div className="space-y-3">
-                <h5 className="font-medium" data-testid="footer-newsletter-title">Stay Updated</h5>
+                <h5 className="font-medium" data-testid="footer-newsletter-title">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</h5>
                 <div className="flex space-x-2">
                   <Input
                     type="email"
@@ -198,30 +194,30 @@ export function Footer() {
           {/* Bottom Footer */}
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-cream text-sm" data-testid="footer-copyright">
-              © 2024 SM Furnishings. All rights reserved.
+              © 2025 SM Furnishings. All rights reserved.
             </div>
             <div className="flex space-x-6 text-sm">
-              <a 
-                href="#" 
+              <Link 
+                href="/privacy" 
                 className="text-cream hover:text-white transition-colors duration-200"
                 data-testid="footer-privacy"
               >
                 Privacy Policy
-              </a>
-              <a 
-                href="#" 
+              </Link>
+              <Link 
+                href="/terms" 
                 className="text-cream hover:text-white transition-colors duration-200"
                 data-testid="footer-terms"
               >
                 Terms of Service
-              </a>
-              <a 
-                href="#" 
+              </Link>
+              <Link 
+                href="/returns" 
                 className="text-cream hover:text-white transition-colors duration-200"
                 data-testid="footer-returns"
               >
                 Returns & Exchanges
-              </a>
+              </Link>
             </div>
           </div>
         </div>
