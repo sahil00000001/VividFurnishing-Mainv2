@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'wouter';
+import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
@@ -109,7 +109,6 @@ export default function ShopPage() {
   // Use global cart context
   const { addToCart: addToGlobalCart, cart: globalCart, cartCount, updateQuantity, removeFromCart, isCartOpen, setIsCartOpen } = useCart();
   const { toast } = useToast();
-  const [, setLocation] = useLocation();
   
   // Update total price when quantity or selected product changes
   useEffect(() => {
@@ -607,6 +606,15 @@ export default function ShopPage() {
                         >
                           <Eye className="w-4 h-4 text-gray-600" />
                         </Button>
+                        
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          className="w-10 h-10 rounded-full p-0 backdrop-blur-sm bg-white/80 hover:bg-white transition-all duration-300"
+                          data-testid={`zoom-${product.id}`}
+                        >
+                          <ZoomIn className="w-4 h-4 text-gray-600" />
+                        </Button>
                       </div>
 
                       {/* Badge */}
@@ -814,8 +822,16 @@ export default function ShopPage() {
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <div className="space-y-6">
             {/* Cart Header */}
-            <div className="border-b pb-4">
+            <div className="flex items-center justify-between border-b pb-4">
               <h2 className="text-2xl font-serif font-bold">Shopping Cart ({cartCount} items)</h2>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setIsCartOpen(false)}
+                data-testid="close-cart"
+              >
+                <X className="w-4 h-4" />
+              </Button>
             </div>
 
             {/* Cart Items */}
@@ -912,16 +928,8 @@ export default function ShopPage() {
                     <Button 
                       className="flex-1 bg-primary hover:bg-primary/90"
                       onClick={() => {
-                        if (globalCart.length === 0) {
-                          toast({
-                            title: "Empty Cart",
-                            description: "Please add items to your cart before checkout.",
-                            variant: "destructive"
-                          });
-                          return;
-                        }
-                        setIsCartOpen(false);
-                        setLocation('/checkout');
+                        // Checkout functionality would go here
+                        alert("Proceeding to checkout...");
                       }}
                     >
                       Checkout

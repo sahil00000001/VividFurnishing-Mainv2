@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower, Coffee } from "lucide-react";
+import { ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Header } from "@/components/Header";
@@ -9,12 +9,6 @@ import { PremiumTabs } from "@/components/PremiumTabs";
 import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
 import { bestSellers, luxuryProducts } from "@/data/products";
 import { Footer } from "@/components/Footer";
-import bg1 from '@assets/stock_images/modern_luxury_furnit_28c5223d.jpg';
-import bg2 from '@assets/stock_images/modern_luxury_furnit_7b0844ce.jpg';
-import bg3 from '@assets/stock_images/modern_luxury_furnit_9ce74e99.jpg';
-import testimonial1 from '@assets/stock_images/professional_headsho_2c9b4b4e.jpg';
-import testimonial2 from '@assets/stock_images/professional_headsho_cb073ce7.jpg';
-import testimonial3 from '@assets/stock_images/professional_headsho_15da0e42.jpg';
 
 const categories = [
   { id: 1, name: "Rocking Chair", icon: Armchair },
@@ -23,14 +17,12 @@ const categories = [
   { id: 4, name: "Ottoman", icon: Square },
   { id: 5, name: "Table Lamp", icon: Lightbulb },
   { id: 6, name: "Decorative Vase", icon: Flower },
-  { id: 7, name: "Coffee Table", icon: Coffee },
 ];
 
 
 export default function Home() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [email, setEmail] = useState("");
-  const [isAnimating, setIsAnimating] = useState(false);
   
   // Countdown timer state
   const [timeLeft, setTimeLeft] = useState({
@@ -44,30 +36,25 @@ export default function Home() {
   const categoriesPerView = 6;
   
   const nextCategory = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setCurrentCategoryIndex((prev) => {
-      const newIndex = prev + 1 >= categories.length ? 0 : prev + 1;
-      setTimeout(() => setIsAnimating(false), 500); // Animation duration
-      return newIndex;
-    });
+    setCurrentCategoryIndex((prev) => 
+      prev + categoriesPerView >= categories.length ? 0 : prev + 1
+    );
   };
 
   const prevCategory = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setCurrentCategoryIndex((prev) => {
-      const newIndex = prev === 0 ? categories.length - 1 : prev - 1;
-      setTimeout(() => setIsAnimating(false), 500); // Animation duration
-      return newIndex;
-    });
+    setCurrentCategoryIndex((prev) => 
+      prev === 0 ? Math.max(0, categories.length - categoriesPerView) : prev - 1
+    );
   };
   
-  // Get all categories for smooth carousel display
-  const getAllCategoriesForCarousel = () => {
-    // Create a longer array for smooth infinite scroll
-    const extendedCategories = [...categories, ...categories, ...categories];
-    return extendedCategories;
+  // Get visible categories based on current index
+  const getVisibleCategories = () => {
+    const visible = [];
+    for (let i = 0; i < categoriesPerView; i++) {
+      const index = (currentCategoryIndex + i) % categories.length;
+      visible.push(categories[index]);
+    }
+    return visible;
   };
 
   // Countdown timer effect
@@ -151,14 +138,33 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Category Carousel */}
-          <div className="relative max-w-6xl mx-auto">
-            {/* Navigation Arrows - Positioned above the carousel */}
-            <div className="flex justify-end mb-8 gap-4">
+          {/* Category Grid */}
+          <div className="relative">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-6xl mx-auto">
+              {getVisibleCategories().map((category) => {
+                const IconComponent = category.icon;
+                return (
+                  <div 
+                    key={category.id}
+                    className="text-center group cursor-pointer" 
+                    data-testid={`category-${category.id}`}
+                  >
+                    <div className="w-24 h-24 md:w-32 md:h-32 bg-cream rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-cream-dark transition-colors duration-200">
+                      <IconComponent className="text-terracotta text-2xl md:text-3xl w-8 h-8 md:w-12 md:h-12" />
+                    </div>
+                    <p className="text-foreground font-medium" data-testid={`category-name-${category.id}`}>
+                      {category.name}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+            
+            {/* Navigation Arrows - Both positioned on right side top */}
+            <div className="absolute right-0 -top-16 flex gap-4">
               <button 
                 onClick={prevCategory}
-                disabled={isAnimating}
-                className={`w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200 ${isAnimating ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
                 data-testid="button-prev-category"
                 aria-label="Previous categories"
               >
@@ -166,42 +172,12 @@ export default function Home() {
               </button>
               <button 
                 onClick={nextCategory}
-                disabled={isAnimating}
-                className={`w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200 ${isAnimating ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
                 data-testid="button-next-category"
                 aria-label="Next categories"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
-            </div>
-            
-            <div className="overflow-hidden">
-              <div 
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{
-                  transform: `translateX(-${(currentCategoryIndex % categories.length) * (100 / categoriesPerView)}%)`,
-                  width: `${(getAllCategoriesForCarousel().length * 100) / categoriesPerView}%`
-                }}
-              >
-                {getAllCategoriesForCarousel().map((category, index) => {
-                  const IconComponent = category.icon;
-                  return (
-                    <div 
-                      key={`${category.id}-${Math.floor(index / categories.length)}`}
-                      className="text-center group cursor-pointer flex-shrink-0"
-                      style={{ width: `${100 / getAllCategoriesForCarousel().length}%` }}
-                      data-testid={`category-${category.id}-${index}`}
-                    >
-                      <div className="w-24 h-24 md:w-32 md:h-32 bg-cream rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-cream-dark transition-colors duration-200">
-                        <IconComponent className="text-terracotta text-2xl md:text-3xl w-8 h-8 md:w-12 md:h-12" />
-                      </div>
-                      <p className="text-foreground font-medium" data-testid={`category-name-${category.id}-${index}`}>
-                        {category.name}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
             </div>
           </div>
         </div>
@@ -252,7 +228,7 @@ export default function Home() {
       </section>
 
       {/* Best Sellers Section */}
-      <section className="py-12 bg-background">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
             <div className="border border-cream-dark rounded-2xl p-8 md:p-12">
@@ -294,7 +270,7 @@ export default function Home() {
       </section>
 
       {/* Luxury Choice Section */}
-      <section className="py-12 bg-gradient-to-br from-background to-cream">
+      <section className="py-16 bg-gradient-to-br from-background to-cream">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
             <div className="border-2 border-terracotta rounded-2xl p-6 md:p-8 bg-gradient-to-r from-cream to-background shadow-xl">
@@ -512,249 +488,35 @@ export default function Home() {
       <PremiumTabs />
 
       {/* Service Features Bar */}
-      <div>
+      <div className="py-12">
         <ServiceFeaturesBar />
       </div>
 
-      {/* Testimonials Section */}
-      <section className="relative overflow-hidden bg-white">
-        {/* Animated Background */}
-        <div className="absolute inset-0 z-[1]">
-          {/* Row 1 */}
-          <div className="absolute top-16 w-full testimonial-marquee-row-1">
-            <div className="flex whitespace-nowrap">
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.31 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.31 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-            </div>
-          </div>
-          
-          {/* Row 2 */}
-          <div className="absolute top-32 w-full testimonial-marquee-row-2">
-            <div className="flex whitespace-nowrap">
-              <span className="testimonial-text" style={{ opacity: 0.31 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.31 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-            </div>
-          </div>
-          
-          {/* Row 3 */}
-          <div className="absolute top-48 w-full testimonial-marquee-row-3">
-            <div className="flex whitespace-nowrap">
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.11 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.11 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-            </div>
-          </div>
-          
-          {/* Row 4 */}
-          <div className="absolute top-64 w-full testimonial-marquee-row-4">
-            <div className="flex whitespace-nowrap">
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.13 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.13 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.13 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.13 }}>· Testimonials ·</span>
-            </div>
-          </div>
-          
-          {/* Row 5 */}
-          <div className="absolute top-80 w-full testimonial-marquee-row-5">
-            <div className="flex whitespace-nowrap">
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-              <span className="testimonial-text" style={{ opacity: 0.07 }}>· Testimonials ·</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Foreground Testimonial Cards */}
-        <div className="relative z-10 container mx-auto px-6 py-16">
-          <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto items-start">
-            
-            {/* Testimonial Card 1 */}
-            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex-1 mt-0">
-              <div className="flex items-start mb-4">
-                <img 
-                  src={testimonial1} 
-                  alt="Sarah Johnson" 
-                  className="testimonial-avatar w-16 h-16 rounded-full object-cover border-3 border-white shadow-md mr-4"
-                />
-                <div className="flex-1">
-                  <h4 className="font-serif text-lg font-semibold text-[#582308] mb-1">Sarah Johnson</h4>
-                  <div className="flex items-center mb-2">
-                    <div className="flex text-[#DBA352]">
-                      <span>★★★★★</span>
-                    </div>
-                    <span className="ml-2 text-sm text-gray-600">5.0</span>
-                  </div>
-                </div>
-              </div>
-              <hr className="border-gray-200 mb-4" />
-              <p className="text-gray-700 leading-relaxed text-sm">
-                "Absolutely love my new dining set from SM Furnishings! The quality is exceptional and the design perfectly complements my home. The delivery was prompt and the customer service was outstanding."
-              </p>
-            </div>
-
-            {/* Testimonial Card 2 */}
-            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex-1 mt-0 lg:mt-16">
-              <div className="flex items-start mb-4">
-                <img 
-                  src={testimonial2} 
-                  alt="Michael Chen" 
-                  className="testimonial-avatar w-16 h-16 rounded-full object-cover border-3 border-white shadow-md mr-4"
-                />
-                <div className="flex-1">
-                  <h4 className="font-serif text-lg font-semibold text-[#582308] mb-1">Michael Chen</h4>
-                  <div className="flex items-center mb-2">
-                    <div className="flex text-[#DBA352]">
-                      <span>★★★★☆</span>
-                    </div>
-                    <span className="ml-2 text-sm text-gray-600">4.5</span>
-                  </div>
-                </div>
-              </div>
-              <hr className="border-gray-200 mb-4" />
-              <p className="text-gray-700 leading-relaxed text-sm">
-                "Great furniture at reasonable prices. I purchased a living room set and couldn't be happier. The pieces are well-made and stylish. Highly recommend SM Furnishings for quality home furniture."
-              </p>
-            </div>
-
-            {/* Testimonial Card 3 */}
-            <div className="testimonial-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300 flex-1 mt-0">
-              <div className="flex items-start mb-4">
-                <img 
-                  src={testimonial3} 
-                  alt="Emily Rodriguez" 
-                  className="testimonial-avatar w-16 h-16 rounded-full object-cover border-3 border-white shadow-md mr-4"
-                />
-                <div className="flex-1">
-                  <h4 className="font-serif text-lg font-semibold text-[#582308] mb-1">Emily Rodriguez</h4>
-                  <div className="flex items-center mb-2">
-                    <div className="flex text-[#DBA352]">
-                      <span>★★★★★</span>
-                    </div>
-                    <span className="ml-2 text-sm text-gray-600">5.0</span>
-                  </div>
-                </div>
-              </div>
-              <hr className="border-gray-200 mb-4" />
-              <p className="text-gray-700 leading-relaxed text-sm">
-                "SM Furnishings transformed my bedroom with their beautiful furniture collection. The attention to detail and craftsmanship is remarkable. Their 24/7 support made the entire experience seamless."
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
       {/* Newsletter Section */}
-      <section 
-        className="relative w-full py-12 md:py-16 min-h-[320px] md:min-h-[380px] lg:min-h-[420px] overflow-hidden"
-        style={{
-          backgroundImage: `url(${bg1}), url(${bg2}), url(${bg3})`,
-          backgroundSize: 'cover, cover, cover',
-          backgroundPosition: 'center center, left center, right center',
-          backgroundBlendMode: 'multiply, normal, overlay'
-        }}
-      >
-        {/* Terracotta Overlay */}
-        <div 
-          className="absolute inset-0"
-          style={{ backgroundColor: 'rgba(219, 163, 82, 0.64)' }}
-        ></div>
-        
-        {/* Content Container */}
-        <div className="relative z-10 h-full">
-          <div className="container mx-auto max-w-5xl px-6 flex flex-col justify-center items-center text-center gap-4">
-            {/* Main Heading */}
-            <h1 
-              className="text-white mb-2"
-              style={{
-                fontFamily: 'Prata, serif',
-                fontSize: 'clamp(28px, 5vw, 54px)',
-                lineHeight: '1.1',
-                letterSpacing: '-0.5px'
-              }}
-              data-testid="newsletter-title"
-            >
-              LET'S STAY IN TOUCH
-            </h1>
-            
-            {/* Subheading */}
-            <h2 
-              className="text-white mb-2"
-              style={{
-                fontFamily: 'Playfair Display, serif',
-                fontSize: '24px',
-                fontWeight: '500'
-              }}
+      <section className="py-24 bg-cream mt-16">
+        <div className="container mx-auto px-6 text-center">
+          <h3 className="font-serif text-3xl font-bold text-foreground mb-4" data-testid="newsletter-title">
+            Stay Connected
+          </h3>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto" data-testid="newsletter-description">
+            Be the first to know about new collections, exclusive offers, and design inspiration.
+          </p>
+          <div className="max-w-md mx-auto flex gap-4">
+            <Input 
+              type="email" 
+              placeholder="Enter your email" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="flex-1 px-4 py-3 border border-border rounded-none focus:outline-none focus:border-terracotta"
+              data-testid="input-newsletter-email"
+            />
+            <Button 
+              onClick={handleSubscribe}
+              className="bg-terracotta text-white px-8 py-3 font-semibold hover:bg-terracotta-dark transition-colors duration-200"
+              data-testid="button-subscribe-newsletter"
             >
               Subscribe
-            </h2>
-            
-            {/* Description Text */}
-            <p 
-              className="text-white mb-4"
-              style={{
-                fontFamily: 'Playfair Display, serif',
-                fontSize: '20px',
-                fontWeight: '600',
-                maxWidth: '600px',
-                lineHeight: '1.5'
-              }}
-              data-testid="newsletter-description"
-            >
-              To our newsletter to receive the latest product drops and coupons
-            </p>
-            
-            {/* Email Input Section */}
-            <form 
-              onSubmit={(e) => { e.preventDefault(); handleSubscribe(); }}
-              className="w-full max-w-xl flex flex-row items-center gap-3 justify-center" 
-              data-testid="form-newsletter"
-            >
-              <Input 
-                type="email" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
-                placeholder="Enter your email" 
-                aria-label="Email" 
-                className="bg-white/90 text-foreground placeholder-muted-foreground h-12 px-4 rounded-md flex-1" 
-                data-testid="input-newsletter-email" 
-              />
-              <Button 
-                type="submit" 
-                onClick={handleSubscribe} 
-                className="bg-terracotta hover:bg-terracotta-dark text-white h-14 px-8 text-lg rounded-md shrink-0" 
-                data-testid="button-subscribe-newsletter"
-              >
-                Subscribe
-              </Button>
-            </form>
+            </Button>
           </div>
         </div>
       </section>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600&family=Prata&family=Anonymous+Pro:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -40,8 +40,7 @@
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-script: 'Dancing Script', cursive;
-  --font-mono: 'Anonymous Pro', 'JetBrains Mono', monospace;
-  --font-prata: 'Prata', serif;
+  --font-mono: 'JetBrains Mono', monospace;
   --radius: 8px;
   --terracotta: hsl(22, 40%, 52%);
   --terracotta-light: hsl(22, 50%, 65%);
@@ -271,57 +270,6 @@
   .font-script {
     font-family: var(--font-script);
   }
-}
-
-/* Testimonials Marquee Animations */
-@keyframes scrollTestimonials {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
-
-.testimonial-marquee-row-1 {
-  animation: scrollTestimonials 20s linear infinite;
-}
-
-.testimonial-marquee-row-2 {
-  animation: scrollTestimonials 25s linear infinite;
-  animation-delay: -5s;
-}
-
-.testimonial-marquee-row-3 {
-  animation: scrollTestimonials 22s linear infinite;
-  animation-delay: -8s;
-}
-
-.testimonial-marquee-row-4 {
-  animation: scrollTestimonials 28s linear infinite;
-  animation-delay: -12s;
-}
-
-.testimonial-marquee-row-5 {
-  animation: scrollTestimonials 24s linear infinite;
-  animation-delay: -3s;
-}
-
-.testimonial-text {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: 100px;
-  color: rgb(88, 35, 8);
-  margin-right: 200px;
-  will-change: transform;
-}
-
-.testimonial-card {
-  will-change: transform;
-}
-
-.testimonial-card:hover {
-  transform: translateY(-2px);
-}
-
-.testimonial-avatar {
-  flex-shrink: 0;
 }
 
 @layer components {

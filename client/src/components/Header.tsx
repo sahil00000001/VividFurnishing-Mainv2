@@ -1,9 +1,11 @@
-import { Link, useLocation } from "wouter";
-import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart } from "lucide-react";
+import { Link } from "wouter";
+import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart, LogOut } from "lucide-react";
 import { useCart } from "@/lib/cartContext";
+import { useAuth } from "@/lib/authContext";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 interface HeaderProps {
   className?: string;
@@ -12,24 +14,18 @@ interface HeaderProps {
 
 export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-transparent", variant = "transparent" }: HeaderProps) {
   const { cartCount, isCartOpen, setIsCartOpen, cart, updateQuantity, removeFromCart } = useCart();
+  const { user, isAuthenticated, logout } = useAuth();
   const { toast } = useToast();
-  const [, setLocation] = useLocation();
 
   const getTotalPrice = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
   const handleCheckout = () => {
-    if (cart.length === 0) {
-      toast({
-        title: "Empty Cart",
-        description: "Please add items to your cart before checkout.",
-        variant: "destructive"
-      });
-      return;
-    }
-    setIsCartOpen(false);
-    setLocation('/checkout');
+    toast({
+      title: "Checkout",
+      description: "Checkout functionality coming soon!",
+    });
   };
 
   return (
@@ -85,11 +81,46 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
               <div className={`absolute left-0 flex items-center space-x-6 ${
                 variant === "solid" ? "text-foreground" : "text-white"
               }`}>
-                <button className={`transition-colors duration-200 ${
-                  variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                }`} data-testid="button-account">
-                  <User className="w-5 h-5" />
-                </button>
+                {isAuthenticated ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button className={`transition-colors duration-200 ${
+                        variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                      }`} data-testid="button-account">
+                        <User className="w-5 h-5" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-56">
+                      <div className="px-2 py-1.5">
+                        <p className="text-sm font-medium">{user?.name}</p>
+                        <p className="text-xs text-muted-foreground">{user?.email}</p>
+                      </div>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild>
+                        <Link href="/profile" className="w-full cursor-pointer">
+                          <User className="w-4 h-4 mr-2" />
+                          My Profile
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem 
+                        onClick={logout} 
+                        className="text-red-600 cursor-pointer"
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Sign Out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Link href="/login">
+                    <button className={`transition-colors duration-200 ${
+                      variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                    }`} data-testid="button-account">
+                      <User className="w-5 h-5" />
+                    </button>
+                  </Link>
+                )}
                 <button 
                   className={`relative transition-colors duration-200 ${
                     variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
@@ -144,8 +175,16 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <div className="space-y-6">
             {/* Cart Header */}
-            <div className="border-b pb-4">
+            <div className="flex items-center justify-between border-b pb-4">
               <h2 className="text-2xl font-serif font-bold">Shopping Cart ({cartCount} items)</h2>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setIsCartOpen(false)}
+                data-testid="close-cart"
+              >
+                <X className="w-4 h-4" />
+              </Button>
             </div>
 
             {/* Cart Items */}
@@ -200,6 +239,14 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                         className="h-8 w-8 p-0"
                       >
                         <Plus className="w-3 h-3" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeFromCart(item.id)}
+                        className="ml-2 text-red-500 hover:text-red-700"
+                      >
+                        <X className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
