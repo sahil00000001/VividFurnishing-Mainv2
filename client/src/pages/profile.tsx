@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Loader2, User, Mail, Calendar, Shield, LogOut, CheckCircle, AlertCircle } from "lucide-react";
+import { Loader2, User, Mail, Calendar, Shield, LogOut, CheckCircle, AlertCircle, Star, Crown, Settings, ShoppingBag, Heart, Award } from "lucide-react";
 import { useAuth } from "@/lib/authContext";
 import { Header } from "@/components/Header";
 
@@ -74,176 +74,293 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-cream">
-      <Header variant="solid" className="relative bg-white shadow-sm" />
+    <div className="min-h-screen relative overflow-hidden" data-testid="profile-page">
+      {/* Background with elegant gradient and pattern */}
+      <div className="absolute inset-0 bg-gradient-to-br from-terracotta/10 via-cream to-terracotta/20"></div>
+      <div className="absolute inset-0" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b5835a' fill-opacity='0.05'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        opacity: 0.3
+      }}></div>
       
-      <div className="container mx-auto px-6 pt-32 pb-12">
-        <div className="max-w-2xl mx-auto space-y-6">
-          {/* Profile Header */}
-          <Card className="shadow-lg border-0">
-            <CardHeader className="text-center">
-              <div className="w-20 h-20 bg-terracotta rounded-full flex items-center justify-center mx-auto mb-4">
-                <User className="w-10 h-10 text-white" />
-              </div>
-              <CardTitle className="text-2xl font-serif">{user.name}</CardTitle>
-              <CardDescription className="flex items-center justify-center gap-2">
-                <Mail className="w-4 h-4" />
-                {user.email}
-              </CardDescription>
-            </CardHeader>
-          </Card>
+      <Header variant="solid" className="relative bg-white/95 backdrop-blur-md shadow-lg border-b border-terracotta/20" />
+      
+      <div className="relative container mx-auto px-6 pt-32 pb-12">
+        <div className="max-w-6xl mx-auto">
+          
+          {/* Welcome Header with elegant design */}
+          <div className="text-center mb-12" data-testid="profile-header">
+            <div className="inline-flex items-center gap-3 mb-4">
+              <div className="w-1 h-8 bg-terracotta rounded-full"></div>
+              <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground">Account Dashboard</h1>
+              <div className="w-1 h-8 bg-terracotta rounded-full"></div>
+            </div>
+            <p className="text-lg text-muted-foreground font-medium">Welcome back to your luxury furniture experience</p>
+          </div>
 
-          {/* Account Information */}
-          <Card className="shadow-lg border-0">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="w-5 h-5" />
-                Account Information
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm font-medium text-muted-foreground">Full Name</Label>
-                  <p className="text-lg">{user.name}</p>
-                </div>
-                <div>
-                  <Label className="text-sm font-medium text-muted-foreground">Email Address</Label>
-                  <p className="text-lg">{user.email}</p>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            
+            {/* Left Column - Profile Info */}
+            <div className="xl:col-span-1 space-y-6">
+              
+              {/* Profile Card with elegant design */}
+              <Card className="relative bg-gradient-to-br from-white to-cream/50 shadow-2xl border-0 overflow-hidden" data-testid="profile-card">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-terracotta/10 rounded-full -translate-y-16 translate-x-16"></div>
+                <div className="absolute bottom-0 left-0 w-24 h-24 bg-terracotta/5 rounded-full translate-y-12 -translate-x-12"></div>
+                
+                <CardHeader className="text-center pb-6 relative">
+                  <div className="relative mx-auto mb-6">
+                    <div className="w-24 h-24 bg-gradient-to-br from-terracotta to-terracotta-dark rounded-full flex items-center justify-center shadow-lg ring-4 ring-white">
+                      <User className="w-12 h-12 text-white" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center shadow-md">
+                      <Crown className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                  <CardTitle className="text-2xl font-serif font-bold text-foreground mb-2" data-testid="user-name">{user.name}</CardTitle>
+                  <CardDescription className="flex items-center justify-center gap-2 text-base">
+                    <Mail className="w-4 h-4 text-terracotta" />
+                    <span className="font-medium" data-testid="user-email">{user.email}</span>
+                  </CardDescription>
+                  <Badge className="mt-3 bg-gradient-to-r from-terracotta to-terracotta-dark text-white border-0 shadow-md" data-testid="member-badge">
+                    <Star className="w-3 h-3 mr-1" />
+                    Premium Member
+                  </Badge>
+                </CardHeader>
+              </Card>
 
-              <Separator />
+              {/* Quick Stats */}
+              <Card className="bg-gradient-to-br from-white to-cream/30 shadow-xl border-0" data-testid="stats-card">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Award className="w-5 h-5 text-terracotta" />
+                    Account Stats
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center p-4 bg-gradient-to-br from-terracotta/10 to-terracotta/5 rounded-xl">
+                      <ShoppingBag className="w-6 h-6 text-terracotta mx-auto mb-2" />
+                      <p className="text-2xl font-bold text-foreground">0</p>
+                      <p className="text-sm text-muted-foreground">Orders</p>
+                    </div>
+                    <div className="text-center p-4 bg-gradient-to-br from-pink-100 to-pink-50 rounded-xl">
+                      <Heart className="w-6 h-6 text-pink-500 mx-auto mb-2" />
+                      <p className="text-2xl font-bold text-foreground">0</p>
+                      <p className="text-sm text-muted-foreground">Wishlist</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Label className="text-sm font-medium text-muted-foreground">Email Verification</Label>
-                  {user.emailVerified ? (
-                    <Badge variant="default" className="bg-green-100 text-green-800 border-green-200">
-                      <CheckCircle className="w-3 h-3 mr-1" />
-                      Verified
-                    </Badge>
-                  ) : (
-                    <Badge variant="destructive" className="bg-red-100 text-red-800 border-red-200">
-                      <AlertCircle className="w-3 h-3 mr-1" />
-                      Not Verified
-                    </Badge>
-                  )}
-                </div>
-
-                {!user.emailVerified && (
-                  <Button
-                    onClick={handleSendOtp}
-                    disabled={isSubmitting}
-                    size="sm"
-                    className="bg-terracotta hover:bg-terracotta-dark"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      "Verify Email"
-                    )}
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* OTP Verification */}
-          {showOtpVerification && (
-            <Card className="shadow-lg border-0">
-              <CardHeader>
-                <CardTitle>Email Verification</CardTitle>
-                <CardDescription>
-                  Enter the verification code sent to {user.email}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleVerifyOtp} className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="otp">Verification Code</Label>
-                    <Input
-                      id="otp"
-                      type="text"
-                      placeholder="Enter 6-digit code"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                      required
-                      disabled={isSubmitting}
-                      className="h-12 text-center text-lg tracking-wider"
-                      maxLength={6}
-                    />
+            {/* Right Column - Account Information */}
+            <div className="xl:col-span-2 space-y-6">
+              
+              {/* Account Information with modern design */}
+              <Card className="bg-gradient-to-br from-white to-cream/30 shadow-xl border-0 overflow-hidden" data-testid="account-info-card">
+                <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-terracotta/5 to-transparent rounded-full -translate-y-20 translate-x-20"></div>
+                
+                <CardHeader className="relative">
+                  <CardTitle className="flex items-center gap-3 text-2xl">
+                    <div className="w-10 h-10 bg-gradient-to-br from-terracotta to-terracotta-dark rounded-lg flex items-center justify-center">
+                      <Shield className="w-5 h-5 text-white" />
+                    </div>
+                    Account Information
+                  </CardTitle>
+                  <CardDescription className="text-base">Manage your personal details and preferences</CardDescription>
+                </CardHeader>
+                
+                <CardContent className="space-y-6 relative">
+                  {/* Personal Information */}
+                  <div className="bg-gradient-to-r from-cream/50 to-white rounded-xl p-6 border border-terracotta/10">
+                    <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                      <User className="w-5 h-5 text-terracotta" />
+                      Personal Details
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label className="text-sm font-semibold text-terracotta uppercase tracking-wide">Full Name</Label>
+                        <div className="bg-white rounded-lg p-3 border border-terracotta/20">
+                          <p className="text-lg font-medium text-foreground" data-testid="display-name">{user.name}</p>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label className="text-sm font-semibold text-terracotta uppercase tracking-wide">Email Address</Label>
+                        <div className="bg-white rounded-lg p-3 border border-terracotta/20">
+                          <p className="text-lg font-medium text-foreground" data-testid="display-email">{user.email}</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="flex gap-2">
-                    <Button
-                      type="submit"
-                      className="flex-1 bg-terracotta hover:bg-terracotta-dark"
-                      disabled={isSubmitting || otp.length !== 6}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          Verifying...
-                        </>
+                  {/* Email Verification Status */}
+                  <div className="bg-gradient-to-r from-white to-cream/30 rounded-xl p-6 border border-terracotta/10">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-semibold text-lg flex items-center gap-2">
+                        <Mail className="w-5 h-5 text-terracotta" />
+                        Email Verification
+                      </h3>
+                      {user.emailVerified ? (
+                        <Badge className="bg-gradient-to-r from-green-500 to-emerald-500 text-white border-0 shadow-md" data-testid="verified-badge">
+                          <CheckCircle className="w-3 h-3 mr-1" />
+                          Verified
+                        </Badge>
                       ) : (
-                        "Verify"
+                        <Badge variant="destructive" className="bg-gradient-to-r from-red-500 to-rose-500 text-white border-0 shadow-md" data-testid="unverified-badge">
+                          <AlertCircle className="w-3 h-3 mr-1" />
+                          Not Verified
+                        </Badge>
                       )}
+                    </div>
+                    
+                    {!user.emailVerified && (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p className="text-red-700 mb-3">Please verify your email address to access all features.</p>
+                        <Button
+                          onClick={handleSendOtp}
+                          disabled={isSubmitting}
+                          className="bg-gradient-to-r from-terracotta to-terracotta-dark hover:from-terracotta-dark hover:to-terracotta text-white border-0 shadow-md"
+                          data-testid="verify-email-button"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Sending...
+                            </>
+                          ) : (
+                            <>
+                              <Mail className="w-4 h-4 mr-2" />
+                              Verify Email
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* OTP Verification Card */}
+              {showOtpVerification && (
+                <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 shadow-xl border-0" data-testid="otp-card">
+                  <CardHeader>
+                    <CardTitle className="text-xl text-blue-700">Email Verification</CardTitle>
+                    <CardDescription className="text-blue-600">
+                      Enter the verification code sent to {user.email}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleVerifyOtp} className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="otp" className="text-blue-700 font-semibold">Verification Code</Label>
+                        <Input
+                          id="otp"
+                          type="text"
+                          placeholder="Enter 6-digit code"
+                          value={otp}
+                          onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                          required
+                          disabled={isSubmitting}
+                          className="h-12 text-center text-lg tracking-wider border-blue-200 focus:border-blue-400"
+                          maxLength={6}
+                          data-testid="otp-input"
+                        />
+                      </div>
+
+                      <div className="flex gap-2">
+                        <Button
+                          type="submit"
+                          className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white"
+                          disabled={isSubmitting || otp.length !== 6}
+                          data-testid="verify-otp-button"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Verifying...
+                            </>
+                          ) : (
+                            "Verify"
+                          )}
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setShowOtpVerification(false)}
+                          disabled={isSubmitting}
+                          className="border-blue-200 text-blue-600 hover:bg-blue-50"
+                          data-testid="cancel-otp-button"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </form>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Account Actions */}
+              <Card className="bg-gradient-to-br from-white to-cream/30 shadow-xl border-0" data-testid="actions-card">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3 text-xl">
+                    <div className="w-8 h-8 bg-gradient-to-br from-terracotta to-terracotta-dark rounded-lg flex items-center justify-center">
+                      <Settings className="w-4 h-4 text-white" />
+                    </div>
+                    Quick Actions
+                  </CardTitle>
+                  <CardDescription>Manage your account and continue your shopping experience</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Link href="/shop" data-testid="link-shop">
+                      <Button variant="outline" className="w-full h-14 bg-gradient-to-br from-white to-cream/50 border-terracotta/30 hover:border-terracotta hover:bg-terracotta/5 transition-all duration-200">
+                        <ShoppingBag className="w-5 h-5 mr-2 text-terracotta" />
+                        <div className="text-left">
+                          <p className="font-medium">Continue Shopping</p>
+                          <p className="text-xs text-muted-foreground">Browse our collection</p>
+                        </div>
+                      </Button>
+                    </Link>
+                    
+                    <Button variant="outline" className="w-full h-14 bg-gradient-to-br from-white to-pink-50/50 border-pink-200 hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-testid="wishlist-button">
+                      <Heart className="w-5 h-5 mr-2 text-pink-500" />
+                      <div className="text-left">
+                        <p className="font-medium">My Wishlist</p>
+                        <p className="text-xs text-muted-foreground">Saved items</p>
+                      </div>
                     </Button>
+                    
                     <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => setShowOtpVerification(false)}
-                      disabled={isSubmitting}
+                      onClick={handleLogout}
+                      className="w-full h-14 bg-gradient-to-r from-red-500 to-rose-500 hover:from-red-600 hover:to-rose-600 text-white border-0 shadow-md transition-all duration-200"
+                      data-testid="logout-button"
                     >
-                      Cancel
+                      <LogOut className="w-5 h-5 mr-2" />
+                      <div className="text-left">
+                        <p className="font-medium">Sign Out</p>
+                        <p className="text-xs opacity-90">End your session</p>
+                      </div>
                     </Button>
                   </div>
-                </form>
-              </CardContent>
-            </Card>
-          )}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
 
           {/* Alerts */}
           {error && (
-            <Alert variant="destructive">
-              <AlertDescription>{error}</AlertDescription>
+            <Alert variant="destructive" className="mt-6 bg-gradient-to-r from-red-50 to-rose-50 border-red-200" data-testid="error-alert">
+              <AlertCircle className="w-4 h-4" />
+              <AlertDescription className="text-red-800">{error}</AlertDescription>
             </Alert>
           )}
 
           {success && (
-            <Alert className="border-green-200 bg-green-50">
+            <Alert className="mt-6 bg-gradient-to-r from-green-50 to-emerald-50 border-green-200" data-testid="success-alert">
               <CheckCircle className="w-4 h-4 text-green-600" />
               <AlertDescription className="text-green-700">{success}</AlertDescription>
             </Alert>
           )}
-
-          {/* Account Actions */}
-          <Card className="shadow-lg border-0">
-            <CardHeader>
-              <CardTitle>Account Actions</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Link href="/shop">
-                  <Button variant="outline" className="w-full h-12">
-                    Continue Shopping
-                  </Button>
-                </Link>
-                <Button
-                  onClick={handleLogout}
-                  variant="destructive"
-                  className="w-full h-12"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Sign Out
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
