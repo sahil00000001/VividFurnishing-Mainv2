@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { shopProducts } from '@/data/products';
@@ -16,7 +16,6 @@ import { useCart } from '@/lib/cartContext';
 import { useToast } from '@/hooks/use-toast';
 import { 
   Heart, 
-  Eye, 
   ShoppingCart, 
   Star, 
   Filter, 
@@ -27,7 +26,6 @@ import {
   X,
   Minus,
   Plus,
-  ZoomIn,
   Search,
   User,
   ShoppingBag,
@@ -98,26 +96,13 @@ export default function ShopPage() {
   const [wishlist, setWishlist] = useState<number[]>([]);
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<{[key: number]: number}>({});
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [animatingProducts, setAnimatingProducts] = useState<Set<number>>(new Set());
-  const [quantity, setQuantity] = useState(1);
-  const [isQuantityAnimating, setIsQuantityAnimating] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [isPriceAnimating, setIsPriceAnimating] = useState(false);
   
   // Use global cart context
   const { addToCart: addToGlobalCart, cart: globalCart, cartCount, updateQuantity, removeFromCart, isCartOpen, setIsCartOpen } = useCart();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   
-  // Update total price when quantity or selected product changes
-  useEffect(() => {
-    if (selectedProduct) {
-      setIsPriceAnimating(true);
-      setTotalPrice(selectedProduct.price * quantity);
-      setTimeout(() => setIsPriceAnimating(false), 300);
-    }
-  }, [quantity, selectedProduct]);
 
   const cartRef = useRef<HTMLButtonElement>(null);
   const productRefs = useRef<{[key: number]: HTMLDivElement | null}>({});
@@ -261,13 +246,6 @@ export default function ShopPage() {
     });
   };
 
-  // Quick View Modal
-  const openQuickView = (product: Product, event: React.MouseEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setSelectedProduct(product);
-    setIsQuickViewOpen(true);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -544,6 +522,7 @@ export default function ShopPage() {
                   style={{
                     animationDelay: `${index * 0.1}s`
                   }}
+                  onClick={() => setLocation(`/product/${product.id}`)}
                   onMouseEnter={() => {
                     setHoveredProduct(product.id);
                     setCurrentImageIndex(prev => ({ ...prev, [product.id]: 0 }));
@@ -597,24 +576,6 @@ export default function ShopPage() {
                           />
                         </Button>
                         
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="w-10 h-10 rounded-full p-0 backdrop-blur-sm bg-white/80 hover:bg-white transition-all duration-300"
-                          onClick={(e) => openQuickView(product, e)}
-                          data-testid={`quick-view-${product.id}`}
-                        >
-                          <Eye className="w-4 h-4 text-gray-600" />
-                        </Button>
-                        
-                        <Button
-                          size="sm"
-                          variant="secondary"
-                          className="w-10 h-10 rounded-full p-0 backdrop-blur-sm bg-white/80 hover:bg-white transition-all duration-300"
-                          data-testid={`zoom-${product.id}`}
-                        >
-                          <ZoomIn className="w-4 h-4 text-gray-600" />
-                        </Button>
                       </div>
 
                       {/* Badge */}
@@ -703,119 +664,6 @@ export default function ShopPage() {
         </div>
       </div>
 
-      {/* Quick View Modal */}
-      <Dialog open={isQuickViewOpen} onOpenChange={setIsQuickViewOpen}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom-10 duration-500">
-          {selectedProduct && (
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Image Gallery */}
-              <div className="space-y-4">
-                <div className="aspect-square overflow-hidden rounded-lg group">
-                  <img
-                    src={selectedProduct.images[0]}
-                    alt={selectedProduct.name}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                </div>
-                <div className="grid grid-cols-4 gap-2">
-                  {selectedProduct.images.slice(1).map((image, index) => (
-                    <div key={index} className="aspect-square overflow-hidden rounded-lg">
-                      <img
-                        src={image}
-                        alt={`${selectedProduct.name} ${index + 2}`}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Product Details */}
-              <div className="space-y-4">
-                <div>
-                  <h2 className="font-serif text-2xl font-bold mb-2">{selectedProduct.name}</h2>
-                  <div className="flex items-center space-x-2 mb-4">
-                    <div className="flex">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-4 h-4 ${
-                            i < Math.floor(selectedProduct.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-sm text-muted-foreground">
-                      {selectedProduct.rating} ({selectedProduct.reviews} reviews)
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <span className={`text-2xl font-bold text-terracotta transition-all duration-300 ${
-                    isPriceAnimating ? 'animate-priceCountUp' : ''
-                  }`}>
-                    ₹{totalPrice.toLocaleString()}
-                  </span>
-                  {selectedProduct.originalPrice && (
-                    <span className="text-lg text-muted-foreground line-through">
-                      ₹{(selectedProduct.originalPrice * quantity).toLocaleString()}
-                    </span>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <p><strong>Category:</strong> {selectedProduct.category}</p>
-                  <p><strong>Material:</strong> {selectedProduct.material}</p>
-                  <p><strong>Color:</strong> {selectedProduct.color}</p>
-                  <p><strong>Availability:</strong> 
-                    <span className={selectedProduct.inStock ? 'text-green-600' : 'text-red-600'}>
-                      {selectedProduct.inStock ? ' In Stock' : ' Out of Stock'}
-                    </span>
-                  </p>
-                </div>
-
-                {/* Quantity Selector with Animation */}
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center border rounded-lg">
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                      <Minus className="w-4 h-4" />
-                    </Button>
-                    <div className="w-12 h-8 flex items-center justify-center font-mono text-lg">
-                      1
-                    </div>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                      <Plus className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                <div className="flex space-x-2">
-                  <Button
-                    className="flex-1 bg-terracotta hover:bg-terracotta-dark"
-                    onClick={(e) => {
-                      addToCart(selectedProduct.id, e);
-                      setIsQuickViewOpen(false);
-                    }}
-                    disabled={!selectedProduct.inStock}
-                  >
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    Add to Cart
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className={wishlist.includes(selectedProduct.id) ? 'text-red-500 border-red-500' : ''}
-                    onClick={(e) => toggleWishlist(selectedProduct.id, e)}
-                    data-testid={`wishlist-modal-${selectedProduct.id}`}
-                  >
-                    <Heart className={`w-4 h-4 transition-all duration-300 ${wishlist.includes(selectedProduct.id) ? 'fill-current animate-heartPulse' : ''}`} />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
 
       {/* Cart Modal */}
       <Dialog open={isCartOpen} onOpenChange={setIsCartOpen}>

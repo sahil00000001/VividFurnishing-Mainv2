@@ -7,6 +7,7 @@ import { CartProvider } from "@/lib/cartContext";
 import { AuthProvider } from "@/lib/authContext";
 import Home from "@/pages/home";
 import Shop from "@/pages/shop";
+import Product from "@/pages/product";
 import About from "@/pages/about";
 import Blog from "@/pages/blog";
 import Category from "@/pages/category";
@@ -20,6 +21,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/shop" component={Shop} />
+      <Route path="/product/:id" component={Product} />
       <Route path="/category/:category" component={Category} />
       <Route path="/blog" component={Blog} />
       <Route path="/about" component={About} />
