@@ -1,0 +1,323 @@
+{
+  "success": true,
+  "count": 66,
+  "data": [
+    {
+      "_id": "68ce690873ebdfc938cebea6",
+      "Collection": "Rozmarra",
+      "Product_Name": "Gulal",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 180,
+      "Fabric": "100% Cotton",
+      "Color": "Red",
+      "Selling_Price": 1999,
+      "Qty_in_Stock": 30,
+      "Description": "Luxury for every day. The Rozmarra Collection makes everyday living feel special. Soft cotton fabrics and versatile designs ensure comfort and elegance that seamlessly fit into daily life.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebea7",
+      "Collection": "Rozmarra",
+      "Product_Name": "Mitti",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 180,
+      "Fabric": "100% Cotton",
+      "Color": "Brown",
+      "Selling_Price": 1999,
+      "Qty_in_Stock": 30,
+      "Description": "Luxury for every day. The Rozmarra Collection makes everyday living feel special. Soft cotton fabrics and versatile designs ensure comfort and elegance that seamlessly fit into daily life.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebea8",
+      "Collection": "Rozmarra",
+      "Product_Name": "Neel",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 180,
+      "Fabric": "100% Cotton",
+      "Color": "Blue",
+      "Selling_Price": 1999,
+      "Qty_in_Stock": 30,
+      "Description": "Luxury for every day. The Rozmarra Collection makes everyday living feel special. Soft cotton fabrics and versatile designs ensure comfort and elegance that seamlessly fit into daily life.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebea9",
+      "Collection": "Rozmarra",
+      "Product_Name": "Jamuni",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 180,
+      "Fabric": "100% Cotton",
+      "Color": "Purple",
+      "Selling_Price": 1999,
+      "Qty_in_Stock": 30,
+      "Description": "Luxury for every day. The Rozmarra Collection makes everyday living feel special. Soft cotton fabrics and versatile designs ensure comfort and elegance that seamlessly fit into daily life.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebeaa",
+      "Collection": "Rozmarra",
+      "Product_Name": "Chaandh",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 180,
+      "Fabric": "100% Cotton",
+      "Color": "Grey",
+      "Selling_Price": 1999,
+      "Qty_in_Stock": 30,
+      "Description": "Luxury for every day. The Rozmarra Collection makes everyday living feel special. Soft cotton fabrics and versatile designs ensure comfort and elegance that seamlessly fit into daily life.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebeab",
+      "Collection": "Rozmarra",
+      "Product_Name": "Surajmukhi",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 180,
+      "Fabric": "100% Cotton",
+      "Color": "Orange",
+      "Selling_Price": 1999,
+      "Qty_in_Stock": 30,
+      "Description": "Luxury for every day. The Rozmarra Collection makes everyday living feel special. Soft cotton fabrics and versatile designs ensure comfort and elegance that seamlessly fit into daily life.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebeac",
+      "Collection": "Rozmarra",
+      "Product_Name": "Aasmaan",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 180,
+      "Fabric": "100% Cotton",
+      "Color": "Blue",
+      "Selling_Price": 1999,
+      "Qty_in_Stock": 30,
+      "Description": "Luxury for every day. The Rozmarra Collection makes everyday living feel special. Soft cotton fabrics and versatile designs ensure comfort and elegance that seamlessly fit into daily life.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebead",
+      "Collection": "Rozmarra",
+      "Product_Name": "Gulabi",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 180,
+      "Fabric": "100% Cotton",
+      "Color": "Pink",
+      "Selling_Price": 1999,
+      "Qty_in_Stock": 30,
+      "Description": "Luxury for every day. The Rozmarra Collection makes everyday living feel special. Soft cotton fabrics and versatile designs ensure comfort and elegance that seamlessly fit into daily life.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebeae",
+      "Collection": "Gulnaar",
+      "Product_Name": "Shwet",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 210,
+      "Fabric": "100% Cotton",
+      "Color": "Off White",
+      "Selling_Price": 2249,
+      "Qty_in_Stock": 30,
+      "Description": "Delicate elegance, timeless charm. The Gulnaar Collection reflects the richness of fine design with a feminine touch. Intricate detailing and graceful patterns make it perfect for creating spaces full of warmth and beauty.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebeaf",
+      "Collection": "Gulnaar",
+      "Product_Name": "Baalu",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 210,
+      "Fabric": "100% Cotton",
+      "Color": "Beige",
+      "Selling_Price": 2249,
+      "Qty_in_Stock": 30,
+      "Description": "Delicate elegance, timeless charm. The Gulnaar Collection reflects the richness of fine design with a feminine touch. Intricate detailing and graceful patterns make it perfect for creating spaces full of warmth and beauty.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
+    {
+      "_id": "68ce690873ebdfc938cebeb0",
+      "Collection": "Gulnaar",
+      "Product_Name": "Safed",
+      "Category": "Bedding",
+      "Sub_Category": [
+        "Bedsheet",
+        "Pillow covers"
+      ],
+      "Size": "King",
+      "Dimensions": "108x108 inch",
+      "Net_Qty": 3,
+      "Thread_Count": 210,
+      "Fabric": "100% Cotton",
+      "Color": "White",
+      "Selling_Price": 2249,
+      "Qty_in_Stock": 30,
+      "Description": "Delicate elegance, timeless charm. The Gulnaar Collection reflects the richness of fine design with a feminine touch. Intricate detailing and graceful patterns make it perfect for creating spaces full of warmth and beauty.",
+      "Wash_Care_Instructions": [
+        "Machine wash on gentle cycle with similar colors.",
+        "Use cold or lukewarm water (up to 30°C).",
+        "Prefer mild, liquid detergent.",
+        "Do not bleach or use harsh chemicals.",
+        "Line dry in shade or tumble dry on low heat.",
+        "Warm iron if needed.",
+        "Dry cleaning is not required.",
+        "Note: Wash separately the first time to avoid color transfer."
+      ]
+    },
