@@ -40,7 +40,7 @@ export function PremiumTabs() {
   };
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-6">
         {/* Section Header with Decorative Lines */}
         <div className="text-center mb-16">

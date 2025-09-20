@@ -9,6 +9,7 @@ import { PremiumTabs } from "@/components/PremiumTabs";
 import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
 import { bestSellers, luxuryProducts } from "@/data/products";
 import { Footer } from "@/components/Footer";
+import { Testimonials } from "@/components/Testimonials";
 import newsletterBgImage from "@assets/Group 48_1758371284588.png";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -128,7 +129,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <Header />
 
@@ -162,7 +163,7 @@ export default function Home() {
       </section>
 
       {/* Shop by Category Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           {/* Section Title with Decorative Lines */}
           <div className="text-center mb-16">
@@ -186,7 +187,7 @@ export default function Home() {
                     className="text-center group cursor-pointer" 
                     data-testid={`category-${category.id}`}
                   >
-                    <div className="w-24 h-24 md:w-32 md:h-32 bg-cream rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-cream-dark transition-colors duration-200">
+                    <div className="w-24 h-24 md:w-32 md:h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-200 transition-colors duration-200">
                       <IconComponent className="text-terracotta text-2xl md:text-3xl w-8 h-8 md:w-12 md:h-12" />
                     </div>
                     <p className="text-foreground font-medium" data-testid={`category-name-${category.id}`}>
@@ -265,10 +266,10 @@ export default function Home() {
       </section>
 
       {/* Best Sellers Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="border border-cream-dark rounded-2xl p-8 md:p-12">
+            <div className="border border-gray-200 rounded-2xl p-8 md:p-12">
               <div className="flex flex-col lg:flex-row gap-12 items-center">
                 {/* Left Content Area - 30% */}
                 <div className="lg:w-[30%] space-y-6">
@@ -307,10 +308,10 @@ export default function Home() {
       </section>
 
       {/* Luxury Choice Section */}
-      <section className="py-16 bg-gradient-to-br from-background to-cream">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="border-2 border-terracotta rounded-2xl p-6 md:p-8 bg-gradient-to-r from-cream to-background shadow-xl">
+            <div className="border-2 border-terracotta rounded-2xl p-6 md:p-8 bg-white shadow-xl">
               <div className="flex flex-col lg:flex-row gap-8 items-center">
                 {/* Left Product Showcase - 70% */}
                 <div className="lg:w-[70%] order-2 lg:order-1">
@@ -362,7 +363,7 @@ export default function Home() {
 
 
       {/* Flash Sale Section */}
-      <section className="py-20 lg:py-24 bg-background">
+      <section className="py-20 lg:py-24 bg-white">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch">
@@ -556,18 +557,18 @@ export default function Home() {
           </div>
 
           {/* Two Column Layout */}
-          <div className="grid lg:grid-cols-[45%_55%] gap-12 lg:gap-16 max-w-7xl mx-auto items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto items-center justify-center">
             {/* Left Side - Contact Form */}
             <div className="order-2 lg:order-1">
               <div 
-                className="p-10 rounded-3xl shadow-lg"
+                className="p-6 rounded-3xl shadow-lg"
                 style={{
                   backgroundColor: '#F5E6D3',
                   boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
                 }}
               >
                 <Form {...bulkOrderForm}>
-                  <form onSubmit={bulkOrderForm.handleSubmit(handleBulkOrderSubmit)} className="space-y-8">
+                  <form onSubmit={bulkOrderForm.handleSubmit(handleBulkOrderSubmit)} className="space-y-6">
                     {/* Full Name Field */}
                     <FormField
                       control={bulkOrderForm.control}
@@ -584,7 +585,7 @@ export default function Home() {
                             <Input
                               placeholder="Your full name"
                               {...field}
-                              className="w-full h-12 px-0 py-3 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0"
+                              className="w-full h-10 px-0 py-2 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0"
                               style={{ 
                                 fontSize: '16px',
                                 color: '#2C1810'
@@ -614,7 +615,7 @@ export default function Home() {
                               type="email"
                               placeholder="yourname@example.com"
                               {...field}
-                              className="w-full h-12 px-0 py-3 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0"
+                              className="w-full h-10 px-0 py-2 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0"
                               style={{ 
                                 fontSize: '16px',
                                 color: '#2C1810'
@@ -644,7 +645,7 @@ export default function Home() {
                               type="tel"
                               placeholder="+91 98765 43210"
                               {...field}
-                              className="w-full h-12 px-0 py-3 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0"
+                              className="w-full h-10 px-0 py-2 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0"
                               style={{ 
                                 fontSize: '16px',
                                 color: '#2C1810'
@@ -691,7 +692,7 @@ export default function Home() {
                     <Button
                       type="submit"
                       disabled={bulkOrderForm.formState.isSubmitting}
-                      className="w-full h-12 text-white font-bold text-lg rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                      className="w-full h-10 text-white font-bold text-base rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
                       style={{
                         background: 'linear-gradient(135deg, #AF4C0F 0%, #D85A1F 100%)',
                         letterSpacing: '0.5px'
@@ -705,71 +706,47 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Side - D-Shaped Image Composition */}
+            {/* Right Side - Curved Rectangle Figure */}
             <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Main D-Shaped Container */}
+              <div className="relative lg:w-[380px] lg:h-[490px]" data-testid="bulk-figure">
+                {/* Main Image Container - Only top-left curved */}
                 <div 
-                  className="relative overflow-hidden group cursor-pointer"
+                  className="absolute left-0 top-0 w-[350px] h-[450px] overflow-hidden shadow-[4px_15px_27.1px_7px_rgba(0,0,0,0.25)]"
                   style={{
-                    width: 'clamp(320px, 90vw, 550px)',
-                    height: 'clamp(400px, 120vw, 700px)',
-                    borderRadius: 'clamp(160px, 45vw, 350px) 0 0 clamp(160px, 45vw, 350px)',
-                    border: 'clamp(8px, 2vw, 15px) solid #AF4C0F',
-                    maxWidth: '90vw'
+                    borderRadius: '210px 0 0 0'
                   }}
+                  data-testid="bulk-figure-image"
                 >
                   {/* Furniture Image */}
                   <img
                     src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000"
                     alt="Luxury furniture collection"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    style={{ objectPosition: 'center' }}
-                  />
-                  
-                  {/* Inner Orange Circle Accent */}
-                  <div 
-                    className="absolute"
-                    style={{
-                      width: '300px',
-                      height: '300px',
-                      border: '12px solid #AF4C0F',
-                      borderRadius: '50%',
-                      top: '25%',
-                      left: '-15%',
-                      clipPath: 'polygon(30% 0%, 100% 0%, 100% 100%, 30% 100%)'
-                    }}
+                    className="w-full h-full object-cover object-left-top group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
 
-                {/* Bottom Brown Bar */}
+                {/* Border Frame */}
                 <div 
-                  className="absolute bottom-0"
+                  className="pointer-events-none absolute left-[33px] top-[38px] w-[342px] h-[450px] border-[8px] border-[#AF4C0F]"
                   style={{
-                    background: '#582308',
-                    height: 'clamp(80px, 15vw, 120px)',
-                    width: 'calc(100% - clamp(8px, 2vw, 15px))',
-                    left: 'clamp(8px, 2vw, 15px)',
-                    borderBottomLeftRadius: 'clamp(160px, 45vw, 350px)',
-                    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
-                    zIndex: 10
+                    borderRadius: '210px 0 0 0'
                   }}
+                  data-testid="bulk-figure-border"
                 />
 
-                {/* Additional decorative elements */}
+                {/* Bottom Straight Bar */}
                 <div 
-                  className="absolute top-20 -left-10 w-16 h-16 rounded-full opacity-20"
-                  style={{ backgroundColor: '#AF4C0F' }}
-                />
-                <div 
-                  className="absolute bottom-40 -right-8 w-12 h-12 rounded-full opacity-15"
-                  style={{ backgroundColor: '#D85A1F' }}
+                  className="absolute left-[97px] top-[415px] w-[280px] h-[75px] bg-[#582308] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+                  data-testid="bulk-figure-bar"
                 />
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <Testimonials />
 
       {/* Newsletter Section */}
       <section 

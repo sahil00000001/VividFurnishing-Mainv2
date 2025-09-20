@@ -1,0 +1,176 @@
+Prompt for Creating Animated Testimonials Section
+Section Overview
+Create a testimonials section with a dynamic animated background and static testimonial cards in the foreground.
+Background Animation Design
+Marquee Text Animation Setup:
+
+Text Content: "· Testimonials ·" (with middle dots as separators)
+Font: Playfair Display, 900 weight, 100px size
+Color: Brown base color rgb(88, 35, 8) with varying opacities
+Animation Type: Continuous horizontal scroll (right to left marquee)
+
+Row Configuration (5 rows total):
+
+Row 1 (top: 6155px):
+
+4 instances of "· Testimonials ·"
+Opacity variations: 0.07, 0.31 (darker/highlighted), 0.07, 0.07
+Staggered positioning for visual rhythm
+
+
+Row 2 (top: 6288px):
+
+Opacity variations: 0.31 (highlighted at different position), 0.07, 0.07, 0.07
+Offset starting position from Row 1
+
+
+Row 3 (top: 6421px):
+
+Opacity variations: 0.07, 0.07, 0.11, 0.07
+Different highlight position
+
+
+Row 4 (top: 6554px):
+
+Opacity variations: 0.07, 0.13, 0.07, 0.13
+Two semi-highlighted texts
+
+
+Row 5 (top: 6687px):
+
+All at 0.07 opacity for subtle background effect
+
+
+
+Animation Properties:
+
+Each row scrolls independently but simultaneously
+Seamless loop - when text exits left, it re-enters from right
+Speed variations between rows for dynamic effect
+Use CSS keyframes or JavaScript for smooth animation
+Consider using transform: translateX() for performance
+
+Foreground Testimonial Cards
+Card Structure:
+[Circle Image] [Name]
+              [★★★★☆ Rating]
+              ________________
+              
+              [Testimonial text content
+               spanning multiple lines...]
+Card Design Specifications:
+
+Container:
+
+White or light background with subtle shadow
+Rounded corners (8-12px radius)
+Padding: 20-30px
+Fixed width: ~400px
+Min-height to accommodate content
+
+
+User Image:
+
+Circular profile image
+Position: Top-left corner, slightly overlapping card edge
+Size: 60-80px diameter
+Border: 3px solid white or brand color
+Box-shadow for depth
+
+
+User Name:
+
+Font: Similar to main headings (Playfair Display or Prata)
+Position: Right of profile image
+Font-size: 18-20px
+Font-weight: 600
+Color: Dark brown #582308
+
+
+Rating:
+
+5-star rating system
+Filled stars: Terracotta/orange color #DBA352
+Empty stars: Light gray
+Position: Below name
+Include rating number (e.g., "5.0")
+
+
+Divider Line:
+
+Thin horizontal line
+Color: Light gray or terracotta with low opacity
+Margin: 10-15px top and bottom
+
+
+Testimonial Text:
+
+Font: Clean, readable (system font or Playfair Display)
+Font-size: 14-16px
+Line-height: 1.6
+Color: Dark gray or brown
+Text-align: left or justify
+
+
+
+Layout Arrangement
+
+Grid Layout: 2-3 cards per row on desktop
+Cards positioning: Centered over the animated background
+Z-index management:
+
+Background animation: z-index: 1
+Testimonial cards: z-index: 10
+
+
+Responsive: Stack cards vertically on mobile
+
+Implementation Notes
+
+Performance Optimization:
+
+Use CSS will-change: transform for animated elements
+Consider using requestAnimationFrame for smoother JS animations
+Implement lazy loading for images
+
+
+Accessibility:
+
+Add aria-label for ratings
+Ensure text contrast meets WCAG standards
+Consider adding pause button for animation (accessibility requirement)
+
+
+Interactive Elements:
+
+Optional: Add hover effects on cards (subtle scale or shadow)
+Optional: Click to pause/play animation
+Optional: Auto-rotate testimonial cards every 5-7 seconds
+
+
+
+Color Palette
+
+Primary Brown: #582308
+Terracotta/Orange: #DBA352
+Background animation opacity range: 0.07 to 0.31
+Card background: White or #FDFCFA
+Text colors: Dark brown for headings, medium brown for body text
+
+Example Animation CSS Structure
+css@keyframes scrollTestimonials {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.testimonial-row {
+  animation: scrollTestimonials 20s linear infinite;
+  white-space: nowrap;
+}
+
+.testimonial-row:nth-child(2) {
+  animation-duration: 25s;
+  animation-delay: -5s;
+}
+/* Different speeds and delays for each row */
+This creates an elegant, luxury furniture brand aesthetic with dynamic background movement while keeping the testimonials readable and prominent in the foreground.

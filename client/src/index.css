@@ -74,6 +74,32 @@
   100% { transform: scale(1); }
 }
 
+/* Testimonials Marquee Animations - Seamless Loop */
+@keyframes scrollTestimonials1 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollTestimonials2 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollTestimonials3 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollTestimonials4 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollTestimonials5 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* About Page Animations */
 @keyframes fade-in-up {
   from {
