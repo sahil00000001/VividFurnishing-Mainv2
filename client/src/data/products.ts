@@ -36,13 +36,6 @@ export interface ShopProduct {
 // Best Sellers dataset - maintains current home page styling
 export const bestSellers: HomeProduct[] = [
   {
-    id: 1,
-    name: "Tufted Leather Sofa",
-    price: "$2,499",
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-    alt: "Burnt orange tufted leather sofa"
-  },
-  {
     id: 2,
     name: "Papasan Chair",
     price: "$899",
@@ -55,6 +48,13 @@ export const bestSellers: HomeProduct[] = [
     price: "$649",
     image: "https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
     alt: "Powder blue modern accent chair with wooden legs"
+  },
+  {
+    id: 4,
+    name: "Artisan Velvet Sofa",
+    price: "$3,499",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
+    alt: "Luxurious beige velvet sofa with brass legs"
   }
 ];
 

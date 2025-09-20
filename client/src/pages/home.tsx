@@ -267,22 +267,47 @@ export default function Home() {
       </section>
 
       {/* Best Sellers Section */}
-      <section className="py-20 bg-white">
+      <section className="pt-20 pb-10 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="border border-gray-200 rounded-2xl p-8 md:p-12">
+            <div 
+              style={{
+                border: '2px solid #582308',
+                borderRadius: '20px',
+                width: '1485px',
+                height: '468px',
+                maxWidth: '100%'
+              }}
+              className="px-8 md:px-12 py-4 md:py-6"
+            >
               <div className="flex flex-col lg:flex-row gap-12 items-center">
                 {/* Left Content Area - 30% */}
                 <div className="lg:w-[30%] space-y-6">
-                  <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground" data-testid="bestsellers-title">
+                  <h3 
+                    className="text-3xl md:text-4xl font-bold text-foreground" 
+                    style={{ fontFamily: '"Playfair Display", serif' }}
+                    data-testid="bestsellers-title"
+                  >
                     BEST SELLERS
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed" data-testid="bestsellers-description">
+                  <p 
+                    className="text-muted-foreground leading-relaxed" 
+                    style={{ fontFamily: '"Playfair Display", serif' }}
+                    data-testid="bestsellers-description"
+                  >
                     Pizza Ipsum Dolor Meat Lovers Buffalo, Pepperoni Olives Steak Roll Pork Hawaiian, Philly Meatball Green Parmesan Philly.
                   </p>
                   <Button 
                     variant="outline"
-                    className="border-2 border-terracotta bg-transparent text-terracotta font-semibold px-5 py-2.5 rounded-md hover:bg-terracotta hover:text-white transition-all duration-200"
+                    style={{
+                      width: '198px',
+                      height: '72px',
+                      background: 'rgba(255, 255, 255, 0.47)',
+                      border: '9px solid #FFD0B3',
+                      borderRadius: '14px',
+                      boxSizing: 'border-box'
+                    }}
+                    className="text-terracotta font-semibold hover:bg-terracotta hover:text-white transition-all duration-200"
                     data-testid="button-explore-more"
                   >
                     Explore More
@@ -312,45 +337,58 @@ export default function Home() {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="border-2 border-terracotta rounded-2xl p-6 md:p-8 bg-white shadow-xl">
+            <div 
+              style={{
+                border: '2px solid #582308',
+                borderRadius: '20px',
+                width: '1485px',
+                height: '468px',
+                maxWidth: '100%'
+              }}
+              className="px-8 md:px-12 py-4 md:py-6 bg-white shadow-xl"
+            >
               <div className="flex flex-col lg:flex-row gap-8 items-center">
                 {/* Left Product Showcase - 70% */}
                 <div className="lg:w-[70%] order-2 lg:order-1">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {luxuryProducts.map((product) => (
-                      <div key={product.id} className="relative group cursor-pointer">
-                        <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow duration-200">
-                          <div className="aspect-square mb-3 overflow-hidden rounded-md">
-                            <img 
-                              src={product.image}
-                              alt={product.alt}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                            />
-                          </div>
-                          <div className="text-xs bg-terracotta text-white px-2 py-1 rounded-full inline-block mb-2">
-                            LUXURY
-                          </div>
-                          <h4 className="font-serif font-semibold text-sm mb-1">{product.name}</h4>
-                          <p className="text-terracotta font-bold text-lg">{product.price}</p>
-                          <Button size="sm" className="w-full mt-2 bg-terracotta hover:bg-terracotta-dark text-xs">
-                            VIEW LUXURY PIECE
-                          </Button>
-                        </div>
-                      </div>
+                      <ProductCard 
+                        key={product.id}
+                        product={product}
+                        variant="luxury"
+                        testIdPrefix="luxury-product"
+                      />
                     ))}
                   </div>
                 </div>
                 
                 {/* Right Content Area - 30% */}
                 <div className="lg:w-[30%] space-y-4 order-1 lg:order-2">
-                  <h3 className="font-serif text-3xl md:text-4xl font-bold text-foreground tracking-wider" data-testid="luxury-choice-title">
+                  <h3 
+                    className="text-3xl md:text-4xl font-bold text-foreground tracking-wider" 
+                    style={{ fontFamily: '"Playfair Display", serif' }}
+                    data-testid="luxury-choice-title"
+                  >
                     LUXURY CHOICE
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed" data-testid="luxury-choice-description">
+                  <p 
+                    className="text-muted-foreground leading-relaxed" 
+                    style={{ fontFamily: '"Playfair Display", serif' }}
+                    data-testid="luxury-choice-description"
+                  >
                     Discover our exclusive luxury collection featuring handpicked pieces that embody sophistication and elegance. Each item represents the pinnacle of craftsmanship and design excellence.
                   </p>
                   <Button 
-                    className="bg-gradient-to-r from-terracotta to-terracotta-dark text-white font-semibold px-6 py-3 rounded-lg hover:shadow-lg transition-all duration-300"
+                    variant="outline"
+                    style={{
+                      width: '198px',
+                      height: '72px',
+                      background: 'rgba(255, 255, 255, 0.47)',
+                      border: '9px solid #FFD0B3',
+                      borderRadius: '14px',
+                      boxSizing: 'border-box'
+                    }}
+                    className="text-terracotta font-semibold hover:bg-terracotta hover:text-white transition-all duration-200"
                     data-testid="button-luxury-explore-more"
                   >
                     EXPLORE LUXURY
