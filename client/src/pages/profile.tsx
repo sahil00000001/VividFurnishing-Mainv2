@@ -75,16 +75,28 @@ export default function Profile() {
 
   return (
     <div className="min-h-screen relative overflow-hidden" data-testid="profile-page">
-      {/* Background with elegant gradient and pattern */}
+      {/* Background with elegant gradient and animated elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-terracotta/10 via-cream to-terracotta/20"></div>
+      
+      {/* Moving geometric shapes */}
+      <div className="absolute inset-0">
+        <div className="floating-shape floating-shape-1"></div>
+        <div className="floating-shape floating-shape-2"></div>
+        <div className="floating-shape floating-shape-3"></div>
+        <div className="floating-shape floating-shape-4"></div>
+        <div className="floating-shape floating-shape-5"></div>
+        <div className="floating-shape floating-shape-6"></div>
+      </div>
+      
+      {/* Subtle pattern overlay */}
       <div className="absolute inset-0" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b5835a' fill-opacity='0.05'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        opacity: 0.3
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b5835a' fill-opacity='0.03'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        opacity: 0.2
       }}></div>
       
       <Header variant="solid" className="relative bg-white/95 backdrop-blur-md shadow-lg border-b border-terracotta/20" />
       
-      <div className="relative container mx-auto px-6 pt-32 pb-12">
+      <div className="relative container mx-auto px-6 pt-20 pb-12">
         <div className="max-w-6xl mx-auto">
           
           {/* Welcome Header with elegant design */}

@@ -170,6 +170,149 @@
   100% { transform: rotateX(0); }
 }
 
+/* Profile Page Background Animations */
+@keyframes floatAround1 {
+  0%, 100% { 
+    transform: translate(0px, 0px) rotate(0deg);
+    opacity: 0.4;
+  }
+  25% { 
+    transform: translate(30px, -20px) rotate(90deg);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: translate(-10px, -30px) rotate(180deg);
+    opacity: 0.3;
+  }
+  75% { 
+    transform: translate(-25px, 10px) rotate(270deg);
+    opacity: 0.5;
+  }
+}
+
+@keyframes floatAround2 {
+  0%, 100% { 
+    transform: translate(0px, 0px) rotate(0deg) scale(1);
+    opacity: 0.3;
+  }
+  33% { 
+    transform: translate(-40px, 25px) rotate(120deg) scale(1.2);
+    opacity: 0.5;
+  }
+  66% { 
+    transform: translate(20px, -15px) rotate(240deg) scale(0.8);
+    opacity: 0.4;
+  }
+}
+
+@keyframes floatAround3 {
+  0%, 100% { 
+    transform: translate(0px, 0px) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: translate(25px, 35px) rotate(180deg);
+    opacity: 0.2;
+  }
+}
+
+@keyframes gentleFloat {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes slowDrift {
+  0%, 100% { 
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.4;
+  }
+  25% { 
+    transform: translate(15px, -10px) scale(1.1);
+    opacity: 0.2;
+  }
+  50% { 
+    transform: translate(-5px, -25px) scale(0.9);
+    opacity: 0.5;
+  }
+  75% { 
+    transform: translate(-20px, 5px) scale(1.05);
+    opacity: 0.3;
+  }
+}
+
+/* Floating shapes styles */
+.floating-shape {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-shape-1 {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, rgba(181, 131, 90, 0.15), rgba(181, 131, 90, 0.05));
+  top: 10%;
+  left: 15%;
+  animation: floatAround1 25s ease-in-out infinite;
+}
+
+.floating-shape-2 {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(45deg, rgba(208, 165, 132, 0.12), rgba(208, 165, 132, 0.03));
+  top: 70%;
+  right: 20%;
+  animation: floatAround2 30s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+.floating-shape-3 {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(225deg, rgba(181, 131, 90, 0.18), rgba(181, 131, 90, 0.08));
+  top: 40%;
+  right: 10%;
+  animation: gentleFloat 20s ease-in-out infinite;
+  animation-delay: -10s;
+}
+
+.floating-shape-4 {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(315deg, rgba(208, 165, 132, 0.1), rgba(208, 165, 132, 0.02));
+  bottom: 20%;
+  left: 25%;
+  animation: slowDrift 35s ease-in-out infinite;
+  animation-delay: -15s;
+}
+
+.floating-shape-5 {
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(180deg, rgba(181, 131, 90, 0.14), rgba(181, 131, 90, 0.06));
+  top: 25%;
+  left: 65%;
+  animation: floatAround3 22s ease-in-out infinite;
+  animation-delay: -8s;
+}
+
+.floating-shape-6 {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(90deg, rgba(208, 165, 132, 0.13), rgba(208, 165, 132, 0.04));
+  bottom: 40%;
+  right: 35%;
+  animation: gentleFloat 28s ease-in-out infinite;
+  animation-delay: -18s;
+}
+
 @keyframes slideInFromLeft {
   from {
     opacity: 0;
