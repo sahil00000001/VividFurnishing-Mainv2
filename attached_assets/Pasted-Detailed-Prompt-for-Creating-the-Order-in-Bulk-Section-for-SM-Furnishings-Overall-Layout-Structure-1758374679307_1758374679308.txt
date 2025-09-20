@@ -1,0 +1,166 @@
+Detailed Prompt for Creating the "Order in Bulk" Section for SM Furnishings
+Overall Layout Structure
+Create a two-column layout section with a 45-55 split ratio (form takes 45%, image composition takes 55%). The entire section should have a clean, luxury furniture aesthetic with terracotta/orange accent colors matching the SM Furnishings brand.
+Section Header
+Position: Centered at the top of the section
+Main Title: "Order In Bulk?" - Use an elegant serif or modern sans-serif font, size 48-56px, dark brown color (#2C1810)
+Subtitle: "Fill the form below to get in touch for bulk orders" - Lighter weight, size 16-18px, gray color (#666666)
+Spacing: Add 20px margin below subtitle before the main content
+Left Side - Contact Form Design
+Form Container:
+
+Background: Soft beige/cream color (#F5E6D3) with subtle transparency
+Border radius: 15-20px for smooth, modern corners
+Padding: 40px internal spacing
+Box shadow: Subtle shadow (0 4px 20px rgba(0,0,0,0.08))
+
+Form Fields Structure:
+
+Full Name Field
+
+Label: "Full Name" in uppercase, small size (12px), letter-spacing: 1px
+Input: Clean border-bottom style only (no full border)
+Placeholder: "Your full name" in light gray
+Height: 45px with generous padding
+
+
+Email Field
+
+Same styling as name field
+Placeholder: "yourname@example.com"
+Add email validation indicators
+
+
+Phone Number Field
+
+Include country code selector if needed
+Placeholder: "+91 98765 43210"
+Number formatting as user types
+
+
+Order Description Field
+
+Textarea instead of input
+Minimum 4 rows height
+Placeholder: "Explain your order and requirements here..."
+Resizable vertically only
+
+
+Submit Button
+
+Text: "Get In Touch"
+Background: Terracotta/orange gradient (#AF4C0F to #D85A1F)
+Full width or centered 200px width
+Height: 50px
+Border radius: 25px (pill-shaped)
+Hover effect: Darken by 10% with smooth transition
+Text: White, bold, 16px
+
+
+
+Right Side - D-Shaped Image Composition
+Main Structure - The "D" Shape:
+
+Outer D Container:
+
+Create a large D-shaped container using border-radius
+Dimensions: Approximately 550px width × 700px height
+Border-radius: Apply 350px to top-left and bottom-left, keep right side straight
+This creates the curved left side of the "D"
+
+
+Border Implementation:
+
+Add a thick border (13-15px) in terracotta color (#AF4C0F)
+Border should follow the D-shape perfectly
+Consider using CSS clip-path or SVG for precise control
+
+
+Image Placement:
+
+Main furniture image should fill the D-shape
+Use object-fit: cover to maintain aspect ratio
+Position the most important part of the image in the visible area
+
+
+Bottom Brown Bar:
+
+Position: Absolute at the bottom of the D
+Background: Dark brown (#582308)
+Height: Approximately 120px
+Width: Should extend from the curved edge to the straight edge
+Box shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+This creates a "shelf" or "ground" effect for the furniture
+
+
+Inner Orange Circle Accent:
+
+Create a circular border element
+Position it to overlap the main image
+Only show approximately 60-70% of the circle
+Border color: Same terracotta (#AF4C0F)
+Border width: 10-12px
+This adds visual interest and frames a specific furniture piece
+
+
+
+Responsive Design Considerations
+Desktop (>1200px):
+
+Maintain side-by-side layout
+Full D-shape visible
+
+Tablet (768px - 1200px):
+
+Reduce D-shape size proportionally
+Adjust form padding
+Consider stacking if space is too tight
+
+Mobile (<768px):
+
+Stack vertically: Header → Form → D-shape image
+Transform D-shape to a simpler rounded rectangle
+Make form fields full-width
+Reduce overall padding
+
+Visual Effects & Interactions
+
+Form Field Focus States:
+
+Border-bottom changes to terracotta color
+Subtle background highlight
+Label floats up (if using floating labels)
+
+
+Image Hover Effect:
+
+Slight zoom (1.05 scale)
+Subtle brightness increase
+Smooth transition (0.3s ease)
+
+
+Loading States:
+
+Button shows spinner on submit
+Form fields disable during submission
+Success message appears in place of form
+
+
+
+Color Palette Summary
+
+Primary: Terracotta/Orange (#AF4C0F)
+Secondary: Dark Brown (#582308)
+Background: Cream/Beige (#F5E6D3)
+Text Primary: Dark Brown (#2C1810)
+Text Secondary: Gray (#666666)
+White: #FFFFFF
+
+Implementation Tips
+
+For the D-Shape: Use CSS combination of border-radius and overflow:hidden, or create an SVG mask for precise control
+Image Quality: Use high-resolution furniture images (minimum 1200px width) with WebP format for performance
+Accessibility: Ensure all form fields have proper labels, ARIA attributes, and keyboard navigation
+Performance: Lazy load the image, optimize file sizes, use CSS transforms for animations instead of position changes
+
+This design creates a sophisticated, modern bulk order section that aligns with luxury furniture branding while maintaining usability and visual appeal.

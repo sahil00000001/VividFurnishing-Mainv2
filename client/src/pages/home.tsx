@@ -9,6 +9,13 @@ import { PremiumTabs } from "@/components/PremiumTabs";
 import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
 import { bestSellers, luxuryProducts } from "@/data/products";
 import { Footer } from "@/components/Footer";
+import newsletterBgImage from "@assets/Group 48_1758371284588.png";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
 const categories = [
   { id: 1, name: "Rocking Chair", icon: Armchair },
@@ -19,10 +26,30 @@ const categories = [
   { id: 6, name: "Decorative Vase", icon: Flower },
 ];
 
+// Bulk Order Form Schema
+const bulkOrderSchema = z.object({
+  fullName: z.string().min(2, "Full name must be at least 2 characters").max(50, "Full name must be less than 50 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  phone: z.string().min(10, "Phone number must be at least 10 digits").regex(/^[\+]?[\d\s\-\(\)]+$/, "Please enter a valid phone number"),
+  orderDescription: z.string().min(10, "Please provide at least 10 characters describing your order").max(500, "Description must be less than 500 characters")
+});
+
 
 export default function Home() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [email, setEmail] = useState("");
+  const { toast } = useToast();
+  
+  // Bulk Order Form with react-hook-form and zod
+  const bulkOrderForm = useForm<z.infer<typeof bulkOrderSchema>>({
+    resolver: zodResolver(bulkOrderSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      orderDescription: ""
+    }
+  });
   
   // Countdown timer state
   const [timeLeft, setTimeLeft] = useState({
@@ -88,6 +115,16 @@ export default function Home() {
       console.log("Newsletter subscription:", email);
       setEmail("");
     }
+  };
+
+  const handleBulkOrderSubmit = (values: z.infer<typeof bulkOrderSchema>) => {
+    console.log("Bulk order form submitted:", values);
+    // Here you would typically send the data to your backend
+    toast({
+      title: "Thank you for your inquiry!",
+      description: "We'll get back to you within 24 hours regarding your bulk order.",
+    });
+    bulkOrderForm.reset();
   };
 
   return (
@@ -490,42 +527,271 @@ export default function Home() {
       {/* Service Features Bar */}
       <ServiceFeaturesBar />
 
+      {/* Order in Bulk Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 
+              className="mb-4"
+              style={{
+                fontFamily: "'Prata', serif",
+                fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+                color: '#2C1810',
+                fontWeight: 'normal'
+              }}
+            >
+              Order In Bulk?
+            </h2>
+            <p 
+              className="text-lg"
+              style={{
+                color: '#666666',
+                fontSize: '18px',
+                fontWeight: '400'
+              }}
+            >
+              Fill the form below to get in touch for bulk orders
+            </p>
+          </div>
+
+          {/* Two Column Layout */}
+          <div className="grid lg:grid-cols-[45%_55%] gap-12 lg:gap-16 max-w-7xl mx-auto items-center">
+            {/* Left Side - Contact Form */}
+            <div className="order-2 lg:order-1">
+              <div 
+                className="p-10 rounded-3xl shadow-lg"
+                style={{
+                  backgroundColor: '#F5E6D3',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
+                }}
+              >
+                <Form {...bulkOrderForm}>
+                  <form onSubmit={bulkOrderForm.handleSubmit(handleBulkOrderSubmit)} className="space-y-8">
+                    {/* Full Name Field */}
+                    <FormField
+                      control={bulkOrderForm.control}
+                      name="fullName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel 
+                            className="block uppercase tracking-wider text-xs font-semibold"
+                            style={{ color: '#2C1810', letterSpacing: '1px' }}
+                          >
+                            FULL NAME
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Your full name"
+                              {...field}
+                              className="w-full h-12 px-0 py-3 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0"
+                              style={{ 
+                                fontSize: '16px',
+                                color: '#2C1810'
+                              }}
+                              data-testid="input-bulk-fullname"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Email Field */}
+                    <FormField
+                      control={bulkOrderForm.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel 
+                            className="block uppercase tracking-wider text-xs font-semibold"
+                            style={{ color: '#2C1810', letterSpacing: '1px' }}
+                          >
+                            EMAIL
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="email"
+                              placeholder="yourname@example.com"
+                              {...field}
+                              className="w-full h-12 px-0 py-3 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0"
+                              style={{ 
+                                fontSize: '16px',
+                                color: '#2C1810'
+                              }}
+                              data-testid="input-bulk-email"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Phone Number Field */}
+                    <FormField
+                      control={bulkOrderForm.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel 
+                            className="block uppercase tracking-wider text-xs font-semibold"
+                            style={{ color: '#2C1810', letterSpacing: '1px' }}
+                          >
+                            PHONE NUMBER
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="tel"
+                              placeholder="+91 98765 43210"
+                              {...field}
+                              className="w-full h-12 px-0 py-3 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0"
+                              style={{ 
+                                fontSize: '16px',
+                                color: '#2C1810'
+                              }}
+                              data-testid="input-bulk-phone"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Order Description Field */}
+                    <FormField
+                      control={bulkOrderForm.control}
+                      name="orderDescription"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel 
+                            className="block uppercase tracking-wider text-xs font-semibold"
+                            style={{ color: '#2C1810', letterSpacing: '1px' }}
+                          >
+                            ORDER DESCRIPTION
+                          </FormLabel>
+                          <FormControl>
+                            <Textarea
+                              rows={4}
+                              placeholder="Explain your order and requirements here..."
+                              {...field}
+                              className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-300 focus:border-orange-600 focus:outline-none transition-colors duration-300 resize-y min-h-[100px] focus-visible:ring-0 focus-visible:ring-offset-0"
+                              style={{ 
+                                fontSize: '16px',
+                                color: '#2C1810'
+                              }}
+                              data-testid="textarea-bulk-description"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    {/* Submit Button */}
+                    <Button
+                      type="submit"
+                      disabled={bulkOrderForm.formState.isSubmitting}
+                      className="w-full h-12 text-white font-bold text-lg rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                      style={{
+                        background: 'linear-gradient(135deg, #AF4C0F 0%, #D85A1F 100%)',
+                        letterSpacing: '0.5px'
+                      }}
+                      data-testid="button-bulk-submit"
+                    >
+                      {bulkOrderForm.formState.isSubmitting ? 'Sending...' : 'Get In Touch'}
+                    </Button>
+                  </form>
+                </Form>
+              </div>
+            </div>
+
+            {/* Right Side - D-Shaped Image Composition */}
+            <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+              <div className="relative">
+                {/* Main D-Shaped Container */}
+                <div 
+                  className="relative overflow-hidden group cursor-pointer"
+                  style={{
+                    width: 'clamp(320px, 90vw, 550px)',
+                    height: 'clamp(400px, 120vw, 700px)',
+                    borderRadius: 'clamp(160px, 45vw, 350px) 0 0 clamp(160px, 45vw, 350px)',
+                    border: 'clamp(8px, 2vw, 15px) solid #AF4C0F',
+                    maxWidth: '90vw'
+                  }}
+                >
+                  {/* Furniture Image */}
+                  <img
+                    src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000"
+                    alt="Luxury furniture collection"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    style={{ objectPosition: 'center' }}
+                  />
+                  
+                  {/* Inner Orange Circle Accent */}
+                  <div 
+                    className="absolute"
+                    style={{
+                      width: '300px',
+                      height: '300px',
+                      border: '12px solid #AF4C0F',
+                      borderRadius: '50%',
+                      top: '25%',
+                      left: '-15%',
+                      clipPath: 'polygon(30% 0%, 100% 0%, 100% 100%, 30% 100%)'
+                    }}
+                  />
+                </div>
+
+                {/* Bottom Brown Bar */}
+                <div 
+                  className="absolute bottom-0"
+                  style={{
+                    background: '#582308',
+                    height: 'clamp(80px, 15vw, 120px)',
+                    width: 'calc(100% - clamp(8px, 2vw, 15px))',
+                    left: 'clamp(8px, 2vw, 15px)',
+                    borderBottomLeftRadius: 'clamp(160px, 45vw, 350px)',
+                    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                    zIndex: 10
+                  }}
+                />
+
+                {/* Additional decorative elements */}
+                <div 
+                  className="absolute top-20 -left-10 w-16 h-16 rounded-full opacity-20"
+                  style={{ backgroundColor: '#AF4C0F' }}
+                />
+                <div 
+                  className="absolute bottom-40 -right-8 w-12 h-12 rounded-full opacity-15"
+                  style={{ backgroundColor: '#D85A1F' }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Newsletter Section */}
       <section 
         className="relative w-full overflow-hidden"
         style={{ 
-          minHeight: 'clamp(18rem, 40vh, 28rem)',
-          height: 'clamp(18rem, 40vh, 28rem)'
+          minHeight: 'clamp(22rem, 45vh, 32rem)',
+          height: 'clamp(22rem, 45vh, 32rem)'
         }}
       >
-        {/* Multi-layered Background Images */}
+        {/* Background Image */}
         <div className="absolute inset-0">
-          {/* Background Image 1 */}
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
+              backgroundImage: `url(${newsletterBgImage})`
             }}
           />
-          {/* Background Image 2 */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-multiply"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
-            }}
-          />
-          {/* Background Image 3 */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25 mix-blend-overlay"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
-            }}
-          />
-          {/* Terracotta Overlay */}
+          {/* Light Overlay for better text readability */}
           <div 
             className="absolute inset-0"
             style={{
-              backgroundColor: 'rgba(219, 163, 82, 0.64)'
+              backgroundColor: 'rgba(0, 0, 0, 0.3)'
             }}
           />
         </div>
@@ -534,7 +800,7 @@ export default function Home() {
         <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
           {/* Main Heading */}
           <h1 
-            className="text-white text-center mb-3 font-normal capitalize"
+            className="text-white text-center mb-8 font-normal capitalize"
             style={{
               fontFamily: "'Prata', serif",
               fontSize: 'clamp(1.75rem, 4.5vw, 3rem)',
@@ -564,7 +830,7 @@ export default function Home() {
             style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: 'clamp(0.875rem, 1.6vw, 1rem)',
-              fontWeight: '500',
+              fontWeight: '700',
               letterSpacing: '0.25px',
               maxWidth: '480px'
             }}
@@ -575,51 +841,45 @@ export default function Home() {
           {/* Email Input Section */}
           <div className="flex flex-col items-center space-y-6">
             {/* Email Input and Submit Button Row */}
-            <div className="flex items-center space-x-6">
-              {/* Email Input */}
-              <div className="relative">
-                <input 
-                  type="email" 
-                  placeholder="Enter your Email ......."
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-transparent text-white placeholder-white/80 border-none outline-none text-center pb-2"
+            <div className="flex flex-col items-center space-y-4">
+              {/* Email Input and Subscribe Button Row */}
+              <div className="flex items-center space-x-6">
+                {/* Email Input */}
+                <div className="relative">
+                  <input 
+                    type="email" 
+                    placeholder="Enter your Email ......."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="bg-transparent text-white placeholder-white/80 border-none outline-none text-center pb-2"
+                    style={{
+                      fontFamily: "'Anonymous Pro', monospace",
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      width: 'clamp(220px, 35vw, 300px)',
+                      borderBottom: '2px solid white',
+                      paddingBottom: '4px'
+                    }}
+                    data-testid="input-newsletter-email"
+                  />
+                </div>
+
+                {/* Subscribe Button */}
+                <button 
+                  onClick={handleSubscribe}
+                  className="text-white hover:text-white/80 transition-colors duration-300 group flex items-center space-x-3"
                   style={{
                     fontFamily: "'Anonymous Pro', monospace",
-                    fontSize: '16px',
+                    fontSize: '20px',
                     fontWeight: '700',
-                    width: 'clamp(220px, 35vw, 300px)',
-                    borderBottom: '2px solid white',
-                    paddingBottom: '4px'
+                    letterSpacing: '0.5px'
                   }}
-                  data-testid="input-newsletter-email"
-                />
+                  data-testid="button-subscribe-newsletter"
+                >
+                  <span>Subscribe</span>
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </button>
               </div>
-
-              {/* Separator Line */}
-              <div 
-                className="bg-white"
-                style={{
-                  width: '96px',
-                  height: '2px'
-                }}
-              />
-
-              {/* Subscribe Button */}
-              <button 
-                onClick={handleSubscribe}
-                className="text-white hover:text-white/80 transition-colors duration-300 group flex items-center space-x-3"
-                style={{
-                  fontFamily: "'Anonymous Pro', monospace",
-                  fontSize: '20px',
-                  fontWeight: '700',
-                  letterSpacing: '0.5px'
-                }}
-                data-testid="button-subscribe-newsletter"
-              >
-                <span>Subscribe</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </button>
             </div>
           </div>
         </div>
