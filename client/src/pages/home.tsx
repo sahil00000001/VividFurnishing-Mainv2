@@ -488,35 +488,139 @@ export default function Home() {
       <PremiumTabs />
 
       {/* Service Features Bar */}
-      <div className="py-12">
-        <ServiceFeaturesBar />
-      </div>
+      <ServiceFeaturesBar />
 
       {/* Newsletter Section */}
-      <section className="py-24 bg-cream mt-16">
-        <div className="container mx-auto px-6 text-center">
-          <h3 className="font-serif text-3xl font-bold text-foreground mb-4" data-testid="newsletter-title">
-            Stay Connected
-          </h3>
-          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto" data-testid="newsletter-description">
-            Be the first to know about new collections, exclusive offers, and design inspiration.
+      <section 
+        className="relative w-full overflow-hidden"
+        style={{ 
+          minHeight: 'clamp(18rem, 40vh, 28rem)',
+          height: 'clamp(18rem, 40vh, 28rem)'
+        }}
+      >
+        {/* Multi-layered Background Images */}
+        <div className="absolute inset-0">
+          {/* Background Image 1 */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
+            }}
+          />
+          {/* Background Image 2 */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 mix-blend-multiply"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
+            }}
+          />
+          {/* Background Image 3 */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-25 mix-blend-overlay"
+            style={{
+              backgroundImage: "url('https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
+            }}
+          />
+          {/* Terracotta Overlay */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundColor: 'rgba(219, 163, 82, 0.64)'
+            }}
+          />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
+          {/* Main Heading */}
+          <h1 
+            className="text-white text-center mb-3 font-normal capitalize"
+            style={{
+              fontFamily: "'Prata', serif",
+              fontSize: 'clamp(1.75rem, 4.5vw, 3rem)',
+              lineHeight: 'clamp(2rem, 5vw, 3.25rem)',
+              letterSpacing: '1px'
+            }}
+          >
+            LET'S STAY IN TOUCH
+          </h1>
+
+          {/* Subheading */}
+          <h2 
+            className="text-white text-center mb-2"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 'clamp(1rem, 2.2vw, 1.5rem)',
+              fontWeight: '500',
+              letterSpacing: '0.5px'
+            }}
+          >
+            Subscribe
+          </h2>
+
+          {/* Description */}
+          <p 
+            className="text-white text-center mb-4 capitalize"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 'clamp(0.875rem, 1.6vw, 1rem)',
+              fontWeight: '500',
+              letterSpacing: '0.25px',
+              maxWidth: '480px'
+            }}
+          >
+            To our newsletter to receive the latest product drops and coupons
           </p>
-          <div className="max-w-md mx-auto flex gap-4">
-            <Input 
-              type="email" 
-              placeholder="Enter your email" 
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 px-4 py-3 border border-border rounded-none focus:outline-none focus:border-terracotta"
-              data-testid="input-newsletter-email"
-            />
-            <Button 
-              onClick={handleSubscribe}
-              className="bg-terracotta text-white px-8 py-3 font-semibold hover:bg-terracotta-dark transition-colors duration-200"
-              data-testid="button-subscribe-newsletter"
-            >
-              Subscribe
-            </Button>
+
+          {/* Email Input Section */}
+          <div className="flex flex-col items-center space-y-6">
+            {/* Email Input and Submit Button Row */}
+            <div className="flex items-center space-x-6">
+              {/* Email Input */}
+              <div className="relative">
+                <input 
+                  type="email" 
+                  placeholder="Enter your Email ......."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-transparent text-white placeholder-white/80 border-none outline-none text-center pb-2"
+                  style={{
+                    fontFamily: "'Anonymous Pro', monospace",
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    width: 'clamp(220px, 35vw, 300px)',
+                    borderBottom: '2px solid white',
+                    paddingBottom: '4px'
+                  }}
+                  data-testid="input-newsletter-email"
+                />
+              </div>
+
+              {/* Separator Line */}
+              <div 
+                className="bg-white"
+                style={{
+                  width: '96px',
+                  height: '2px'
+                }}
+              />
+
+              {/* Subscribe Button */}
+              <button 
+                onClick={handleSubscribe}
+                className="text-white hover:text-white/80 transition-colors duration-300 group flex items-center space-x-3"
+                style={{
+                  fontFamily: "'Anonymous Pro', monospace",
+                  fontSize: '20px',
+                  fontWeight: '700',
+                  letterSpacing: '0.5px'
+                }}
+                data-testid="button-subscribe-newsletter"
+              >
+                <span>Subscribe</span>
+                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>

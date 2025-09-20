@@ -26,34 +26,28 @@ import {
 
 const timelineData = [
   {
-    year: "2010",
-    title: "Founded",
-    description: "Started with a vision to make luxury furniture accessible to everyone",
+    year: "2003",
+    title: "The First Step",
+    description: "After Dadu's retirement as Sales Head of a government handloom cooperative, our family opened its first multi-brand home furnishings showroom in Hisar. It was more than a store — it was a place where people discovered fabrics that felt like home.",
     side: "left"
-  },
-  {
-    year: "2015",
-    title: "First Showroom",
-    description: "Opened our flagship store in the heart of the design district",
-    side: "right"
   },
   {
     year: "2018",
-    title: "Online Expansion", 
-    description: "Launched our e-commerce platform, reaching customers nationwide",
-    side: "left"
-  },
-  {
-    year: "2020",
-    title: "Sustainability Focus",
-    description: "Committed to eco-friendly materials and sustainable practices",
+    title: "A Dream Expands",
+    description: "With years of dedication and trust, we grew to open our second showroom in Hisar. This was not just about expansion, but about becoming part of more homes and more stories.",
     side: "right"
   },
   {
-    year: "2024",
-    title: "1M+ Happy Customers",
-    description: "Celebrating over a million satisfied customers worldwide",
+    year: "2020",
+    title: "Love & Legacy",
+    description: "We lost our guiding lights — Shakuntala Ji and Manohar Ji. But their values of warmth, elegance, and care stayed with us. It was in their memory that the seeds of SM Furnishings were sown.",
     side: "left"
+  },
+  {
+    year: "2025",
+    title: "A New Chapter",
+    description: "Carrying forward their legacy, the next generation launches SM Furnishings — a brand born from love, rooted in heritage, and made for modern homes.",
+    side: "right"
   }
 ];
 
@@ -110,11 +104,12 @@ const testimonials = [
 ];
 
 const uspPoints = [
-  "Handpicked by interior design experts",
-  "Sustainable materials and ethical sourcing",
-  "30-day satisfaction guarantee",
-  "White-glove delivery service",
-  "Lifetime customer support"
+  "Rooted in three generations of trust and craft.",
+  "A legacy inspired by Shakuntala Ji's warmth and Manohar Ji's eye for quality.",
+  "Luxury made minimal, timeless, and affordable.",
+  "Every collection designed with comfort at its heart.",
+  "A family-first brand, born out of love and memories.",
+  "More than furnishings — it's a feeling of home."
 ];
 
 const awards = [
@@ -242,7 +237,7 @@ export default function About() {
               Our <span className="text-terracotta">Journey</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              From a small dream to a furniture revolution - discover the milestones that shaped SM Furnishings
+              From family values to timeless furnishings — this is just the beginning of SM Furnishings.
             </p>
           </div>
 
@@ -298,6 +293,67 @@ export default function About() {
         </div>
       </section>
 
+      {/* Why Shakuntala & Manohar Section */}
+      <section id="why-shakuntala-manohar" className="py-20 bg-cream">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Why <span className="text-terracotta">Shakuntala & Manohar?</span>
+            </h2>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="text-2xl md:text-3xl font-light text-foreground mb-8 leading-relaxed">
+                Our name isn't just a name — it's a promise.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12">
+              <div 
+                className={`text-center transform transition-all duration-700 ${
+                  visibleSections.has('why-shakuntala-manohar') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                }`}
+              >
+                <div className="bg-terracotta text-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform duration-300">
+                  <Heart className="w-12 h-12" />
+                </div>
+                <h3 className="font-serif text-2xl font-bold mb-4 text-terracotta">Shakuntala</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  <span className="font-semibold">"The one protected by virtue"</span> — she embodied grace, warmth, and strength that turned every house into a home.
+                </p>
+              </div>
+
+              <div 
+                className={`text-center transform transition-all duration-700 ${
+                  visibleSections.has('why-shakuntala-manohar') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                }`}
+                style={{ transitionDelay: '200ms' }}
+              >
+                <div className="bg-terracotta text-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform duration-300">
+                  <Eye className="w-12 h-12" />
+                </div>
+                <h3 className="font-serif text-2xl font-bold mb-4 text-terracotta">Manohar</h3>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  <span className="font-semibold">"The one who captivates the heart"</span> — his eye for detail and love for quality touched everyone around him.
+                </p>
+              </div>
+            </div>
+
+            <div 
+              className={`text-center mt-12 transform transition-all duration-700 ${
+                visibleSections.has('why-shakuntala-manohar') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+              }`}
+              style={{ transitionDelay: '400ms' }}
+            >
+              <p className="text-xl text-muted-foreground leading-relaxed font-medium">
+                Together, they are the soul of SM Furnishings — comfort that protects you, and beauty that captures your heart.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Mission, Vision & Values */}
       <section id="values" className="py-20 bg-gradient-to-br from-cream to-background">
         <div className="container mx-auto px-6">
@@ -318,7 +374,7 @@ export default function About() {
               </div>
               <h3 className="font-serif text-2xl font-bold mb-4">Mission</h3>
               <p className="text-muted-foreground leading-relaxed">
-                To democratize luxury furniture by making high-quality, beautifully designed pieces accessible to every home, regardless of budget.
+                To make luxury furnishings accessible — blending timeless elegance with everyday comfort.
               </p>
             </div>
 
@@ -333,7 +389,7 @@ export default function About() {
               </div>
               <h3 className="font-serif text-2xl font-bold mb-4">Vision</h3>
               <p className="text-muted-foreground leading-relaxed">
-                To become the world's leading sustainable furniture brand, inspiring homes and protecting our planet for future generations.
+                To become a household name in home furnishings by carrying forward a legacy rooted in love, quality, and trust.
               </p>
             </div>
 
@@ -348,15 +404,15 @@ export default function About() {
               </div>
               <h3 className="font-serif text-2xl font-bold mb-4">Values</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Quality, sustainability, accessibility, and exceptional customer experience guide every decision we make and every piece we create.
+                Heritage, affordability, and authenticity guide us — ensuring every piece feels personal, warm, and lasting.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Meet the Team */}
-      <section id="team" className="py-20 bg-background">
+      {/* Meet the Team - Hidden */}
+      <section id="team" className="py-20 bg-background hidden">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
@@ -480,8 +536,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* Customer Love & Testimonials */}
-      <section id="testimonials" className="py-20 bg-background">
+      {/* Customer Love & Testimonials - Hidden */}
+      <section id="testimonials" className="py-20 bg-background hidden">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
@@ -557,8 +613,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* Sustainability */}
-      <section id="sustainability" className="py-20 bg-gradient-to-br from-green-50 to-cream relative overflow-hidden">
+      {/* Sustainability - Hidden */}
+      <section id="sustainability" className="py-20 bg-gradient-to-br from-green-50 to-cream relative overflow-hidden hidden">
         {/* Floating decorative elements */}
         <div className="absolute inset-0">
           <Leaf className="absolute top-20 left-10 w-8 h-8 text-green-300 opacity-50 animate-float" />
@@ -624,8 +680,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* Trust & Recognition */}
-      <section id="recognition" className="py-20 bg-background">
+      {/* Trust & Recognition - Hidden */}
+      <section id="recognition" className="py-20 bg-background hidden">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
@@ -672,8 +728,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* Call-to-Action Section */}
-      <section className="py-20 bg-terracotta text-white">
+      {/* Be Part of Our Journey - Hidden */}
+      <section className="py-20 bg-terracotta text-white hidden">
         <div className="container mx-auto px-6 text-center">
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
             Be Part of Our <span className="font-script italic">Journey</span>
@@ -719,8 +775,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* Fun & Interactive Section */}
-      <section className="py-20 bg-cream">
+      {/* Behind the Scenes - Hidden */}
+      <section className="py-20 bg-cream hidden">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">

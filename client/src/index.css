@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600&family=Prata:wght@400&family=Anonymous+Pro:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -40,7 +40,8 @@
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-script: 'Dancing Script', cursive;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'Anonymous Pro', monospace;
+  --font-prata: 'Prata', serif;
   --radius: 8px;
   --terracotta: hsl(22, 40%, 52%);
   --terracotta-light: hsl(22, 50%, 65%);
