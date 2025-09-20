@@ -46,7 +46,10 @@ export function PremiumTabs() {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center">
             <div className="flex-1 h-px bg-foreground opacity-30"></div>
-            <h3 className="font-serif text-3xl md:text-4xl font-bold mx-8 text-foreground tracking-wider">
+            <h3 
+              className="text-3xl md:text-4xl font-bold mx-8 text-foreground tracking-wider"
+              style={{ fontFamily: "'Prata', serif" }}
+            >
               PREMIUM COLLECTIONS
             </h3>
             <div className="flex-1 h-px bg-foreground opacity-30"></div>
@@ -67,6 +70,7 @@ export function PremiumTabs() {
                     ? 'text-terracotta' 
                     : 'text-foreground hover:text-terracotta/70'
                 }`}
+                style={{ fontFamily: "'Sk-Modernist', sans-serif" }}
                 onClick={() => handleTabChange(tab.id)}
                 data-testid={`tab-${tab.id}`}
               >
@@ -124,7 +128,13 @@ export function PremiumTabs() {
                   data-testid={`card-product-${product.id}`}
                 >
                   {/* Image Box */}
-                  <div className="bg-cream rounded-2xl p-6 aspect-square flex items-center justify-center relative overflow-hidden mb-3">
+                  <div 
+                    className="rounded-2xl p-6 aspect-square flex items-center justify-center relative overflow-hidden mb-3"
+                    style={{
+                      background: 'linear-gradient(180deg, rgba(255, 252, 233, 0.61) 0%, rgba(238, 217, 204, 0.61) 44.71%, rgba(220, 177, 150, 0.61) 76.44%, rgba(175, 76, 15, 0.3782) 100%)',
+                      borderRadius: '24px'
+                    }}
+                  >
                     {/* Product Badge */}
                     {product.badge && (
                       <div className={`absolute top-3 right-3 px-2 py-1 rounded-full text-xs font-bold tracking-wide text-white z-10 ${
@@ -148,13 +158,22 @@ export function PremiumTabs() {
                   
                   {/* Product Info - Now outside the box */}
                   <div className="text-center space-y-1">
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    <p 
+                      className="text-xs font-medium text-muted-foreground uppercase tracking-wide"
+                      style={{ fontFamily: "'Lexend Deca', sans-serif" }}
+                    >
                       {product.category || 'CATEGORY'}
                     </p>
-                    <h4 className="font-serif font-bold text-sm text-foreground">
+                    <h4 
+                      className="font-bold text-sm text-foreground"
+                      style={{ fontFamily: "'Lexend Deca', sans-serif" }}
+                    >
                       {product.name}
                     </h4>
-                    <p className="font-bold text-terracotta">
+                    <p 
+                      className="font-bold text-terracotta"
+                      style={{ fontFamily: "'Sk-Modernist', sans-serif" }}
+                    >
                       {product.price}
                     </p>
                   </div>

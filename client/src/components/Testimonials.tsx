@@ -29,27 +29,6 @@ const testimonialsData: TestimonialData[] = [
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80",
     rating: 4,
     text: "The craftsmanship is remarkable and the delivery was prompt. Every piece feels premium and matches perfectly with my home's aesthetic."
-  },
-  {
-    id: 4,
-    name: "David Park",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80",
-    rating: 5,
-    text: "Outstanding experience from start to finish. The furniture arrived in perfect condition and looks even better than the photos online."
-  },
-  {
-    id: 5,
-    name: "Lisa Thompson",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80",
-    rating: 5,
-    text: "I ordered multiple pieces for my new apartment and couldn't be happier. The quality-to-price ratio is unmatched in the market."
-  },
-  {
-    id: 6,
-    name: "James Wilson",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80",
-    rating: 4,
-    text: "Fantastic customer service and beautiful furniture. The team helped me choose pieces that perfectly complement my home's design theme."
   }
 ];
 
@@ -142,14 +121,14 @@ function TestimonialCard({ testimonial }: { testimonial: TestimonialData }) {
 
 export function Testimonials() {
   return (
-    <section className="relative py-20 bg-white overflow-hidden">
+    <section className="relative py-8 bg-white overflow-hidden">
       {/* Animated Marquee Background */}
       <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
         {/* Row 1 */}
         <div 
           className="absolute whitespace-nowrap"
           style={{
-            top: '80px',
+            top: '0px',
             left: 0,
             width: 'max-content',
             animation: 'scrollTestimonials1 20s linear infinite'
@@ -259,7 +238,7 @@ export function Testimonials() {
         <div 
           className="absolute whitespace-nowrap"
           style={{
-            top: '180px',
+            top: '100px',
             left: 0,
             width: 'max-content',
             animation: 'scrollTestimonials2 25s linear infinite',
@@ -282,7 +261,7 @@ export function Testimonials() {
         <div 
           className="absolute whitespace-nowrap"
           style={{
-            top: '280px',
+            top: '200px',
             left: 0,
             width: 'max-content',
             animation: 'scrollTestimonials3 30s linear infinite',
@@ -303,7 +282,7 @@ export function Testimonials() {
         <div 
           className="absolute whitespace-nowrap"
           style={{
-            top: '380px',
+            top: '300px',
             left: 0,
             width: 'max-content',
             animation: 'scrollTestimonials4 22s linear infinite',
@@ -324,7 +303,7 @@ export function Testimonials() {
         <div 
           className="absolute whitespace-nowrap"
           style={{
-            top: '480px',
+            top: '400px',
             left: 0,
             width: 'max-content',
             animation: 'scrollTestimonials5 28s linear infinite',
@@ -344,40 +323,25 @@ export function Testimonials() {
 
       {/* Foreground Content */}
       <div className="relative z-10 container mx-auto px-6">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 
-            className="mb-4"
-            style={{
-              fontFamily: "'Prata', serif",
-              fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
-              color: '#582308',
-              fontWeight: 'normal'
-            }}
-            data-testid="testimonials-title"
-          >
-            What Our Customers Say
-          </h2>
-          <p 
-            className="text-lg max-w-2xl mx-auto"
-            style={{
-              color: '#666666',
-              fontSize: '18px',
-              fontWeight: '400'
-            }}
-            data-testid="testimonials-subtitle"
-          >
-            Discover why thousands of customers trust SM Furnishings for their home transformation
-          </p>
-        </div>
 
-        {/* Testimonials Grid */}
-        <div className="relative z-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {testimonialsData.map((testimonial) => (
-            <div key={testimonial.id} className="flex justify-center">
-              <TestimonialCard testimonial={testimonial} />
+        {/* Testimonials Zigzag Layout */}
+        <div className="relative z-20 max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-8">
+            {/* First Card - Top Position */}
+            <div className="flex justify-center lg:self-start">
+              <TestimonialCard testimonial={testimonialsData[0]} />
             </div>
-          ))}
+            
+            {/* Second Card - Middle Position */}
+            <div className="flex justify-center lg:self-center lg:mt-12">
+              <TestimonialCard testimonial={testimonialsData[1]} />
+            </div>
+            
+            {/* Third Card - Top Position */}
+            <div className="flex justify-center lg:self-start">
+              <TestimonialCard testimonial={testimonialsData[2]} />
+            </div>
+          </div>
         </div>
       </div>
 

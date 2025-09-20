@@ -243,7 +243,8 @@ export default function Home() {
               fontFamily: '"Dancing Script", cursive',
               fontSize: 'clamp(2.5rem, 6vw, 7rem)',
               lineHeight: '1.1',
-              fontStyle: 'italic'
+              fontStyle: 'italic',
+              marginTop: '-1rem'
             }}
           >
             affordably
@@ -404,7 +405,7 @@ export default function Home() {
                     fontWeight: '600'
                   }}
                 >
-                  🎉 Get 25% off! Limited Time Offer! ⏰
+                  Get 25% off! Limited Time Offer!
                 </p>
                 
                 {/* Countdown Timer */}
@@ -471,7 +472,7 @@ export default function Home() {
                   className="bg-[#AF4C0F] hover:bg-[#8B3A0C] text-white font-bold px-6 lg:px-8 py-2 lg:py-3 rounded-full border-4 border-[#AF4C0F] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                   style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
                 >
-                  🛍️ Explore Deal
+                  Explore Deal
                 </Button>
               </div>
               
@@ -527,6 +528,123 @@ export default function Home() {
 
       {/* Service Features Bar */}
       <ServiceFeaturesBar />
+
+      {/* Testimonials Section */}
+      <Testimonials />
+
+      {/* Newsletter Section */}
+      <section 
+        className="relative w-full overflow-hidden"
+        style={{ 
+          minHeight: 'clamp(22rem, 45vh, 32rem)',
+          height: 'clamp(22rem, 45vh, 32rem)'
+        }}
+      >
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url(${newsletterBgImage})`
+            }}
+          />
+          {/* Light Overlay for better text readability */}
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.3)'
+            }}
+          />
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
+          {/* Main Heading */}
+          <h1 
+            className="text-white text-center mb-8 font-normal capitalize"
+            style={{
+              fontFamily: "'Prata', serif",
+              fontSize: 'clamp(1.75rem, 4.5vw, 3rem)',
+              lineHeight: 'clamp(2rem, 5vw, 3.25rem)',
+              letterSpacing: '1px'
+            }}
+          >
+            LET'S STAY IN TOUCH
+          </h1>
+
+          {/* Subheading */}
+          <h2 
+            className="text-white text-center mb-2"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 'clamp(1rem, 2.2vw, 1.5rem)',
+              fontWeight: '500',
+              letterSpacing: '0.5px'
+            }}
+          >
+            Subscribe
+          </h2>
+
+          {/* Description */}
+          <p 
+            className="text-white text-center mb-4 capitalize"
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: 'clamp(0.875rem, 1.6vw, 1rem)',
+              fontWeight: '700',
+              letterSpacing: '0.25px',
+              maxWidth: '480px'
+            }}
+          >
+            To our newsletter to receive the latest product drops and coupons
+          </p>
+
+          {/* Email Input Section */}
+          <div className="flex flex-col items-center space-y-6">
+            {/* Email Input and Submit Button Row */}
+            <div className="flex flex-col items-center space-y-4">
+              {/* Email Input and Subscribe Button Row */}
+              <div className="flex items-center space-x-6">
+                {/* Email Input */}
+                <div className="relative">
+                  <input 
+                    type="email" 
+                    placeholder="Enter your Email ......."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="bg-transparent text-white placeholder-white/80 border-none outline-none text-center pb-2"
+                    style={{
+                      fontFamily: "'Anonymous Pro', monospace",
+                      fontSize: '16px',
+                      fontWeight: '700',
+                      width: 'clamp(220px, 35vw, 300px)',
+                      borderBottom: '2px solid white',
+                      paddingBottom: '4px'
+                    }}
+                    data-testid="input-newsletter-email"
+                  />
+                </div>
+
+                {/* Subscribe Button */}
+                <button 
+                  onClick={handleSubscribe}
+                  className="text-white hover:text-white/80 transition-colors duration-300 group flex items-center space-x-3"
+                  style={{
+                    fontFamily: "'Anonymous Pro', monospace",
+                    fontSize: '20px',
+                    fontWeight: '700',
+                    letterSpacing: '0.5px'
+                  }}
+                  data-testid="button-subscribe-newsletter"
+                >
+                  <span>Subscribe</span>
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Order in Bulk Section */}
       <section className="py-20 bg-white">
@@ -739,123 +857,6 @@ export default function Home() {
                   className="absolute left-[97px] top-[415px] w-[280px] h-[75px] bg-[#582308] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
                   data-testid="bulk-figure-bar"
                 />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <Testimonials />
-
-      {/* Newsletter Section */}
-      <section 
-        className="relative w-full overflow-hidden"
-        style={{ 
-          minHeight: 'clamp(22rem, 45vh, 32rem)',
-          height: 'clamp(22rem, 45vh, 32rem)'
-        }}
-      >
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url(${newsletterBgImage})`
-            }}
-          />
-          {/* Light Overlay for better text readability */}
-          <div 
-            className="absolute inset-0"
-            style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.3)'
-            }}
-          />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
-          {/* Main Heading */}
-          <h1 
-            className="text-white text-center mb-8 font-normal capitalize"
-            style={{
-              fontFamily: "'Prata', serif",
-              fontSize: 'clamp(1.75rem, 4.5vw, 3rem)',
-              lineHeight: 'clamp(2rem, 5vw, 3.25rem)',
-              letterSpacing: '1px'
-            }}
-          >
-            LET'S STAY IN TOUCH
-          </h1>
-
-          {/* Subheading */}
-          <h2 
-            className="text-white text-center mb-2"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(1rem, 2.2vw, 1.5rem)',
-              fontWeight: '500',
-              letterSpacing: '0.5px'
-            }}
-          >
-            Subscribe
-          </h2>
-
-          {/* Description */}
-          <p 
-            className="text-white text-center mb-4 capitalize"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: 'clamp(0.875rem, 1.6vw, 1rem)',
-              fontWeight: '700',
-              letterSpacing: '0.25px',
-              maxWidth: '480px'
-            }}
-          >
-            To our newsletter to receive the latest product drops and coupons
-          </p>
-
-          {/* Email Input Section */}
-          <div className="flex flex-col items-center space-y-6">
-            {/* Email Input and Submit Button Row */}
-            <div className="flex flex-col items-center space-y-4">
-              {/* Email Input and Subscribe Button Row */}
-              <div className="flex items-center space-x-6">
-                {/* Email Input */}
-                <div className="relative">
-                  <input 
-                    type="email" 
-                    placeholder="Enter your Email ......."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-transparent text-white placeholder-white/80 border-none outline-none text-center pb-2"
-                    style={{
-                      fontFamily: "'Anonymous Pro', monospace",
-                      fontSize: '16px',
-                      fontWeight: '700',
-                      width: 'clamp(220px, 35vw, 300px)',
-                      borderBottom: '2px solid white',
-                      paddingBottom: '4px'
-                    }}
-                    data-testid="input-newsletter-email"
-                  />
-                </div>
-
-                {/* Subscribe Button */}
-                <button 
-                  onClick={handleSubscribe}
-                  className="text-white hover:text-white/80 transition-colors duration-300 group flex items-center space-x-3"
-                  style={{
-                    fontFamily: "'Anonymous Pro', monospace",
-                    fontSize: '20px',
-                    fontWeight: '700',
-                    letterSpacing: '0.5px'
-                  }}
-                  data-testid="button-subscribe-newsletter"
-                >
-                  <span>Subscribe</span>
-                  <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-                </button>
               </div>
             </div>
           </div>
