@@ -75,7 +75,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser(data.user);
         return { success: true };
       } else {
-        return { success: false, error: data.error || "Login failed" };
+        return { success: false, error: data.message || data.error || "Login failed" };
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -101,7 +101,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser(data.user);
         return { success: true };
       } else {
-        return { success: false, error: data.error || "Signup failed" };
+        return { success: false, error: data.message || data.error || "Signup failed" };
       }
     } catch (error) {
       console.error("Signup error:", error);
@@ -130,7 +130,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (response.ok) {
         return { success: true };
       } else {
-        return { success: false, error: data.error || "Failed to send OTP" };
+        return { success: false, error: data.message || data.error || "Failed to send OTP" };
       }
     } catch (error) {
       console.error("Send OTP error:", error);
