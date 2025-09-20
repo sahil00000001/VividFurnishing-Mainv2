@@ -1,6 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { createServer } from "http";
-// import { registerRoutes } from "./routes"; // Commented out since using hosted backend
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
@@ -38,8 +37,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Skip local backend routes since we're using hosted backend
-  // const server = await registerRoutes(app);
+  // Using external APIs at https://sm-furnishing-backend.onrender.com
   const server = createServer(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
