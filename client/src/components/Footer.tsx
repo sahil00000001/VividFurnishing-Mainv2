@@ -1,10 +1,39 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
+import { submitNewsletter } from "@/lib/api";
 
 export function Footer() {
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleNewsletterSubmit = async () => {
+    if (email && !isSubmitting) {
+      setIsSubmitting(true);
+      try {
+        await submitNewsletter({ email });
+        toast({
+          title: "Successfully subscribed!",
+          description: "Thank you for subscribing to our newsletter. You'll receive the latest updates and exclusive coupons.",
+        });
+        setEmail("");
+      } catch (error) {
+        toast({
+          title: "Subscription failed",
+          description: "Please try again later or contact support if the problem persists.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
+  };
+
   return (
     <footer className="bg-terracotta text-white py-16">
       <div className="container mx-auto px-6">
@@ -175,14 +204,18 @@ export function Footer() {
                   <Input
                     type="email"
                     placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="bg-cream text-foreground border-cream-dark placeholder:text-muted-foreground"
                     data-testid="footer-newsletter-input"
                   />
                   <Button
-                    className="bg-cream text-terracotta hover:bg-cream-dark transition-colors duration-200 font-semibold"
+                    onClick={handleNewsletterSubmit}
+                    disabled={isSubmitting || !email.trim()}
+                    className="bg-cream text-terracotta hover:bg-cream-dark transition-colors duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                     data-testid="footer-newsletter-button"
                   >
-                    Subscribe
+                    {isSubmitting ? 'Subscribing...' : 'Subscribe'}
                   </Button>
                 </div>
               </div>

@@ -97,6 +97,70 @@ export const colorDisplay: { [key: string]: string } = {
   'Black': '#111827'
 };
 
+// Form submission interfaces
+export interface BulkOrderData {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  orderDescription: string;
+}
+
+export interface NewsletterData {
+  email: string;
+}
+
+// Submit bulk order form
+export async function submitBulkOrder(data: BulkOrderData): Promise<void> {
+  try {
+    const response = await fetch('https://sm-furnishing-backend.onrender.com/api/form-data', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error('Failed to submit bulk order form');
+    }
+  } catch (error) {
+    console.error('Error submitting bulk order:', error);
+    throw error;
+  }
+}
+
+// Submit newsletter subscription
+export async function submitNewsletter(data: NewsletterData): Promise<void> {
+  try {
+    const response = await fetch('https://sm-furnishing-backend.onrender.com/api/newsletter-emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    
+    if (!result.success) {
+      throw new Error('Failed to subscribe to newsletter');
+    }
+  } catch (error) {
+    console.error('Error subscribing to newsletter:', error);
+    throw error;
+  }
+}
+
 // Helper function to create placeholder image URL
 export function getProductImageUrl(product: ApiProduct): string {
   // Create a gradient based on color name

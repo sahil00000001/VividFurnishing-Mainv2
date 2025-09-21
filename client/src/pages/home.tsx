@@ -17,6 +17,7 @@ import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { submitBulkOrder, submitNewsletter } from "@/lib/api";
 
 const categories = [
   { id: 1, name: "Rocking Chair", icon: Armchair },
@@ -29,9 +30,9 @@ const categories = [
 
 // Bulk Order Form Schema
 const bulkOrderSchema = z.object({
-  fullName: z.string().min(2, "Full name must be at least 2 characters").max(50, "Full name must be less than 50 characters"),
+  name: z.string().min(2, "Full name must be at least 2 characters").max(50, "Full name must be less than 50 characters"),
   email: z.string().email("Please enter a valid email address"),
-  phone: z.string().min(10, "Phone number must be at least 10 digits").regex(/^[\+]?[\d\s\-\(\)]+$/, "Please enter a valid phone number"),
+  phoneNumber: z.string().min(10, "Phone number must be at least 10 digits").regex(/^[\+]?[\d\s\-\(\)]+$/, "Please enter a valid phone number"),
   orderDescription: z.string().min(10, "Please provide at least 10 characters describing your order").max(500, "Description must be less than 500 characters")
 });
 
@@ -45,12 +46,16 @@ export default function Home() {
   const bulkOrderForm = useForm<z.infer<typeof bulkOrderSchema>>({
     resolver: zodResolver(bulkOrderSchema),
     defaultValues: {
-      fullName: "",
+      name: "",
       email: "",
-      phone: "",
+      phoneNumber: "",
       orderDescription: ""
     }
   });
+  
+  // Loading states
+  const [isBulkOrderSubmitting, setIsBulkOrderSubmitting] = useState(false);
+  const [isNewsletterSubmitting, setIsNewsletterSubmitting] = useState(false);
   
   // Countdown timer state
   const [timeLeft, setTimeLeft] = useState({
@@ -111,21 +116,46 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSubscribe = () => {
-    if (email) {
-      console.log("Newsletter subscription:", email);
-      setEmail("");
+  const handleSubscribe = async () => {
+    if (email && !isNewsletterSubmitting) {
+      setIsNewsletterSubmitting(true);
+      try {
+        await submitNewsletter({ email });
+        toast({
+          title: "Successfully subscribed!",
+          description: "Thank you for subscribing to our newsletter. You'll receive the latest updates and exclusive coupons.",
+        });
+        setEmail("");
+      } catch (error) {
+        toast({
+          title: "Subscription failed",
+          description: "Please try again later or contact support if the problem persists.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsNewsletterSubmitting(false);
+      }
     }
   };
 
-  const handleBulkOrderSubmit = (values: z.infer<typeof bulkOrderSchema>) => {
-    console.log("Bulk order form submitted:", values);
-    // Here you would typically send the data to your backend
-    toast({
-      title: "Thank you for your inquiry!",
-      description: "We'll get back to you within 24 hours regarding your bulk order.",
-    });
-    bulkOrderForm.reset();
+  const handleBulkOrderSubmit = async (values: z.infer<typeof bulkOrderSchema>) => {
+    setIsBulkOrderSubmitting(true);
+    try {
+      await submitBulkOrder(values);
+      toast({
+        title: "Thank you for your inquiry!",
+        description: "We'll get back to you within 24 hours regarding your bulk order.",
+      });
+      bulkOrderForm.reset();
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "Please try again later or contact support if the problem persists.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsBulkOrderSubmitting(false);
+    }
   };
 
   return (
@@ -666,7 +696,8 @@ export default function Home() {
                 {/* Subscribe Button */}
                 <button 
                   onClick={handleSubscribe}
-                  className="text-white hover:text-white/80 transition-colors duration-300 group flex items-center space-x-3"
+                  disabled={isNewsletterSubmitting || !email.trim()}
+                  className="text-white hover:text-white/80 transition-colors duration-300 group flex items-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
                     fontFamily: "'Anonymous Pro', monospace",
                     fontSize: '20px',
@@ -675,7 +706,7 @@ export default function Home() {
                   }}
                   data-testid="button-subscribe-newsletter"
                 >
-                  <span>Subscribe</span>
+                  <span>{isNewsletterSubmitting ? 'Subscribing...' : 'Subscribe'}</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
                 </button>
               </div>
@@ -728,7 +759,7 @@ export default function Home() {
                     {/* Full Name Field */}
                     <FormField
                       control={bulkOrderForm.control}
-                      name="fullName"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel 
@@ -787,7 +818,7 @@ export default function Home() {
                     {/* Phone Number Field */}
                     <FormField
                       control={bulkOrderForm.control}
-                      name="phone"
+                      name="phoneNumber"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel 
@@ -847,15 +878,15 @@ export default function Home() {
                     {/* Submit Button */}
                     <Button
                       type="submit"
-                      disabled={bulkOrderForm.formState.isSubmitting}
-                      className="w-full h-10 text-white font-bold text-base rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                      disabled={isBulkOrderSubmitting}
+                      className="w-full h-10 text-white font-bold text-base rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                       style={{
                         background: 'linear-gradient(135deg, #AF4C0F 0%, #D85A1F 100%)',
                         letterSpacing: '0.5px'
                       }}
                       data-testid="button-bulk-submit"
                     >
-                      {bulkOrderForm.formState.isSubmitting ? 'Sending...' : 'Get In Touch'}
+                      {isBulkOrderSubmitting ? 'Sending...' : 'Get In Touch'}
                     </Button>
                   </form>
                 </Form>

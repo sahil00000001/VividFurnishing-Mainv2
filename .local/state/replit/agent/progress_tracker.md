@@ -26,3 +26,4 @@
 [x] 26. Updated Premium Collections fonts: PREMIUM COLLECTIONS (Prata), tabs (Sk-Modernist), categories/product names (Lexend Deca), prices (Sk-Modernist) and added gradient background to product boxes
 [x] 27. Removed emojis (🎉⏰🛍️) from Flash Sale section and updated "affordably" font to Mistrully
 [x] 28. Reverted "affordably" font back to Dancing Script and moved it up using marginTop: -1rem
+[x] 29. Implementing API integrations for Order in Bulk form and newsletter subscriptions
