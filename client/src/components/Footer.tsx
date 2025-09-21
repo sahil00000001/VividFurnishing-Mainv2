@@ -35,7 +35,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-terracotta text-white py-16">
+    <footer className="text-white py-16" style={{ backgroundColor: 'rgb(88 35 8 / var(--tw-bg-opacity, 1))' }}>
       <div className="container mx-auto px-6">
         <div className="max-w-7xl mx-auto">
           {/* Main Footer Content */}

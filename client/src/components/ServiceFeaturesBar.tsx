@@ -40,13 +40,13 @@ export function ServiceFeaturesBar() {
       role="region"
     >
       <div className="container mx-auto px-6 h-full">
-        <div className="grid grid-cols-3 md:divide-x divide-white/20 h-full place-items-center">
+        <div className="grid grid-cols-3 md:divide-x divide-white/20 h-full">
           {features.map((feature) => {
             const IconComponent = feature.icon;
             return (
               <div 
                 key={feature.id}
-                className="flex flex-col items-center justify-center text-center text-white h-full px-4"
+                className="w-full h-full flex flex-col items-center justify-center text-center text-white px-4"
                 data-testid={`feature-${feature.id}`}
               >
                 {/* Icon */}

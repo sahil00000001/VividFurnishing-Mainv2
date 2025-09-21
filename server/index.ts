@@ -8,11 +8,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Initialize Razorpay
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID!,
-  key_secret: process.env.RAZORPAY_KEY_SECRET!,
-});
+// Initialize Razorpay only if keys are provided
+let razorpay: Razorpay | null = null;
+if (process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET) {
+  razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+  });
+}
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -47,6 +50,13 @@ app.use((req, res, next) => {
 // Razorpay API endpoints
 app.post("/api/razorpay/create-order", async (req: Request, res: Response) => {
   try {
+    if (!razorpay) {
+      return res.status(503).json({ 
+        success: false, 
+        error: "Razorpay is not configured. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET environment variables." 
+      });
+    }
+
     const { amount, currency = 'INR', receipt } = req.body;
     
     if (!amount || amount <= 0) {
@@ -80,6 +90,13 @@ app.post("/api/razorpay/create-order", async (req: Request, res: Response) => {
 
 app.post("/api/razorpay/verify-payment", async (req: Request, res: Response) => {
   try {
+    if (!razorpay || !process.env.RAZORPAY_KEY_SECRET) {
+      return res.status(503).json({ 
+        success: false, 
+        error: "Razorpay is not configured. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET environment variables." 
+      });
+    }
+
     const { 
       razorpay_order_id,
       razorpay_payment_id,
@@ -97,7 +114,7 @@ app.post("/api/razorpay/verify-payment", async (req: Request, res: Response) => 
     // Create signature for verification
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET!)
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(body.toString())
       .digest("hex");
 

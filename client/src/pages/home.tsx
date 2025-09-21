@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { ChevronLeft, ChevronRight, Armchair, Table, Sofa, Square, Lightbulb, Flower } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +9,6 @@ import { PremiumTabs } from "@/components/PremiumTabs";
 import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
 import { bestSellers, luxuryProducts } from "@/data/products";
 import { Footer } from "@/components/Footer";
-import { Testimonials } from "@/components/Testimonials";
 import newsletterBgImage from "@assets/Group 48_1758371284588.png";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,6 +40,7 @@ export default function Home() {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
   const [email, setEmail] = useState("");
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
   
   // Bulk Order Form with react-hook-form and zod
   const bulkOrderForm = useForm<z.infer<typeof bulkOrderSchema>>({
@@ -192,64 +192,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Shop by Category Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          {/* Section Title with Decorative Lines */}
-          <div className="text-center mb-16">
-            <div className="flex items-center justify-center">
-              <div className="flex-1 h-px bg-foreground opacity-30"></div>
-              <h3 className="font-serif text-3xl md:text-4xl font-bold mx-8 text-foreground tracking-wider" data-testid="category-title">
-                SHOP BY CATEGORY
-              </h3>
-              <div className="flex-1 h-px bg-foreground opacity-30"></div>
-            </div>
-          </div>
-          
-          {/* Category Grid */}
-          <div className="relative">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-6xl mx-auto">
-              {getVisibleCategories().map((category) => {
-                const IconComponent = category.icon;
-                return (
-                  <div 
-                    key={category.id}
-                    className="text-center group cursor-pointer" 
-                    data-testid={`category-${category.id}`}
-                  >
-                    <div className="w-24 h-24 md:w-32 md:h-32 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-gray-200 transition-colors duration-200">
-                      <IconComponent className="text-terracotta text-2xl md:text-3xl w-8 h-8 md:w-12 md:h-12" />
-                    </div>
-                    <p className="text-foreground font-medium" data-testid={`category-name-${category.id}`}>
-                      {category.name}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-            
-            {/* Navigation Arrows - Both positioned on right side top */}
-            <div className="absolute right-0 -top-16 flex gap-4">
-              <button 
-                onClick={prevCategory}
-                className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
-                data-testid="button-prev-category"
-                aria-label="Previous categories"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button 
-                onClick={nextCategory}
-                className="w-12 h-12 bg-terracotta text-white rounded-full flex items-center justify-center hover:bg-terracotta-dark transition-colors duration-200"
-                data-testid="button-next-category"
-                aria-label="Next categories"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Designing Luxury Hero Section */}
       <section className="py-16 lg:py-20 bg-[#582308] text-center">
@@ -329,6 +271,7 @@ export default function Home() {
                   </p>
                   <Button 
                     variant="outline"
+                    onClick={() => setLocation('/shop')}
                     style={{
                       width: '198px',
                       height: '72px',
@@ -337,7 +280,7 @@ export default function Home() {
                       borderRadius: '14px',
                       boxSizing: 'border-box'
                     }}
-                    className="text-terracotta font-semibold hover:bg-terracotta hover:text-white transition-all duration-200"
+                    className="text-terracotta font-semibold"
                     data-testid="button-explore-more"
                   >
                     Explore More
@@ -353,6 +296,7 @@ export default function Home() {
                         product={product}
                         variant="bestseller"
                         testIdPrefix="product"
+                        showAddToCart={false}
                       />
                     ))}
                   </div>
@@ -387,6 +331,7 @@ export default function Home() {
                         product={product}
                         variant="luxury"
                         testIdPrefix="luxury-product"
+                        showAddToCart={false}
                       />
                     ))}
                   </div>
@@ -410,6 +355,7 @@ export default function Home() {
                   </p>
                   <Button 
                     variant="outline"
+                    onClick={() => setLocation('/shop')}
                     style={{
                       width: '198px',
                       height: '72px',
@@ -418,7 +364,7 @@ export default function Home() {
                       borderRadius: '14px',
                       boxSizing: 'border-box'
                     }}
-                    className="text-terracotta font-semibold hover:bg-terracotta hover:text-white transition-all duration-200"
+                    className="text-terracotta font-semibold"
                     data-testid="button-luxury-explore-more"
                   >
                     EXPLORE LUXURY
@@ -431,165 +377,6 @@ export default function Home() {
       </section>
 
 
-      {/* Flash Sale Section */}
-      <section className="py-20 lg:py-24 bg-white">
-        <div className="container mx-auto px-4 lg:px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-stretch">
-              {/* Left Section - Flash Sale Container */}
-              <div 
-                className="w-full lg:w-[751px] min-h-[400px] lg:h-[474px] bg-[#FFEBCE] rounded-[30px] flex flex-col items-center justify-center p-6 lg:p-8 shadow-lg"
-              >
-                {/* Flash Sale Title */}
-                <div className="text-center mb-4">
-                  <span 
-                    className="text-[#582308] font-bold"
-                    style={{
-                      fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-                      fontFamily: 'serif',
-                      lineHeight: '1.1'
-                    }}
-                  >
-                    Flash
-                  </span>{" "}
-                  <span 
-                    className="text-black font-bold"
-                    style={{
-                      fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-                      fontFamily: 'serif',
-                      lineHeight: '1.1'
-                    }}
-                  >
-                    Sale
-                  </span>
-                </div>
-                
-                {/* Subtitle */}
-                <p 
-                  className="text-black text-center mb-6 px-4"
-                  style={{
-                    fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
-                    fontFamily: 'serif',
-                    fontWeight: '600'
-                  }}
-                >
-                  Get 25% off! Limited Time Offer!
-                </p>
-                
-                {/* Countdown Timer */}
-                <div className="flex items-center justify-center gap-2 lg:gap-4 mb-6">
-                  <div className="text-center">
-                    <div 
-                      className="text-black font-bold bg-white rounded-lg px-2 py-1 shadow-sm"
-                      style={{ 
-                        fontSize: 'clamp(1.5rem, 4vw, 3rem)',
-                        minWidth: 'clamp(3rem, 6vw, 5rem)',
-                        fontFamily: 'monospace'
-                      }}
-                    >
-                      {String(timeLeft.days).padStart(2, '0')}
-                    </div>
-                    <div className="text-black text-xs lg:text-sm font-medium mt-1">Days</div>
-                  </div>
-                  <div className="text-black font-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>:</div>
-                  <div className="text-center">
-                    <div 
-                      className="text-black font-bold bg-white rounded-lg px-2 py-1 shadow-sm"
-                      style={{ 
-                        fontSize: 'clamp(1.5rem, 4vw, 3rem)',
-                        minWidth: 'clamp(3rem, 6vw, 5rem)',
-                        fontFamily: 'monospace'
-                      }}
-                    >
-                      {String(timeLeft.hours).padStart(2, '0')}
-                    </div>
-                    <div className="text-black text-xs lg:text-sm font-medium mt-1">Hours</div>
-                  </div>
-                  <div className="text-black font-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>:</div>
-                  <div className="text-center">
-                    <div 
-                      className="text-black font-bold bg-white rounded-lg px-2 py-1 shadow-sm"
-                      style={{ 
-                        fontSize: 'clamp(1.5rem, 4vw, 3rem)',
-                        minWidth: 'clamp(3rem, 6vw, 5rem)',
-                        fontFamily: 'monospace'
-                      }}
-                    >
-                      {String(timeLeft.minutes).padStart(2, '0')}
-                    </div>
-                    <div className="text-black text-xs lg:text-sm font-medium mt-1">Minutes</div>
-                  </div>
-                  <div className="text-black font-bold" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}>:</div>
-                  <div className="text-center">
-                    <div 
-                      className="text-black font-bold bg-white rounded-lg px-2 py-1 shadow-sm"
-                      style={{ 
-                        fontSize: 'clamp(1.5rem, 4vw, 3rem)',
-                        minWidth: 'clamp(3rem, 6vw, 5rem)',
-                        fontFamily: 'monospace'
-                      }}
-                    >
-                      {String(timeLeft.seconds).padStart(2, '0')}
-                    </div>
-                    <div className="text-black text-xs lg:text-sm font-medium mt-1">Seconds</div>
-                  </div>
-                </div>
-                
-                {/* CTA Button */}
-                <Button 
-                  className="bg-[#AF4C0F] hover:bg-[#8B3A0C] text-white font-bold px-6 lg:px-8 py-2 lg:py-3 rounded-full border-4 border-[#AF4C0F] shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                  style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}
-                >
-                  Explore Deal
-                </Button>
-              </div>
-              
-              {/* Right Section - Product Images */}
-              <div className="grid grid-cols-2 lg:flex lg:flex-row gap-3 lg:gap-4 w-full lg:w-auto justify-center">
-                {/* Product Image 1 */}
-                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[400px] lg:h-[474px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                  <img 
-                    src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
-                    alt="Modern chair"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-[5px] lg:inset-[7px] border-3 lg:border-4 border-[#FFEBCE] rounded-[20px] lg:rounded-[30px] pointer-events-none"></div>
-                </div>
-                
-                {/* Product Image 2 */}
-                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[400px] lg:h-[474px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                  <img 
-                    src="https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
-                    alt="Accent chair"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-[5px] lg:inset-[7px] border-3 lg:border-4 border-[#FFEBCE] rounded-[20px] lg:rounded-[30px] pointer-events-none"></div>
-                </div>
-                
-                {/* Product Image 3 */}
-                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[400px] lg:h-[474px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                  <img 
-                    src="https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
-                    alt="Papasan chair"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-[5px] lg:inset-[7px] border-3 lg:border-4 border-[#FFEBCE] rounded-[20px] lg:rounded-[30px] pointer-events-none"></div>
-                </div>
-                
-                {/* Product Image 4 */}
-                <div className="relative w-full max-w-[140px] lg:w-[168px] h-[400px] lg:h-[474px] rounded-[20px] lg:rounded-[30px] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                  <img 
-                    src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=800"
-                    alt="Modern sofa"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-[5px] lg:inset-[7px] border-3 lg:border-4 border-[#FFEBCE] rounded-[20px] lg:rounded-[30px] pointer-events-none"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Premium Collection Section with Interactive Tabs */}
       <PremiumTabs />
@@ -597,8 +384,6 @@ export default function Home() {
       {/* Service Features Bar */}
       <ServiceFeaturesBar />
 
-      {/* Testimonials Section */}
-      <Testimonials />
 
       {/* Newsletter Section */}
       <section 
@@ -719,7 +504,7 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           {/* Section Header */}
-          <div className="text-center mb-16">
+          <div className="text-left mb-16">
             <h2 
               className="mb-4"
               style={{
@@ -895,10 +680,10 @@ export default function Home() {
 
             {/* Right Side - Curved Rectangle Figure */}
             <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="relative lg:w-[380px] lg:h-[490px]" data-testid="bulk-figure">
+              <div className="relative lg:w-[450px] lg:h-[580px]" data-testid="bulk-figure">
                 {/* Main Image Container - Only top-left curved */}
                 <div 
-                  className="absolute left-0 top-0 w-[350px] h-[450px] overflow-hidden shadow-[4px_15px_27.1px_7px_rgba(0,0,0,0.25)]"
+                  className="absolute left-0 top-0 w-[420px] h-[540px] overflow-hidden shadow-[4px_15px_27.1px_7px_rgba(0,0,0,0.25)]"
                   style={{
                     borderRadius: '210px 0 0 0'
                   }}
@@ -914,7 +699,7 @@ export default function Home() {
 
                 {/* Border Frame */}
                 <div 
-                  className="pointer-events-none absolute left-[33px] top-[38px] w-[342px] h-[450px] border-[8px] border-[#AF4C0F]"
+                  className="pointer-events-none absolute left-[33px] top-[38px] w-[412px] h-[540px] border-[8px] border-[#AF4C0F]"
                   style={{
                     borderRadius: '210px 0 0 0'
                   }}
@@ -923,7 +708,7 @@ export default function Home() {
 
                 {/* Bottom Straight Bar */}
                 <div 
-                  className="absolute left-[97px] top-[415px] w-[280px] h-[75px] bg-[#582308] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
+                  className="absolute left-[117px] top-[505px] w-[320px] h-[75px] bg-[#582308] shadow-[0_4px_4px_rgba(0,0,0,0.25)]"
                   data-testid="bulk-figure-bar"
                 />
               </div>

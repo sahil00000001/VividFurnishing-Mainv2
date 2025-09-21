@@ -97,6 +97,18 @@ export function ProductCard({ product, variant, testIdPrefix = "product", showAd
           >
             {product.name}
           </h4>
+          <p 
+            className="text-black capitalize mb-2"
+            style={{
+              fontFamily: 'Prata, serif',
+              fontWeight: 400,
+              fontSize: '14px',
+              lineHeight: '18px'
+            }}
+            data-testid={`${testIdPrefix}-price-${product.id}`}
+          >
+            {product.price}
+          </p>
           {showAddToCart && (
             <div className="flex items-center justify-between">
               <Button

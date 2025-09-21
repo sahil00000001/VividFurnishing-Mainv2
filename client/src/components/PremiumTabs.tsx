@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
 import { HomeProduct, premiumAll, premiumBestSellers, premiumNewArrivals } from "@/data/products";
 
 type TabType = 'all' | 'best' | 'new';
@@ -185,13 +186,15 @@ export function PremiumTabs() {
 
         {/* Explore Shop Button */}
         <div className="text-center mt-12">
-          <Button 
-            variant="outline"
-            className="px-16 py-3 font-medium tracking-wide border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-300"
-            data-testid="explore-shop-button"
-          >
-            Explore Shop
-          </Button>
+          <Link href="/shop">
+            <Button 
+              variant="outline"
+              className="px-16 py-3 font-medium tracking-wide border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-300"
+              data-testid="explore-shop-button"
+            >
+              Explore Shop
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

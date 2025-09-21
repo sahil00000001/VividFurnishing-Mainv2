@@ -34,3 +34,14 @@
 [x] 34. Cleaned up and simplified order JSON structure - removed redundant data, added product_id to items, kept only essential e-commerce information
 [x] 35. Implemented COD (Cash on Delivery) payment with same JSON format as Razorpay - includes all order details, customer info, and payment method
 [x] 36. Removed unwanted "cart cleared" notification for both COD and Razorpay payments - users now see proper order confirmation messages
+[x] 37. Hidden "SHOP BY CATEGORY" and "Flash Sale" sections from homepage as requested by user
+[x] 38. Removed testimonial section from homepage as requested by user
+[x] 39. Centered icons and descriptions in service features section (Free Shipping, Flexible Prices, 24x7 Support) within their partition boxes
+[x] 40. Removed hover effects from "Explore More" and "EXPLORE LUXURY" buttons in BEST SELLERS and LUXURY CHOICE sections
+[x] 41. Left-aligned "Order In Bulk" section header text and increased image size from 380x490px to 450x580px
+[x] 42. Removed "Add to Cart" functionality from product images in BEST SELLERS and LUXURY CHOICE sections
+[x] 43. Added navigation to "Explore Shop" button in PREMIUM COLLECTIONS section to go to shop page
+[x] 44. Restored price display in LUXURY CHOICE section product cards
+[x] 45. Changed footer background color to rgb(88 35 8 / var(--tw-bg-opacity, 1))
+[x] 46. Added navigation to "Explore More" button in BEST SELLERS section to redirect to shop page
+[x] 47. Added navigation to "EXPLORE LUXURY" button in LUXURY CHOICE section to redirect to shop page
