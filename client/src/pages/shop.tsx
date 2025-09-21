@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { useCart } from '@/lib/cartContext';
+import { useWishlist } from '@/lib/wishlistContext';
 import { useToast } from '@/hooks/use-toast';
 import { fetchAllProducts, ApiProduct, formatPrice, getUniqueValues, getProductImageUrl } from '@/lib/api';
 import { 
@@ -67,11 +68,11 @@ export default function ShopPage() {
   // UI State
   const [sortBy, setSortBy] = useState<"featured" | "price-low" | "price-high" | "newest">("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [wishlist, setWishlist] = useState<string[]>([]);
   const [animatingProducts, setAnimatingProducts] = useState<Set<string>>(new Set());
   
-  // Use global cart context
+  // Use global cart and wishlist contexts
   const { addToCart: addToGlobalCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   
@@ -246,18 +247,12 @@ export default function ShopPage() {
     }
   };
 
-  // Toggle Wishlist
-  const toggleWishlist = (productId: string, event: React.MouseEvent) => {
+  // Toggle Wishlist using global context
+  const handleToggleWishlist = async (productId: string, event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
     
-    setWishlist(prev => {
-      if (prev.includes(productId)) {
-        return prev.filter(id => id !== productId);
-      } else {
-        return [...prev, productId];
-      }
-    });
+    await toggleWishlist(productId);
   };
   
   // Clear all filters
@@ -701,15 +696,15 @@ export default function ShopPage() {
                       </Badge>
                     </div>
                     
-                    {/* Stock Status */}
-                    <div className="absolute top-3 right-3">
+                    {/* Stock Status - Hidden */}
+                    {/* <div className="absolute top-3 right-3">
                       <Badge 
                         variant={product.Qty_in_Stock > 0 ? "default" : "destructive"}
                         className="text-xs"
                       >
                         {product.Qty_in_Stock > 0 ? `${product.Qty_in_Stock} in stock` : 'Out of stock'}
                       </Badge>
-                    </div>
+                    </div> */}
 
                     {/* Quick Actions - Slide in on hover */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-4">
@@ -718,11 +713,11 @@ export default function ShopPage() {
                           size="sm"
                           variant="secondary"
                           className="rounded-full bg-white/90 text-black hover:bg-white shadow-lg backdrop-blur-sm"
-                          onClick={(e) => toggleWishlist(product._id, e)}
+                          onClick={(e) => handleToggleWishlist(product._id, e)}
                         >
                           <Heart 
                             className={`w-4 h-4 ${
-                              wishlist.includes(product._id) 
+                              isInWishlist(product._id) 
                                 ? 'fill-red-500 text-red-500' 
                                 : 'text-gray-600'
                             }`} 

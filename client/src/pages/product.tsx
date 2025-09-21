@@ -8,6 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { useCart } from '@/lib/cartContext';
+import { useWishlist } from '@/lib/wishlistContext';
 import { useToast } from '@/hooks/use-toast';
 import { fetchProductById, ApiProduct, formatPrice, getProductImageUrl, colorDisplay } from '@/lib/api';
 import { 
@@ -29,13 +30,13 @@ export default function ProductPage() {
   const [, params] = useRoute('/product/:id');
   const [, setLocation] = useLocation();
   const [quantity, setQuantity] = useState(1);
-  const [isWishlisted, setIsWishlisted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState<ApiProduct | null>(null);
   const [error, setError] = useState<string | null>(null);
   
-  // Use global cart context
+  // Use global cart and wishlist contexts
   const { addToCart: addToGlobalCart } = useCart();
+  const { toggleWishlist, isInWishlist } = useWishlist();
   const { toast } = useToast();
   
   const productId = params?.id;
@@ -133,21 +134,22 @@ export default function ProductPage() {
     );
   }
   
-  const handleAddToCart = () => {
-    // Add the selected quantity to cart
-    for (let i = 0; i < quantity; i++) {
-      addToGlobalCart({
-        id: product._id as any,
-        name: product.Product_Name,
-        price: product.Selling_Price,
-        image: getProductImageUrl(product)
+  const handleAddToCart = async () => {
+    try {
+      // Add the selected quantity to cart using the correct API
+      await addToGlobalCart(product._id, quantity);
+      
+      toast({
+        title: "Added to cart",
+        description: `${quantity}x ${product.Product_Name} has been added to your cart`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart. Please try again.",
+        variant: "destructive",
       });
     }
-    
-    toast({
-      title: "Added to cart",
-      description: `${quantity}x ${product.Product_Name} has been added to your cart`,
-    });
   };
   
   const handleGoBack = () => {
@@ -160,12 +162,9 @@ export default function ProductPage() {
     }
   };
   
-  const toggleWishlist = () => {
-    setIsWishlisted(!isWishlisted);
-    toast({
-      title: isWishlisted ? "Removed from wishlist" : "Added to wishlist",
-      description: `${product.Product_Name} has been ${isWishlisted ? 'removed from' : 'added to'} your wishlist`,
-    });
+  const handleToggleWishlist = async () => {
+    if (!product) return;
+    await toggleWishlist(product._id);
   };
   
   return (
@@ -213,15 +212,15 @@ export default function ProductPage() {
           <div className="space-y-6">
             {/* Product Header */}
             <div>
-              {/* Stock Status Badge */}
-              <div className="mb-4">
+              {/* Stock Status Badge - Hidden */}
+              {/* <div className="mb-4">
                 <Badge 
                   variant={product.Qty_in_Stock > 0 ? "default" : "destructive"}
                   className="text-sm"
                 >
                   {product.Qty_in_Stock > 0 ? `${product.Qty_in_Stock} in stock` : 'Out of stock'}
                 </Badge>
-              </div>
+              </div> */}
               
               <h1 className="font-serif text-3xl lg:text-4xl font-bold text-foreground mb-4" data-testid="product-name">
                 {product.Product_Name}
@@ -333,11 +332,11 @@ export default function ProductPage() {
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={toggleWishlist}
-                  className={`px-6 ${isWishlisted ? 'text-red-500 border-red-500' : ''}`}
+                  onClick={handleToggleWishlist}
+                  className={`px-6 ${isInWishlist(product._id) ? 'text-red-500 border-red-500' : ''}`}
                   data-testid="wishlist-button"
                 >
-                  <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
+                  <Heart className={`w-5 h-5 ${isInWishlist(product._id) ? 'fill-current' : ''}`} />
                 </Button>
               </div>
             </div>

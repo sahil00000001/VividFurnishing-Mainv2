@@ -84,7 +84,7 @@ export function ProductCard({ product, variant, testIdPrefix = "product", showAd
             }}
           ></div>
         </div>
-        <div className="absolute bottom-6 left-6 right-6">
+        <div className="absolute bottom-1 left-6 right-6">
           <h4 
             className="text-black text-left capitalize mb-2"
             style={{
@@ -178,7 +178,7 @@ export function ProductCard({ product, variant, testIdPrefix = "product", showAd
           }}
         ></div>
       </div>
-      <div className="absolute bottom-6 left-6 right-6">
+      <div className="absolute bottom-1 left-6 right-6">
         <h4 
           className="text-black mb-1 text-left capitalize"
           style={{

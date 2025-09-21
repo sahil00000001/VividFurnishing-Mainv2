@@ -179,7 +179,7 @@ export default function Home() {
             AFFORDABLE <span className="text-cream">·</span> LUXURY
           </h2>
           <p className="text-xl md:text-2xl font-light mb-8 tracking-wider" data-testid="hero-subheading">
-            For Every Home
+            Where Comfort Meets Elegance
           </p>
           <Button 
             variant="outline" 
@@ -230,9 +230,7 @@ export default function Home() {
                 fontFamily: '"Playfair Display", serif'
               }}
             >
-              Experience the perfect balance of sophistication and accessibility in our curated collection.
-              <br />
-              Where luxury meets affordability, creating timeless elegance for every home.
+              We bring you timeless designs rooted in heritage yet styled for modern living. Every collection is crafted with care, ensuring your home reflects luxury — without the heavy price tag. We weave stories of love, comfort, and elegance into every piece, making your space truly yours.
             </p>
           </div>
         </div>
@@ -247,7 +245,6 @@ export default function Home() {
                 border: '2px solid #582308',
                 borderRadius: '20px',
                 width: '1485px',
-                height: '468px',
                 maxWidth: '100%'
               }}
               className="px-8 md:px-12 py-4 md:py-6"
@@ -267,7 +264,7 @@ export default function Home() {
                     style={{ fontFamily: '"Playfair Display", serif' }}
                     data-testid="bestsellers-description"
                   >
-                    Pizza Ipsum Dolor Meat Lovers Buffalo, Pepperoni Olives Steak Roll Pork Hawaiian, Philly Meatball Green Parmesan Philly.
+                    Discover the pieces our customers can't get enough of. These bestselling designs combine comfort, elegance, and everyday luxury.
                   </p>
                   <Button 
                     variant="outline"
@@ -316,7 +313,6 @@ export default function Home() {
                 border: '2px solid #582308',
                 borderRadius: '20px',
                 width: '1485px',
-                height: '468px',
                 maxWidth: '100%'
               }}
               className="px-8 md:px-12 py-4 md:py-6 bg-white shadow-xl"
@@ -351,7 +347,7 @@ export default function Home() {
                     style={{ fontFamily: '"Playfair Display", serif' }}
                     data-testid="luxury-choice-description"
                   >
-                    Discover our exclusive luxury collection featuring handpicked pieces that embody sophistication and elegance. Each item represents the pinnacle of craftsmanship and design excellence.
+                    Handpicked selections that embody luxury and sophistication, thoughtfully crafted to bring warmth and style to your home.
                   </p>
                   <Button 
                     variant="outline"
@@ -501,10 +497,10 @@ export default function Home() {
       </section>
 
       {/* Order in Bulk Section */}
-      <section className="py-20 bg-white">
+      <section className="py-8 bg-white">
         <div className="container mx-auto px-6">
           {/* Section Header */}
-          <div className="text-left mb-16">
+          <div className="text-left mb-6 mt-2 ml-8">
             <h2 
               className="mb-4"
               style={{

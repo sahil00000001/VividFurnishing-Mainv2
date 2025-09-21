@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart, LogOut } from "lucide-react";
 import { useCart } from "@/lib/cartContext";
+import { useWishlist } from "@/lib/wishlistContext";
 import { useAuth } from "@/lib/authContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ interface HeaderProps {
 
 export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-transparent", variant = "transparent" }: HeaderProps) {
   const { cartCount, isCartOpen, setIsCartOpen, cart, cartItems, updateQuantity, removeFromCart, clearCart, isLoading } = useCart();
+  const { wishlistCount, setIsWishlistOpen } = useWishlist();
   const { user, isAuthenticated, logout } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
@@ -145,10 +147,19 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                 }`} data-testid="button-search">
                   <Search className="w-5 h-5" />
                 </button>
-                <button className={`transition-colors duration-200 ${
-                  variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                }`} data-testid="button-heart">
+                <button 
+                  className={`relative transition-colors duration-200 ${
+                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                  }`} 
+                  data-testid="button-wishlist"
+                  onClick={() => setIsWishlistOpen(true)}
+                >
                   <Heart className="w-5 h-5" />
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="wishlist-count">
+                      {wishlistCount}
+                    </span>
+                  )}
                 </button>
               </div>
               
