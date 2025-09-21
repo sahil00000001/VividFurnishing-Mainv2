@@ -122,14 +122,13 @@ export default function CheckoutPage() {
       const orderResponse = await response.json();
       console.log('Razorpay Order Created:', orderResponse);
       
-      // Download order creation response as TXT file
-      const orderData = {
+      // Store order creation data for final JSON
+      const orderCreationData = {
         step: 'Order Creation',
         timestamp: new Date().toISOString(),
         ...orderResponse
       };
-      setRazorpayResponse(orderData);
-      downloadJsonResponse(orderData, `razorpay-order-${Date.now()}.txt`);
+      setRazorpayResponse(orderCreationData);
       
       if (!orderResponse.success) {
         throw new Error(orderResponse.error || 'Failed to create order');
@@ -160,19 +159,51 @@ export default function CheckoutPage() {
           const verificationResult = await verifyResponse.json();
           console.log('Payment Verification:', verificationResult);
           
-          // Download payment verification response as TXT file
-          const verificationData = {
-            step: 'Payment Verification',
-            timestamp: new Date().toISOString(),
-            payment_response: response,
-            verification: verificationResult
-          };
-          setRazorpayResponse(verificationData);
-          downloadJsonResponse(verificationData, `razorpay-payment-verification-${Date.now()}.txt`);
-          
           if (verificationResult.verified) {
+            // Create clean order JSON with only essential data
+            const completeOrderData = {
+              order_id: orderCreationData.order.id,
+              order_date: new Date().toISOString(),
+              status: 'completed',
+              
+              items: cartItems.map(item => ({
+                product_id: item.productId,
+                product_name: item.productName,
+                quantity: item.quantity,
+                price: item.priceAtTime
+              })),
+              
+              customer: {
+                name: `${formData.firstName} ${formData.lastName}`,
+                email: formData.email,
+                phone: formData.phone,
+                address: formData.address,
+                city: formData.city,
+                state: formData.state,
+                pin_code: formData.zipCode,
+                country: formData.country
+              },
+              
+              pricing: {
+                subtotal: subtotal,
+                tax: taxAmount,
+                shipping: shippingCost,
+                total: totalAmount
+              },
+              
+              payment: {
+                method: 'razorpay',
+                status: 'verified',
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id
+              }
+            };
+            
+            // Download complete order JSON
+            downloadJsonResponse(completeOrderData, `SM-Furnishings-Order-${orderCreationData.order.id}-${Date.now()}.json`);
+            
             // Clear cart and redirect to success page
-            await clearCart();
+            await clearCart(false);
             
             toast({
               title: "Payment Successful! 🎉",
@@ -207,7 +238,7 @@ export default function CheckoutPage() {
               message: 'Payment was cancelled by user'
             };
             setRazorpayResponse(dismissalData);
-            downloadJsonResponse(dismissalData, `razorpay-dismissed-${Date.now()}.txt`);
+            // No download for dismissed payments
           }
         }
       };
@@ -224,7 +255,7 @@ export default function CheckoutPage() {
         error: error instanceof Error ? error.message : 'Payment failed'
       };
       setRazorpayResponse(errorData);
-      downloadJsonResponse(errorData, `razorpay-error-${Date.now()}.txt`);
+      // No download for payment errors
       
       toast({
         title: "Payment Error",
@@ -306,11 +337,59 @@ export default function CheckoutPage() {
         // COD - Process order successfully
         await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate processing
         
-        // Clear cart after successful order
-        await clearCart();
+        // Create COD order JSON with same format as Razorpay
+        const codOrderData = {
+          order_id: `cod_order_${Date.now()}`,
+          order_date: new Date().toISOString(),
+          status: 'completed',
+          
+          items: cartItems.map(item => ({
+            product_id: item.productId,
+            product_name: item.productName,
+            quantity: item.quantity,
+            price: item.priceAtTime
+          })),
+          
+          customer: {
+            name: `${formData.firstName} ${formData.lastName}`,
+            email: formData.email,
+            phone: formData.phone,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            pin_code: formData.zipCode,
+            country: formData.country
+          },
+          
+          pricing: {
+            subtotal: subtotal,
+            tax: taxAmount,
+            shipping: shippingCost,
+            total: totalAmount
+          },
+          
+          payment: {
+            method: 'cod',
+            status: 'pending'
+          }
+        };
+        
+        // Download COD order JSON
+        downloadJsonResponse(codOrderData, `SM-Furnishings-COD-Order-${Date.now()}.json`);
+        
+        // Clear cart after successful order (without notification)
+        await clearCart(false);
+        
+        // Success message for COD
+        toast({
+          title: "Order Confirmed! 📦",
+          description: `Your COD order of ₹${totalAmount.toLocaleString()} has been placed successfully.`,
+        });
         
         // Redirect to success page
-        setLocation('/success');
+        setTimeout(() => {
+          setLocation('/success');
+        }, 2000);
 
       } else if (method === 'razorpay') {
         await handleRazorpayPayment(orderData);

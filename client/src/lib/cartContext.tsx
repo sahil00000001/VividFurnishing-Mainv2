@@ -12,7 +12,7 @@ interface CartContextType {
   addToCart: (productId: string, quantity?: number) => Promise<void>;
   removeFromCart: (productId: string) => Promise<void>;
   updateQuantity: (productId: string, quantity: number) => Promise<void>;
-  clearCart: () => Promise<void>;
+  clearCart: (showNotification?: boolean) => Promise<void>;
   refreshCart: () => Promise<void>;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
@@ -282,7 +282,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const clearCart = async () => {
+  const clearCart = async (showNotification: boolean = true) => {
     const userKey = isAuthenticated && user ? user.id : 'guest';
 
     if (!cart) return;
@@ -305,11 +305,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
       localStorage.setItem(cartKey, JSON.stringify(clearedCart));
       setCart(clearedCart);
       
-      toast({
-        title: "Cart Cleared",
-        description: "All items removed from your cart.",
-        variant: "destructive",
-      });
+      // Only show notification if requested
+      if (showNotification) {
+        toast({
+          title: "Cart Cleared",
+          description: "All items removed from your cart.",
+          variant: "destructive",
+        });
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to clear cart';
       setError(errorMessage);

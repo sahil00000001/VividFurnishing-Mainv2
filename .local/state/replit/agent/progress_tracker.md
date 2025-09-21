@@ -31,3 +31,6 @@
 [x] 31. Starting shopping cart feature implementation with JWT authentication and external API integration
 [x] 32. Fixed Razorpay payment gateway configuration by updating server to use environment variables instead of hardcoded keys
 [x] 33. Created .env.example template file for proper environment variable configuration
+[x] 34. Cleaned up and simplified order JSON structure - removed redundant data, added product_id to items, kept only essential e-commerce information
+[x] 35. Implemented COD (Cash on Delivery) payment with same JSON format as Razorpay - includes all order details, customer info, and payment method
+[x] 36. Removed unwanted "cart cleared" notification for both COD and Razorpay payments - users now see proper order confirmation messages

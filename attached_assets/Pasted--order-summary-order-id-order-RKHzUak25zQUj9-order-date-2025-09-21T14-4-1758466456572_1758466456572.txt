@@ -1,0 +1,106 @@
+{
+  "order_summary": {
+    "order_id": "order_RKHzUak25zQUj9",
+    "order_date": "2025-09-21T14:45:32.264Z",
+    "total_amount": 7076.46,
+    "currency": "INR",
+    "item_count": 3,
+    "status": "completed"
+  },
+  
+  "pricing": {
+    "subtotal": 5997,
+    "tax_amount": 1079.46,
+    "shipping_cost": 0,
+    "total_amount": 7076.46
+  },
+  "customer_details": {
+    "first_name": "Sahil",
+    "last_name": "Vashisht",
+    "email": "vashishtsahil99@gmail.com",
+    "phone": "9625107920",
+    "address": {
+      "street_address": "B-41 Indra Park",
+      "city": "New Delhi",
+      "state": "Delhi",
+      "pin_code": "110043",
+      "country": "India"
+    }
+  },
+  "payment_details": {
+    "payment_method": "razorpay",
+    "payment_status": "verified",
+    "payment_timestamp": "2025-09-21T14:45:32.264Z",
+    "verification_result": {
+      "success": true,
+    
+      "orderData": {
+        "items": [
+          {
+            "productId": "68ce690873ebdfc938cebea6",
+            "productName": "Gulal",
+            "productImage": "/api/placeholder/Gulal",
+            "quantity": 1,
+            "priceAtTime": 1999,
+            "addedAt": "2025-09-21T14:44:23.233Z"
+          },
+          {
+            "productId": "68ce690873ebdfc938cebea7",
+            "productName": "Mitti",
+            "productImage": "/api/placeholder/Mitti",
+            "quantity": 1,
+            "priceAtTime": 1999,
+            "addedAt": "2025-09-21T14:44:24.680Z"
+          },
+          {
+            "productId": "68ce690873ebdfc938cebea8",
+            "productName": "Neel",
+            "productImage": "/api/placeholder/Neel",
+            "quantity": 1,
+            "priceAtTime": 1999,
+            "addedAt": "2025-09-21T14:44:25.774Z"
+          }
+        ],
+        "customer": {
+          "firstName": "Sahil",
+          "lastName": "Vashisht",
+          "email": "vashishtsahil99@gmail.com",
+          "phone": "9625107920",
+          "address": "B-41 Indra Park",
+          "city": "New Delhi",
+          "state": "Delhi",
+          "zipCode": "110043",
+          "country": "India"
+        },
+        "pricing": {
+          "subtotal": 5997,
+          "shipping": 0,
+          "tax": 1079.46,
+          "total": 7076.46
+        },
+        "paymentMethod": "razorpay"
+      },
+      "message": "Payment verified successfully!"
+    }
+  },
+  "order_creation": {
+    "step": "Order Creation",
+    "timestamp": "2025-09-21T14:44:58.776Z",
+    "success": true,
+    "order": {
+      "amount": 707646,
+      "amount_due": 707646,
+      "amount_paid": 0,
+      "attempts": 0,
+      "created_at": 1758465899,
+      "currency": "INR",
+      "entity": "order",
+      "id": "order_RKHzUak25zQUj9",
+      
+      "offer_id": null,
+      "receipt": "order_1758465897675",
+      "status": "created"
+    },
+    "key_id": "rzp_test_RJZlX5CNvXJ9eA"
+  }
+}
