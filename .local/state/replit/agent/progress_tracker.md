@@ -29,3 +29,5 @@
 [x] 29. Implementing API integrations for Order in Bulk form and newsletter subscriptions
 [x] 30. Migration to Replit environment completed successfully - project running without errors
 [x] 31. Starting shopping cart feature implementation with JWT authentication and external API integration
+[x] 32. Fixed Razorpay payment gateway configuration by updating server to use environment variables instead of hardcoded keys
+[x] 33. Created .env.example template file for proper environment variable configuration

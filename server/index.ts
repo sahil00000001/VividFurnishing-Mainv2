@@ -10,8 +10,8 @@ app.use(express.urlencoded({ extended: false }));
 
 // Initialize Razorpay
 const razorpay = new Razorpay({
-  key_id: "rzp_test_RJZlX5CNvXJ9eA",
-  key_secret: "rMZmCtmZCspBB35RSrlVUxx4",
+  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_KEY_SECRET!,
 });
 
 app.use((req, res, next) => {
