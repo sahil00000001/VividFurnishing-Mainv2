@@ -8,9 +8,8 @@ import {
   Heart, 
   Users, 
   Globe, 
-  Award, 
-  Leaf, 
-  Star, 
+  Star,
+  Leaf,
   Play, 
   ChevronLeft, 
   ChevronRight,
@@ -112,11 +111,6 @@ const uspPoints = [
   "More than furnishings — it's a feeling of home."
 ];
 
-const awards = [
-  { name: "Best Furniture Retailer 2024", icon: Award },
-  { name: "Sustainability Excellence", icon: Leaf },
-  { name: "Customer Choice Award", icon: Star }
-];
 
 export default function About() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -215,6 +209,7 @@ export default function About() {
             <Button 
               size="lg"
               className="bg-terracotta text-white px-8 py-4 text-lg tracking-wide hover:bg-terracotta-dark transition-all duration-300 hover:scale-105"
+              onClick={() => window.open('https://www.instagram.com/sm_furnishings/', '_blank')}
             >
               Join Our Journey
             </Button>
@@ -222,6 +217,7 @@ export default function About() {
               variant="outline" 
               size="lg"
               className="border-2 border-white bg-transparent text-white font-semibold px-8 py-4 text-lg tracking-wide hover:bg-white hover:text-terracotta transition-all duration-300"
+              onClick={() => window.location.href = '/shop'}
             >
               Shop Now
             </Button>
@@ -516,21 +512,6 @@ export default function About() {
                 ))}
               </div>
 
-              <div className="flex flex-wrap gap-4 mt-8">
-                {awards.map((award, index) => (
-                  <Badge 
-                    key={index}
-                    variant="secondary"
-                    className={`px-4 py-2 bg-terracotta text-white hover:bg-terracotta-dark transition-all duration-300 transform ${
-                      visibleSections.has('usp') ? 'scale-100' : 'scale-0'
-                    }`}
-                    style={{ transitionDelay: `${index * 100 + 600}ms` }}
-                  >
-                    <award.icon className="w-4 h-4 mr-2" />
-                    {award.name}
-                  </Badge>
-                ))}
-              </div>
             </div>
           </div>
         </div>
@@ -708,23 +689,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* Certificates */}
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {awards.map((award, index) => (
-              <Card 
-                key={index}
-                className={`p-6 text-center hover:shadow-lg transition-all duration-300 transform ${
-                  visibleSections.has('recognition') ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <CardContent className="p-0">
-                  <award.icon className="w-12 h-12 text-terracotta mx-auto mb-4" />
-                  <h3 className="font-semibold text-lg">{award.name}</h3>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </div>
       </section>
 

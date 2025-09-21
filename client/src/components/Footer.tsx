@@ -39,7 +39,7 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="max-w-7xl mx-auto">
           {/* Main Footer Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
             {/* Brand & About */}
             <div className="space-y-6">
               <h3 className="font-serif text-2xl font-bold tracking-wider" data-testid="footer-brand">
@@ -107,78 +107,9 @@ export function Footer() {
                     About Us
                   </Link>
                 </li>
-                <li>
-                  <Link 
-                    href="/contact" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-link-contact"
-                  >
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/faq" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-link-faq"
-                  >
-                    FAQ
-                  </Link>
-                </li>
               </ul>
             </div>
 
-            {/* Categories */}
-            <div className="space-y-6">
-              <h4 className="font-semibold text-lg" data-testid="footer-categories-title">Categories</h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link 
-                    href="/category/living-room" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-category-living"
-                  >
-                    Living Room
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/category/bedroom" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-category-bedroom"
-                  >
-                    Bedroom
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/category/dining-room" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-category-dining"
-                  >
-                    Dining Room
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/category/office" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-category-office"
-                  >
-                    Office
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/category/outdoor" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-category-outdoor"
-                  >
-                    Outdoor
-                  </Link>
-                </li>
-              </ul>
-            </div>
 
             {/* Contact & Newsletter */}
             <div className="space-y-6">

@@ -45,3 +45,6 @@
 [x] 45. Changed footer background color to rgb(88 35 8 / var(--tw-bg-opacity, 1))
 [x] 46. Added navigation to "Explore More" button in BEST SELLERS section to redirect to shop page
 [x] 47. Added navigation to "EXPLORE LUXURY" button in LUXURY CHOICE section to redirect to shop page
+[x] 48. Removed "Best Furniture Retailer 2024", "Sustainability Excellence", and "Customer Choice Award" from About Us page "What Makes Us Different" section
+[x] 49. Fixed button redirects in About Us page: "Shop Now" button now redirects to shop page, "Join Our Journey" button configured for external redirect
+[x] 50. Fixed TypeScript errors in About Us page by cleaning up unused imports and removing orphaned code references

@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart, LogOut } from "lucide-react";
 import { useCart } from "@/lib/cartContext";
 import { useAuth } from "@/lib/authContext";
@@ -16,6 +16,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
   const { cartCount, isCartOpen, setIsCartOpen, cart, cartItems, updateQuantity, removeFromCart, clearCart, isLoading } = useCart();
   const { user, isAuthenticated, logout } = useAuth();
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
 
   const getTotalPrice = () => {
     if (!cart) return 0;
@@ -24,8 +25,12 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
 
   const handleCheckout = () => {
     setIsCartOpen(false);
-    // Redirect to checkout page using wouter's setLocation
-    window.location.href = '/checkout';
+    setLocation('/checkout');
+  };
+
+  const handleContinueShopping = () => {
+    setIsCartOpen(false);
+    setLocation('/shop');
   };
 
   return (
@@ -181,7 +186,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                 <h3 className="text-lg font-medium mb-2">Your cart is empty</h3>
                 <p className="text-muted-foreground mb-6">Let's fill it with beautiful furniture!</p>
                 <Button 
-                  onClick={() => setIsCartOpen(false)}
+                  onClick={handleContinueShopping}
                   className="bg-terracotta hover:bg-terracotta-dark text-white"
                 >
                   Continue Shopping
@@ -258,7 +263,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                   <Button 
                     variant="outline" 
                     className="flex-1"
-                    onClick={() => setIsCartOpen(false)}
+                    onClick={handleContinueShopping}
                     disabled={isLoading}
                   >
                     Continue Shopping

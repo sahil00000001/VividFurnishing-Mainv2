@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Loader2, User, Mail, Calendar, Shield, LogOut, CheckCircle, AlertCircle, Star, Crown, Settings, ShoppingBag, Heart, Award } from "lucide-react";
+import { Loader2, User, Mail, Calendar, Shield, LogOut, CheckCircle, AlertCircle, Settings, ShoppingBag, Heart, Award } from "lucide-react";
 import { useAuth } from "@/lib/authContext";
 import { Header } from "@/components/Header";
 
@@ -124,19 +124,12 @@ export default function Profile() {
                     <div className="w-24 h-24 bg-gradient-to-br from-terracotta to-terracotta-dark rounded-full flex items-center justify-center shadow-lg ring-4 ring-white">
                       <User className="w-12 h-12 text-white" />
                     </div>
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center shadow-md">
-                      <Crown className="w-4 h-4 text-white" />
-                    </div>
                   </div>
                   <CardTitle className="text-2xl font-serif font-bold text-foreground mb-2" data-testid="user-name">{user.name}</CardTitle>
                   <CardDescription className="flex items-center justify-center gap-2 text-base">
                     <Mail className="w-4 h-4 text-terracotta" />
                     <span className="font-medium" data-testid="user-email">{user.email}</span>
                   </CardDescription>
-                  <Badge className="mt-3 bg-gradient-to-r from-terracotta to-terracotta-dark text-white border-0 shadow-md" data-testid="member-badge">
-                    <Star className="w-3 h-3 mr-1" />
-                    Premium Member
-                  </Badge>
                 </CardHeader>
               </Card>
 
@@ -350,7 +343,6 @@ export default function Profile() {
                       <LogOut className="w-5 h-5 mr-2" />
                       <div className="text-left">
                         <p className="font-medium">Sign Out</p>
-                        <p className="text-xs opacity-90">End your session</p>
                       </div>
                     </Button>
                   </div>

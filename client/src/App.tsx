@@ -16,6 +16,9 @@ import Signup from "@/pages/signup";
 import Profile from "@/pages/profile";
 import Checkout from "@/pages/checkout";
 import Success from "@/pages/success";
+import Privacy from "@/pages/privacy";
+import Terms from "@/pages/terms";
+import Returns from "@/pages/returns";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -32,6 +35,9 @@ function Router() {
       <Route path="/profile" component={Profile} />
       <Route path="/checkout" component={Checkout} />
       <Route path="/success" component={Success} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
+      <Route path="/returns" component={Returns} />
       <Route component={NotFound} />
     </Switch>
   );
