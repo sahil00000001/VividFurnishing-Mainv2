@@ -9,6 +9,7 @@ import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { useCart } from '@/lib/cartContext';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/lib/authContext';
 import { Minus, Plus, Package, CreditCard, MapPin, Phone, User, Mail, Truck, Wallet, Tag } from 'lucide-react';
 
 interface CheckoutFormData {
@@ -29,6 +30,7 @@ export default function CheckoutPage() {
   const [, setLocation] = useLocation();
   const { cartItems, cartCount, cart, updateQuantity, removeFromCart, clearCart, isLoading } = useCart();
   const { toast } = useToast();
+  const { user, isAuthenticated } = useAuth();
   
   const [formData, setFormData] = useState<CheckoutFormData>({
     firstName: '',
@@ -84,22 +86,40 @@ export default function CheckoutPage() {
     }
   };
 
-  const downloadJsonResponse = (data: any, filename: string) => {
-    const jsonString = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonString], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+  const saveOrderToBackend = async (orderData: any) => {
+    try {
+      const response = await fetch('https://sm-furnishing-backend.onrender.com/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
 
-    toast({
-      title: "Response Downloaded",
-      description: `${filename} has been downloaded to your device.`,
-    });
+      if (!response.ok) {
+        throw new Error(`Failed to save order: ${response.status} ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      console.log('Order saved successfully:', result);
+      
+      toast({
+        title: "Order Saved Successfully! ✅",
+        description: `Your order ${orderData.order_id} has been saved to our system.`,
+      });
+      
+      return { success: true, data: result };
+    } catch (error) {
+      console.error('Error saving order:', error);
+      
+      toast({
+        title: "Order Save Failed",
+        description: "Failed to save your order. Please contact support with your order details.",
+        variant: "destructive",
+      });
+      
+      return { success: false, error: error instanceof Error ? error.message : 'Unknown error' };
+    }
   };
 
   const handleRazorpayPayment = async (orderData: any) => {
@@ -166,6 +186,15 @@ export default function CheckoutPage() {
               order_date: new Date().toISOString(),
               status: 'completed',
               
+              // User information (authenticated user or guest)
+              user: isAuthenticated && user ? {
+                username: user.name,
+                user_email: user.email
+              } : {
+                username: `${formData.firstName} ${formData.lastName}`.trim(),
+                user_email: formData.email
+              },
+              
               items: cartItems.map(item => ({
                 product_id: item.productId,
                 product_name: item.productName,
@@ -199,20 +228,29 @@ export default function CheckoutPage() {
               }
             };
             
-            // Download complete order JSON
-            downloadJsonResponse(completeOrderData, `SM-Furnishings-Order-${orderCreationData.order.id}-${Date.now()}.json`);
+            // Save order to backend
+            const saveResult = await saveOrderToBackend(completeOrderData);
             
-            // Clear cart and redirect to success page
-            await clearCart(false);
-            
-            toast({
-              title: "Payment Successful! 🎉",
-              description: `Your payment of ₹${totalAmount.toLocaleString()} has been processed successfully.`,
-            });
-            
-            setTimeout(() => {
-              setLocation('/success');
-            }, 2000);
+            if (saveResult.success) {
+              // Only proceed with success flow if order was saved successfully
+              await clearCart(false);
+              
+              toast({
+                title: "Payment Successful! 🎉",
+                description: `Your payment of ₹${totalAmount.toLocaleString()} has been processed successfully.`,
+              });
+              
+              setTimeout(() => {
+                setLocation('/success');
+              }, 2000);
+            } else {
+              // Payment succeeded but order save failed - show error but don't clear cart
+              toast({
+                title: "Payment Processed, Order Save Failed",
+                description: "Your payment was successful but we couldn't save your order. Please contact support immediately with your payment ID: " + response.razorpay_payment_id,
+                variant: "destructive",
+              });
+            }
           } else {
             toast({
               title: "Payment Verification Failed",
@@ -343,6 +381,15 @@ export default function CheckoutPage() {
           order_date: new Date().toISOString(),
           status: 'completed',
           
+          // User information (authenticated user or guest)
+          user: isAuthenticated && user ? {
+            username: user.name,
+            user_email: user.email
+          } : {
+            username: `${formData.firstName} ${formData.lastName}`.trim(),
+            user_email: formData.email
+          },
+          
           items: cartItems.map(item => ({
             product_id: item.productId,
             product_name: item.productName,
@@ -374,22 +421,29 @@ export default function CheckoutPage() {
           }
         };
         
-        // Download COD order JSON
-        downloadJsonResponse(codOrderData, `SM-Furnishings-COD-Order-${Date.now()}.json`);
+        // Save COD order to backend
+        const saveResult = await saveOrderToBackend(codOrderData);
         
-        // Clear cart after successful order (without notification)
-        await clearCart(false);
-        
-        // Success message for COD
-        toast({
-          title: "Order Confirmed! 📦",
-          description: `Your COD order of ₹${totalAmount.toLocaleString()} has been placed successfully.`,
-        });
-        
-        // Redirect to success page
-        setTimeout(() => {
-          setLocation('/success');
-        }, 2000);
+        if (saveResult.success) {
+          // Only proceed with success flow if order was saved successfully
+          await clearCart(false);
+          
+          toast({
+            title: "Order Confirmed! 📦",
+            description: `Your COD order of ₹${totalAmount.toLocaleString()} has been placed successfully.`,
+          });
+          
+          setTimeout(() => {
+            setLocation('/success');
+          }, 2000);
+        } else {
+          // Order save failed - show error and don't clear cart so user can retry
+          toast({
+            title: "Order Failed to Save",
+            description: "We couldn't save your order. Please try again or contact support.",
+            variant: "destructive",
+          });
+        }
 
       } else if (method === 'razorpay') {
         await handleRazorpayPayment(orderData);
@@ -440,6 +494,17 @@ export default function CheckoutPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-serif font-bold mb-2">Checkout</h1>
           <p className="text-muted-foreground">Review your order and provide shipping details</p>
+          {isAuthenticated && user && (
+            <div className="mt-4 p-4 bg-terracotta/10 rounded-lg border border-terracotta/20">
+              <div className="flex items-center gap-2 text-terracotta">
+                <User className="w-5 h-5" />
+                <span className="font-medium">Logged in as: {user.name}</span>
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">
+                User ID: {user.id} | Email: {user.email}
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">

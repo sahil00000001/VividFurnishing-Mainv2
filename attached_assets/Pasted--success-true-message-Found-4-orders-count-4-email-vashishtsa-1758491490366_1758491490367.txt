@@ -1,0 +1,242 @@
+{
+    "success": true,
+    "message": "Found 4 orders",
+    "count": 4,
+    "email": "vashishtsahil99@gmail.com",
+    "orders": [
+        {
+            "_id": "68d07208108e210e1c89e4e7",
+            "order_id": "order_RKP9W22W3zNVFK",
+            "order_date": "2025-09-21T21:45:42.704Z",
+            "status": "completed",
+            "user": {
+                "user_id": null,
+                "username": "Sahil",
+                "user_email": "vashishtsahil99@gmail.com"
+            },
+            "items": [
+                {
+                    "product_id": "68ce690873ebdfc938cebea6",
+                    "product_name": "Gulal",
+                    "quantity": 1,
+                    "price": 1999
+                },
+                {
+                    "product_id": "68ce690873ebdfc938cebea7",
+                    "product_name": "Mitti",
+                    "quantity": 1,
+                    "price": 1999
+                },
+                {
+                    "product_id": "68ce690873ebdfc938cebea8",
+                    "product_name": "Neel",
+                    "quantity": 1,
+                    "price": 1999
+                }
+            ],
+            "customer": {
+                "name": "demo demoAbc",
+                "email": "vashishtsahil99@gmail.com",
+                "phone": "9625107920",
+                "address": "B-41 Indra Park",
+                "city": "New Delhi",
+                "state": "Delhi",
+                "pin_code": "110043",
+                "country": "India"
+            },
+            "pricing": {
+                "subtotal": 5997,
+                "tax": 1079.46,
+                "shipping": 0,
+                "discount": null,
+                "total": 7076.46
+            },
+            "payment": {
+                "method": "razorpay",
+                "status": "verified",
+                "razorpay_order_id": "order_RKP9W22W3zNVFK",
+                "razorpay_payment_id": "pay_RKP9fHFR5t2vLh",
+                "razorpay_signature": null,
+                "transaction_id": null,
+                "payment_date": null
+            },
+            "shipping": null,
+            "notes": null,
+            "invoice_number": "INV-order_RKP9W22W3zNVFK-1758491144902",
+            "is_deleted": false,
+            "createdAt": "2025-09-21T21:45:44.902Z",
+            "updatedAt": "2025-09-21T21:45:44.902Z"
+        },
+        {
+            "_id": "68d06cad508b1825677e213f",
+            "order_id": "order_RKOQMSXpCnQi6a",
+            "order_date": "2025-09-21T21:03:11.867Z",
+            "status": "completed",
+            "user": {
+                "user_id": null,
+                "username": "Sahil",
+                "user_email": "vashishtsahil99@gmail.com"
+            },
+            "items": [
+                {
+                    "product_id": "68ce690873ebdfc938cebea6",
+                    "product_name": "Gulal",
+                    "quantity": 1,
+                    "price": 1999
+                },
+                {
+                    "product_id": "68ce690873ebdfc938cebea7",
+                    "product_name": "Mitti",
+                    "quantity": 1,
+                    "price": 1999
+                }
+            ],
+            "customer": {
+                "name": "demo demoAbc",
+                "email": "vashishtsahil99@gmail.com",
+                "phone": "9625107920",
+                "address": "B-41 Indra Park",
+                "city": "New Delhi",
+                "state": "Delhi",
+                "pin_code": "110043",
+                "country": "India"
+            },
+            "pricing": {
+                "subtotal": 3998,
+                "tax": 719.64,
+                "shipping": 0,
+                "discount": null,
+                "total": 4717.64
+            },
+            "payment": {
+                "method": "razorpay",
+                "status": "verified",
+                "razorpay_order_id": "order_RKOQMSXpCnQi6a",
+                "razorpay_payment_id": "pay_RKOQlJkqOZDX5X",
+                "razorpay_signature": null,
+                "transaction_id": null,
+                "payment_date": null
+            },
+            "shipping": null,
+            "notes": null,
+            "invoice_number": null,
+            "is_deleted": false,
+            "createdAt": "2025-09-21T21:22:53.870Z",
+            "updatedAt": "2025-09-21T21:22:53.870Z"
+        },
+        {
+            "_id": "68d06f26b84374516fb54a2d",
+            "order_id": "oOQMSXpsaddCnQi6a",
+            "order_date": "2025-09-21T21:03:11.867Z",
+            "status": "completed",
+            "user": {
+                "user_id": null,
+                "username": "Sahil",
+                "user_email": "vashishtsahil99@gmail.com"
+            },
+            "items": [
+                {
+                    "product_id": "68ce690873ebdfc938cebea6",
+                    "product_name": "Gulal",
+                    "quantity": 1,
+                    "price": 1999
+                },
+                {
+                    "product_id": "68ce690873ebdfc938cebea7",
+                    "product_name": "Mitti",
+                    "quantity": 1,
+                    "price": 1999
+                }
+            ],
+            "customer": {
+                "name": "demo demoAbc",
+                "email": "vashishtsahil99@gmail.com",
+                "phone": "9625107920",
+                "address": "B-41 Indra Park",
+                "city": "New Delhi",
+                "state": "Delhi",
+                "pin_code": "110043",
+                "country": "India"
+            },
+            "pricing": {
+                "subtotal": 3998,
+                "tax": 719.64,
+                "shipping": 0,
+                "discount": null,
+                "total": 4717.64
+            },
+            "payment": {
+                "method": "razorpay",
+                "status": "verified",
+                "razorpay_order_id": "order_RKOQMSXpCnQi6a",
+                "razorpay_payment_id": "pay_RKOQlJkqOZDX5X",
+                "razorpay_signature": null,
+                "transaction_id": null,
+                "payment_date": null
+            },
+            "shipping": null,
+            "notes": null,
+            "invoice_number": "INV-oOQMSXpsaddCnQi6a-1758490406658",
+            "is_deleted": false,
+            "createdAt": "2025-09-21T21:33:26.658Z",
+            "updatedAt": "2025-09-21T21:33:26.658Z"
+        },
+        {
+            "_id": "68d0725a108e210e1c89e4e8",
+            "order_id": "oOQMSXpsaCnQi6a",
+            "order_date": "2025-09-21T21:03:11.867Z",
+            "status": "completed",
+            "user": {
+                "user_id": null,
+                "username": "Sahil",
+                "user_email": "vashishtsahil99@gmail.com"
+            },
+            "items": [
+                {
+                    "product_id": "68ce690873ebdfc938cebea6",
+                    "product_name": "Gulal",
+                    "quantity": 1,
+                    "price": 1999
+                },
+                {
+                    "product_id": "68ce690873ebdfc938cebea7",
+                    "product_name": "Mitti",
+                    "quantity": 1,
+                    "price": 1999
+                }
+            ],
+            "customer": {
+                "name": "demo demoAbc",
+                "email": "vashishtsahil99@gmail.com",
+                "phone": "9625107920",
+                "address": "B-41 Indra Park",
+                "city": "New Delhi",
+                "state": "Delhi",
+                "pin_code": "110043",
+                "country": "India"
+            },
+            "pricing": {
+                "subtotal": 3998,
+                "tax": 719.64,
+                "shipping": 0,
+                "discount": null,
+                "total": 4717.64
+            },
+            "payment": {
+                "method": "razorpay",
+                "status": "verified",
+                "razorpay_order_id": "order_RKOQMSXpCnQi6a",
+                "razorpay_payment_id": "pay_RKOQlJkqOZDX5X",
+                "razorpay_signature": null,
+                "transaction_id": null,
+                "payment_date": null
+            },
+            "shipping": null,
+            "notes": null,
+            "invoice_number": "INV-oOQMSXpsaCnQi6a-1758491226362",
+            "is_deleted": false,
+            "createdAt": "2025-09-21T21:47:06.362Z",
+            "updatedAt": "2025-09-21T21:47:06.362Z"
+        }
+    ]
+}

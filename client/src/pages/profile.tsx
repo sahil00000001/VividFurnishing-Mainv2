@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,9 +7,76 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Loader2, User, Mail, Calendar, Shield, LogOut, CheckCircle, AlertCircle, Settings, ShoppingBag, Heart, Award } from "lucide-react";
+import { Loader2, User, Mail, Calendar, Shield, LogOut, CheckCircle, AlertCircle, Settings, ShoppingBag, Heart, Award, Package, CreditCard, Truck, Phone, MapPin, Receipt, Calendar as CalendarIcon, CheckCircle2, Clock, XCircle } from "lucide-react";
 import { useAuth } from "@/lib/authContext";
 import { Header } from "@/components/Header";
+import { useQuery } from "@tanstack/react-query";
+
+interface OrderItem {
+  product_id: string;
+  product_name: string;
+  quantity: number;
+  price: number;
+}
+
+interface OrderCustomer {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  pin_code: string;
+  country: string;
+}
+
+interface OrderPricing {
+  subtotal: number;
+  tax: number;
+  shipping: number;
+  discount?: number | null;
+  total: number;
+}
+
+interface OrderPayment {
+  method: string;
+  status: string;
+  razorpay_order_id?: string;
+  razorpay_payment_id?: string;
+  razorpay_signature?: string | null;
+  transaction_id?: string | null;
+  payment_date?: string | null;
+}
+
+interface Order {
+  _id: string;
+  order_id: string;
+  order_date: string;
+  status: string;
+  user: {
+    user_id?: string | null;
+    username: string;
+    user_email: string;
+  };
+  items: OrderItem[];
+  customer: OrderCustomer;
+  pricing: OrderPricing;
+  payment: OrderPayment;
+  shipping?: any;
+  notes?: string | null;
+  invoice_number?: string | null;
+  is_deleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface OrdersResponse {
+  success: boolean;
+  message: string;
+  count: number;
+  email: string;
+  orders: Order[];
+}
 
 export default function Profile() {
   const [, setLocation] = useLocation();
@@ -19,6 +86,25 @@ export default function Profile() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
+  // Fetch user orders
+  const { data: ordersData, isLoading: ordersLoading, error: ordersError } = useQuery<OrdersResponse>({
+    queryKey: ['orders', user?.email],
+    enabled: !!user?.email,
+    staleTime: 300000, // 5 minutes
+    refetchOnWindowFocus: false,
+    queryFn: async () => {
+      if (!user?.email) throw new Error('No user email found');
+      
+      const response = await fetch(`https://sm-furnishing-backend.onrender.com/api/orders/${encodeURIComponent(user.email)}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch orders: ${response.status}`);
+      }
+      
+      return response.json();
+    }
+  });
 
   // Redirect to login if not authenticated
   if (!isAuthenticated || !user) {
@@ -145,7 +231,9 @@ export default function Profile() {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center p-4 bg-gradient-to-br from-terracotta/10 to-terracotta/5 rounded-xl">
                       <ShoppingBag className="w-6 h-6 text-terracotta mx-auto mb-2" />
-                      <p className="text-2xl font-bold text-foreground">0</p>
+                      <p className="text-2xl font-bold text-foreground" data-testid="orders-count">
+                        {ordersLoading ? '...' : ordersData?.count || 0}
+                      </p>
                       <p className="text-sm text-muted-foreground">Orders</p>
                     </div>
                     <div className="text-center p-4 bg-gradient-to-br from-pink-100 to-pink-50 rounded-xl">
@@ -304,6 +392,142 @@ export default function Profile() {
                 </Card>
               )}
 
+              {/* Orders Section */}
+              <Card className="bg-gradient-to-br from-white to-cream/30 shadow-xl border-0" data-testid="orders-section">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-3 text-2xl">
+                    <div className="w-10 h-10 bg-gradient-to-br from-terracotta to-terracotta-dark rounded-lg flex items-center justify-center">
+                      <Package className="w-5 h-5 text-white" />
+                    </div>
+                    My Orders
+                    {ordersData?.count && (
+                      <Badge className="bg-terracotta text-white ml-2">
+                        {ordersData.count}
+                      </Badge>
+                    )}
+                  </CardTitle>
+                  <CardDescription>Track and manage your furniture orders</CardDescription>
+                </CardHeader>
+                
+                <CardContent className="space-y-4">
+                  {ordersLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="w-8 h-8 animate-spin text-terracotta" />
+                      <span className="ml-2 text-muted-foreground">Loading your orders...</span>
+                    </div>
+                  ) : ordersError ? (
+                    <div className="text-center py-8">
+                      <XCircle className="w-12 h-12 text-red-500 mx-auto mb-2" />
+                      <p className="text-red-600 font-medium">Failed to load orders</p>
+                      <p className="text-sm text-muted-foreground">Please try again later</p>
+                    </div>
+                  ) : !ordersData?.orders?.length ? (
+                    <div className="text-center py-8">
+                      <Package className="w-12 h-12 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-lg font-medium text-muted-foreground">No orders yet</p>
+                      <p className="text-sm text-muted-foreground mb-4">Start shopping to see your orders here</p>
+                      <Link href="/shop">
+                        <Button className="bg-terracotta hover:bg-terracotta-dark text-white">
+                          <ShoppingBag className="w-4 h-4 mr-2" />
+                          Start Shopping
+                        </Button>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="space-y-4 max-h-96 overflow-y-auto">
+                      {ordersData.orders.map((order) => (
+                        <div
+                          key={order._id}
+                          className="bg-gradient-to-r from-white to-cream/50 rounded-xl p-6 border border-terracotta/10 hover:border-terracotta/30 transition-all duration-200 cursor-pointer"
+                          onClick={() => setSelectedOrder(order)}
+                          data-testid={`order-${order.order_id}`}
+                        >
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <h3 className="font-bold text-lg text-foreground">
+                                  Order #{order.order_id.slice(-8)}
+                                </h3>
+                                <Badge
+                                  className={`${
+                                    order.status === 'completed'
+                                      ? 'bg-green-100 text-green-700 border-green-200'
+                                      : order.status === 'pending'
+                                      ? 'bg-yellow-100 text-yellow-700 border-yellow-200'
+                                      : 'bg-gray-100 text-gray-700 border-gray-200'
+                                  }`}
+                                >
+                                  {order.status === 'completed' && <CheckCircle2 className="w-3 h-3 mr-1" />}
+                                  {order.status === 'pending' && <Clock className="w-3 h-3 mr-1" />}
+                                  {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                                </Badge>
+                              </div>
+                              <p className="text-sm text-muted-foreground flex items-center gap-1">
+                                <CalendarIcon className="w-4 h-4" />
+                                {new Date(order.order_date).toLocaleDateString('en-IN', {
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-2xl font-bold text-terracotta">
+                                ₹{order.pricing.total.toLocaleString()}
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                {order.items.length} item{order.items.length > 1 ? 's' : ''}
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <div className="flex items-center gap-2">
+                              <CreditCard className="w-4 h-4 text-muted-foreground" />
+                              <span className="capitalize text-muted-foreground">
+                                {order.payment.method === 'razorpay' ? 'Online Payment' : 'Cash on Delivery'}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MapPin className="w-4 h-4 text-muted-foreground" />
+                              <span className="text-muted-foreground">
+                                {order.customer.city}, {order.customer.state}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Receipt className="w-4 h-4 text-muted-foreground" />
+                              <span className="text-muted-foreground">
+                                {order.invoice_number ? `INV-${order.invoice_number.slice(-8)}` : 'No Invoice'}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div className="mt-4 pt-4 border-t border-terracotta/10">
+                            <div className="flex flex-wrap gap-2">
+                              {order.items.slice(0, 3).map((item, index) => (
+                                <span
+                                  key={index}
+                                  className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-terracotta/10 text-terracotta-dark"
+                                >
+                                  {item.product_name} x{item.quantity}
+                                </span>
+                              ))}
+                              {order.items.length > 3 && (
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-muted text-muted-foreground">
+                                  +{order.items.length - 3} more
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
               {/* Account Actions */}
               <Card className="bg-gradient-to-br from-white to-cream/30 shadow-xl border-0" data-testid="actions-card">
                 <CardHeader>
@@ -350,6 +574,182 @@ export default function Profile() {
               </Card>
             </div>
           </div>
+
+          {/* Order Details Modal */}
+          {selectedOrder && (
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setSelectedOrder(null)}>
+              <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+                <div className="sticky top-0 bg-white border-b border-gray-200 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="text-2xl font-bold text-foreground">Order Details</h2>
+                      <p className="text-muted-foreground">Order #{selectedOrder.order_id}</p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setSelectedOrder(null)}
+                      className="border-gray-300 hover:bg-gray-50"
+                    >
+                      ✕ Close
+                    </Button>
+                  </div>
+                </div>
+                
+                <div className="p-6 space-y-6">
+                  {/* Order Status & Summary */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <Card className="bg-gradient-to-br from-terracotta/5 to-terracotta/10 border-terracotta/20">
+                      <CardContent className="p-4 text-center">
+                        <div className="w-12 h-12 bg-terracotta rounded-full flex items-center justify-center mx-auto mb-2">
+                          <Package className="w-6 h-6 text-white" />
+                        </div>
+                        <p className="font-bold text-2xl text-terracotta">₹{selectedOrder.pricing.total.toLocaleString()}</p>
+                        <p className="text-sm text-muted-foreground">Total Amount</p>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+                      <CardContent className="p-4 text-center">
+                        <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <CheckCircle2 className="w-6 h-6 text-white" />
+                        </div>
+                        <p className="font-bold text-green-700 capitalize">{selectedOrder.status}</p>
+                        <p className="text-sm text-muted-foreground">Order Status</p>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+                      <CardContent className="p-4 text-center">
+                        <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <CreditCard className="w-6 h-6 text-white" />
+                        </div>
+                        <p className="font-bold text-blue-700 capitalize">
+                          {selectedOrder.payment.method === 'razorpay' ? 'Online' : 'COD'}
+                        </p>
+                        <p className="text-sm text-muted-foreground">Payment Method</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  
+                  {/* Order Items */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Package className="w-5 h-5 text-terracotta" />
+                        Order Items ({selectedOrder.items.length})
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {selectedOrder.items.map((item, index) => (
+                          <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-foreground">{item.product_name}</h4>
+                              <p className="text-sm text-muted-foreground">Product ID: {item.product_id}</p>
+                            </div>
+                            <div className="text-center mx-4">
+                              <p className="font-medium">Qty: {item.quantity}</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="font-bold text-terracotta">₹{item.price.toLocaleString()}</p>
+                              <p className="text-sm text-muted-foreground">₹{(item.price * item.quantity).toLocaleString()} total</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  {/* Shipping & Customer Info */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <MapPin className="w-5 h-5 text-terracotta" />
+                          Shipping Address
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-2">
+                        <p className="font-medium">{selectedOrder.customer.name}</p>
+                        <p className="text-sm text-muted-foreground">{selectedOrder.customer.address}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {selectedOrder.customer.city}, {selectedOrder.customer.state} - {selectedOrder.customer.pin_code}
+                        </p>
+                        <p className="text-sm text-muted-foreground">{selectedOrder.customer.country}</p>
+                        <div className="pt-2 border-t">
+                          <p className="text-sm flex items-center gap-2">
+                            <Phone className="w-4 h-4" />
+                            {selectedOrder.customer.phone}
+                          </p>
+                          <p className="text-sm flex items-center gap-2">
+                            <Mail className="w-4 h-4" />
+                            {selectedOrder.customer.email}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <Receipt className="w-5 h-5 text-terracotta" />
+                          Order Summary
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Subtotal:</span>
+                          <span>₹{selectedOrder.pricing.subtotal.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Shipping:</span>
+                          <span className="text-green-600 font-medium">
+                            {selectedOrder.pricing.shipping === 0 ? 'Free' : `₹${selectedOrder.pricing.shipping.toLocaleString()}`}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Tax (GST):</span>
+                          <span>₹{selectedOrder.pricing.tax.toLocaleString()}</span>
+                        </div>
+                        {selectedOrder.pricing.discount && (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Discount:</span>
+                            <span className="text-green-600">-₹{selectedOrder.pricing.discount.toLocaleString()}</span>
+                          </div>
+                        )}
+                        <Separator />
+                        <div className="flex justify-between text-lg font-bold">
+                          <span>Total:</span>
+                          <span className="text-terracotta">₹{selectedOrder.pricing.total.toLocaleString()}</span>
+                        </div>
+                        
+                        {selectedOrder.invoice_number && (
+                          <div className="pt-3 border-t">
+                            <p className="text-sm text-muted-foreground">
+                              Invoice: {selectedOrder.invoice_number}
+                            </p>
+                          </div>
+                        )}
+                        
+                        <div className="pt-3 border-t">
+                          <p className="text-sm text-muted-foreground">
+                            Order Date: {new Date(selectedOrder.order_date).toLocaleDateString('en-IN', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Alerts */}
           {error && (
