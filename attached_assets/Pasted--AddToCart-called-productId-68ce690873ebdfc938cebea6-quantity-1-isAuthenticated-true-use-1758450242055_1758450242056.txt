@@ -1,0 +1,52 @@
+🛒 AddToCart called: {productId: '68ce690873ebdfc938cebea6', quantity: 1, isAuthenticated: true, user: {…}}
+cartContext.tsx:88 🚀 Starting add to cart API call...
+api.ts:226 🔑 Getting auth token: Token exists
+api.ts:239 📋 Auth headers prepared with token
+api.ts:282   POST https://sm-furnishing-backend.onrender.com/api/cart/add 404 (Not Found)
+addToCart @ api.ts:282
+addToCart @ cartContext.tsx:113
+addToCart @ shop.tsx:189
+onClick @ shop.tsx:734
+callCallback2 @ react-dom.development.js:4164
+invokeGuardedCallbackDev @ react-dom.development.js:4213
+invokeGuardedCallback @ react-dom.development.js:4277
+invokeGuardedCallbackAndCatchFirstError @ react-dom.development.js:4291
+executeDispatch @ react-dom.development.js:9041
+processDispatchQueueItemsInOrder @ react-dom.development.js:9073
+processDispatchQueue @ react-dom.development.js:9086
+dispatchEventsForPlugins @ react-dom.development.js:9097
+(anonymous) @ react-dom.development.js:9288
+batchedUpdates$1 @ react-dom.development.js:26179
+batchedUpdates @ react-dom.development.js:3991
+dispatchEventForPluginEventSystem @ react-dom.development.js:9287
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ react-dom.development.js:6465
+dispatchEvent @ react-dom.development.js:6457
+dispatchDiscreteEvent @ react-dom.development.js:6430
+api.ts:300  Error adding to cart: Error: Product not found
+    at addToCart (api.ts:295:13)
+    at async addToCart (cartContext.tsx:113:27)
+    at async addToCart (shop.tsx:189:7)
+addToCart @ api.ts:300
+await in addToCart
+addToCart @ cartContext.tsx:113
+addToCart @ shop.tsx:189
+onClick @ shop.tsx:734
+callCallback2 @ react-dom.development.js:4164
+invokeGuardedCallbackDev @ react-dom.development.js:4213
+invokeGuardedCallback @ react-dom.development.js:4277
+invokeGuardedCallbackAndCatchFirstError @ react-dom.development.js:4291
+executeDispatch @ react-dom.development.js:9041
+processDispatchQueueItemsInOrder @ react-dom.development.js:9073
+processDispatchQueue @ react-dom.development.js:9086
+dispatchEventsForPlugins @ react-dom.development.js:9097
+(anonymous) @ react-dom.development.js:9288
+batchedUpdates$1 @ react-dom.development.js:26179
+batchedUpdates @ react-dom.development.js:3991
+dispatchEventForPluginEventSystem @ react-dom.development.js:9287
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ react-dom.development.js:6465
+dispatchEvent @ react-dom.development.js:6457
+dispatchDiscreteEvent @ react-dom.development.js:6430
+cartContext.tsx:122  ❌ Add to cart failed: Error: Product not found
+    at addToCart (api.ts:295:13)
+    at async addToCart (cartContext.tsx:113:27)
+    at async addToCart (shop.tsx:189:7)

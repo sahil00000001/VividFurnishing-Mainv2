@@ -252,25 +252,49 @@ function handleAuthError(): never {
   throw new Error('Authentication required. Please login.');
 }
 
-// Cart API Functions
+// Local cart storage key
+const CART_STORAGE_KEY = 'sm_furnishings_cart';
+
+// Helper function to get user-specific cart key
+function getUserCartKey(): string {
+  const user = JSON.parse(localStorage.getItem('authUser') || 'null');
+  return user ? `${CART_STORAGE_KEY}_${user.id}` : CART_STORAGE_KEY;
+}
+
+// Helper function to create a new empty cart
+function createEmptyCart(): Cart {
+  return {
+    _id: 'local_cart_' + Date.now(),
+    userId: JSON.parse(localStorage.getItem('authUser') || 'null')?.id || 'anonymous',
+    items: [],
+    totalAmount: 0,
+    totalItems: 0,
+    status: 'active',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+}
+
+// Helper function to calculate cart totals
+function calculateCartTotals(items: CartItem[]): { totalAmount: number; totalItems: number } {
+  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalAmount = items.reduce((sum, item) => sum + (item.priceAtTime * item.quantity), 0);
+  return { totalAmount, totalItems };
+}
+
+// Cart API Functions (using localStorage)
 export async function fetchCart(): Promise<Cart> {
   try {
-    const response = await fetch(apiUrl('/api/cart'), {
-      method: 'GET',
-      headers: getAuthHeaders(),
-    });
-
-    if (response.status === 401) {
-      handleAuthError();
+    const cartKey = getUserCartKey();
+    const cartData = localStorage.getItem(cartKey);
+    
+    if (!cartData) {
+      const emptyCart = createEmptyCart();
+      localStorage.setItem(cartKey, JSON.stringify(emptyCart));
+      return emptyCart;
     }
-
-    const data: CartResponse | CartError = await response.json();
-
-    if (!response.ok) {
-      throw new Error((data as CartError).message || 'Failed to fetch cart');
-    }
-
-    return (data as CartResponse).cart;
+    
+    return JSON.parse(cartData);
   } catch (error) {
     console.error('Error fetching cart:', error);
     throw error;
@@ -279,23 +303,39 @@ export async function fetchCart(): Promise<Cart> {
 
 export async function addToCart(productId: string, quantity: number): Promise<Cart> {
   try {
-    const response = await fetch(apiUrl('/api/cart/add'), {
-      method: 'POST',
-      headers: getAuthHeaders(),
-      body: JSON.stringify({ productId, quantity }),
-    });
-
-    if (response.status === 401) {
-      handleAuthError();
+    // Fetch the product details to get name, price, etc.
+    const product = await fetchProductById(productId);
+    
+    const cart = await fetchCart();
+    const existingItemIndex = cart.items.findIndex(item => item.productId === productId);
+    
+    if (existingItemIndex >= 0) {
+      // Update existing item quantity
+      cart.items[existingItemIndex].quantity += quantity;
+    } else {
+      // Add new item to cart
+      const newItem: CartItem = {
+        productId,
+        productName: product.Product_Name,
+        productImage: getProductImageUrl(product),
+        quantity,
+        priceAtTime: product.Selling_Price,
+        addedAt: new Date().toISOString()
+      };
+      cart.items.push(newItem);
     }
-
-    const data: CartResponse | CartError = await response.json();
-
-    if (!response.ok) {
-      throw new Error((data as CartError).message || 'Failed to add item to cart');
-    }
-
-    return (data as CartResponse).cart;
+    
+    // Recalculate totals
+    const totals = calculateCartTotals(cart.items);
+    cart.totalAmount = totals.totalAmount;
+    cart.totalItems = totals.totalItems;
+    cart.updatedAt = new Date().toISOString();
+    
+    // Save to localStorage
+    const cartKey = getUserCartKey();
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+    
+    return cart;
   } catch (error) {
     console.error('Error adding to cart:', error);
     throw error;
@@ -304,23 +344,30 @@ export async function addToCart(productId: string, quantity: number): Promise<Ca
 
 export async function updateCartQuantity(productId: string, quantity: number): Promise<Cart> {
   try {
-    const response = await fetch(apiUrl('/api/cart/update'), {
-      method: 'PUT',
-      headers: getAuthHeaders(),
-      body: JSON.stringify({ productId, quantity }),
-    });
-
-    if (response.status === 401) {
-      handleAuthError();
+    const cart = await fetchCart();
+    const existingItemIndex = cart.items.findIndex(item => item.productId === productId);
+    
+    if (existingItemIndex >= 0) {
+      if (quantity <= 0) {
+        // Remove item if quantity is 0 or less
+        cart.items.splice(existingItemIndex, 1);
+      } else {
+        // Update quantity
+        cart.items[existingItemIndex].quantity = quantity;
+      }
     }
-
-    const data: CartResponse | CartError = await response.json();
-
-    if (!response.ok) {
-      throw new Error((data as CartError).message || 'Failed to update cart');
-    }
-
-    return (data as CartResponse).cart;
+    
+    // Recalculate totals
+    const totals = calculateCartTotals(cart.items);
+    cart.totalAmount = totals.totalAmount;
+    cart.totalItems = totals.totalItems;
+    cart.updatedAt = new Date().toISOString();
+    
+    // Save to localStorage
+    const cartKey = getUserCartKey();
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+    
+    return cart;
   } catch (error) {
     console.error('Error updating cart quantity:', error);
     throw error;
@@ -329,22 +376,20 @@ export async function updateCartQuantity(productId: string, quantity: number): P
 
 export async function removeFromCart(productId: string): Promise<Cart> {
   try {
-    const response = await fetch(apiUrl(`/api/cart/item/${productId}`), {
-      method: 'DELETE',
-      headers: getAuthHeaders(),
-    });
-
-    if (response.status === 401) {
-      handleAuthError();
-    }
-
-    const data: CartResponse | CartError = await response.json();
-
-    if (!response.ok) {
-      throw new Error((data as CartError).message || 'Failed to remove item from cart');
-    }
-
-    return (data as CartResponse).cart;
+    const cart = await fetchCart();
+    cart.items = cart.items.filter(item => item.productId !== productId);
+    
+    // Recalculate totals
+    const totals = calculateCartTotals(cart.items);
+    cart.totalAmount = totals.totalAmount;
+    cart.totalItems = totals.totalItems;
+    cart.updatedAt = new Date().toISOString();
+    
+    // Save to localStorage
+    const cartKey = getUserCartKey();
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+    
+    return cart;
   } catch (error) {
     console.error('Error removing from cart:', error);
     throw error;
@@ -353,22 +398,13 @@ export async function removeFromCart(productId: string): Promise<Cart> {
 
 export async function clearCart(): Promise<Cart> {
   try {
-    const response = await fetch(apiUrl('/api/cart/clear'), {
-      method: 'DELETE',
-      headers: getAuthHeaders(),
-    });
-
-    if (response.status === 401) {
-      handleAuthError();
-    }
-
-    const data: CartResponse | CartError = await response.json();
-
-    if (!response.ok) {
-      throw new Error((data as CartError).message || 'Failed to clear cart');
-    }
-
-    return (data as CartResponse).cart;
+    const emptyCart = createEmptyCart();
+    
+    // Save to localStorage
+    const cartKey = getUserCartKey();
+    localStorage.setItem(cartKey, JSON.stringify(emptyCart));
+    
+    return emptyCart;
   } catch (error) {
     console.error('Error clearing cart:', error);
     throw error;
