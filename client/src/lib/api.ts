@@ -186,3 +186,191 @@ export function getProductImageUrl(product: ApiProduct): string {
   // In the future, this would be replaced with actual product image URLs
   return `https://via.placeholder.com/400x400/f0f0f0/666666?text=${encodeURIComponent(product.Product_Name)}`;
 }
+
+// Cart API interfaces
+export interface CartItem {
+  productId: string;
+  productName: string;
+  productImage: string;
+  quantity: number;
+  priceAtTime: number;
+  addedAt: string;
+}
+
+export interface Cart {
+  _id: string;
+  userId: string;
+  items: CartItem[];
+  totalAmount: number;
+  totalItems: number;
+  status: 'active' | 'abandoned' | 'converted';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CartResponse {
+  success: boolean;
+  cart: Cart;
+}
+
+// Cart API error response
+export interface CartError {
+  success: false;
+  message: string;
+  code?: string;
+}
+
+// Helper function to get JWT token
+function getAuthToken(): string | null {
+  const token = localStorage.getItem('authToken');
+  console.log('🔑 Getting auth token:', token ? 'Token exists' : 'No token found');
+  return token;
+}
+
+// Helper function to create authenticated headers
+function getAuthHeaders(): HeadersInit {
+  const token = getAuthToken();
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+  };
+  
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+    console.log('📋 Auth headers prepared with token');
+  } else {
+    console.log('⚠️ No auth token available for headers');
+  }
+  
+  return headers;
+}
+
+// Handle authentication errors
+function handleAuthError(): never {
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('authUser');
+  window.location.href = '/login';
+  throw new Error('Authentication required. Please login.');
+}
+
+// Cart API Functions
+export async function fetchCart(): Promise<Cart> {
+  try {
+    const response = await fetch(apiUrl('/api/cart'), {
+      method: 'GET',
+      headers: getAuthHeaders(),
+    });
+
+    if (response.status === 401) {
+      handleAuthError();
+    }
+
+    const data: CartResponse | CartError = await response.json();
+
+    if (!response.ok) {
+      throw new Error((data as CartError).message || 'Failed to fetch cart');
+    }
+
+    return (data as CartResponse).cart;
+  } catch (error) {
+    console.error('Error fetching cart:', error);
+    throw error;
+  }
+}
+
+export async function addToCart(productId: string, quantity: number): Promise<Cart> {
+  try {
+    const response = await fetch(apiUrl('/api/cart/add'), {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ productId, quantity }),
+    });
+
+    if (response.status === 401) {
+      handleAuthError();
+    }
+
+    const data: CartResponse | CartError = await response.json();
+
+    if (!response.ok) {
+      throw new Error((data as CartError).message || 'Failed to add item to cart');
+    }
+
+    return (data as CartResponse).cart;
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    throw error;
+  }
+}
+
+export async function updateCartQuantity(productId: string, quantity: number): Promise<Cart> {
+  try {
+    const response = await fetch(apiUrl('/api/cart/update'), {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ productId, quantity }),
+    });
+
+    if (response.status === 401) {
+      handleAuthError();
+    }
+
+    const data: CartResponse | CartError = await response.json();
+
+    if (!response.ok) {
+      throw new Error((data as CartError).message || 'Failed to update cart');
+    }
+
+    return (data as CartResponse).cart;
+  } catch (error) {
+    console.error('Error updating cart quantity:', error);
+    throw error;
+  }
+}
+
+export async function removeFromCart(productId: string): Promise<Cart> {
+  try {
+    const response = await fetch(apiUrl(`/api/cart/item/${productId}`), {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+
+    if (response.status === 401) {
+      handleAuthError();
+    }
+
+    const data: CartResponse | CartError = await response.json();
+
+    if (!response.ok) {
+      throw new Error((data as CartError).message || 'Failed to remove item from cart');
+    }
+
+    return (data as CartResponse).cart;
+  } catch (error) {
+    console.error('Error removing from cart:', error);
+    throw error;
+  }
+}
+
+export async function clearCart(): Promise<Cart> {
+  try {
+    const response = await fetch(apiUrl('/api/cart/clear'), {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    });
+
+    if (response.status === 401) {
+      handleAuthError();
+    }
+
+    const data: CartResponse | CartError = await response.json();
+
+    if (!response.ok) {
+      throw new Error((data as CartError).message || 'Failed to clear cart');
+    }
+
+    return (data as CartResponse).cart;
+  } catch (error) {
+    console.error('Error clearing cart:', error);
+    throw error;
+  }
+}

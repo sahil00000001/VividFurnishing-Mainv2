@@ -1,0 +1,288 @@
+Frontend Cart Implementation Prompt for FurnishAdmin
+Project Context
+You are implementing a shopping cart feature for FurnishAdmin, a furniture e-commerce application. The backend APIs are complete and deployed at https://sm-furnishing-backend.onrender.com/. This cart system uses JWT authentication and provides full CRUD operations with sophisticated business logic including price snapshots and inventory validation.
+Core Requirements
+1. Authentication Integration
+
+JWT Token Management:
+
+Store JWT token in localStorage after successful login/signup
+Retrieve token from localStorage for all API calls
+Add token to every cart API request header: Authorization: Bearer <token>
+Handle token expiration gracefully
+Clear token from localStorage on logout
+
+
+Error Handling:
+
+Intercept all 401 (Unauthorized) responses
+Redirect users to login page when token is invalid/expired
+Preserve cart intent (what user was trying to add) for post-login action
+Show appropriate message: "Please login to manage your cart"
+
+
+
+2. API Endpoints Implementation
+Base URL: https://sm-furnishing-backend.onrender.com/
+Cart Operations to Implement:
+
+Get Cart - GET /api/cart
+
+Call on app initialization (if user is logged in)
+Call after successful login
+Creates empty cart if none exists
+Update cart state in your state management solution
+
+
+Add to Cart - POST /api/cart/add
+
+Request body: { productId, quantity }
+Show "Add to Cart" button on product cards/pages
+Handle quantity selector (default: 1)
+Show success toast/notification
+Update cart count in navbar
+
+
+Update Quantity - PUT /api/cart/update
+
+Request body: { productId, quantity }
+Implement +/- buttons in cart view
+Allow direct quantity input with validation
+Setting quantity to 0 removes the item
+Show loading state during update
+
+
+Remove Item - DELETE /api/cart/item/:productId
+
+Add remove/trash icon for each cart item
+Show confirmation dialog: "Remove this item from cart?"
+Update cart totals immediately
+
+
+Clear Cart - DELETE /api/cart/clear
+
+Add "Clear Cart" button in cart view
+Show confirmation: "Remove all items from cart?"
+Redirect to empty cart state
+
+
+
+3. UI/UX Requirements
+Cart Icon/Badge
+
+Display in navbar/header persistently
+Show item count badge (totalItems from API)
+Update count after every cart operation
+Animate badge on updates (pulse/bounce effect)
+Click to open cart drawer/page
+
+Product Listing Integration
+
+Each product card should have "Add to Cart" button
+Show "Added to Cart" confirmation briefly
+Display current quantity if item already in cart
+Show "Out of Stock" for unavailable items
+Quick add with default quantity of 1
+
+Cart Page/Drawer
+
+Display all cart items with:
+
+Product image
+Product name
+Price at time of adding (priceAtTime)
+Quantity selector
+Line total (price × quantity)
+Remove button
+
+
+Show cart summary:
+
+Total items count
+Subtotal amount
+Clear cart button
+Proceed to checkout button
+
+
+Empty cart state:
+
+Friendly message: "Your cart is empty"
+"Continue Shopping" CTA button
+
+
+
+Loading States
+
+Show skeleton loaders during initial cart fetch
+Disable buttons during API calls
+Show inline spinners for quantity updates
+Optimistic UI updates (update immediately, rollback on error)
+
+Error Handling UI
+
+Toast notifications for errors
+Inline error messages for stock issues
+Network error handling: "Unable to update cart. Please try again."
+Stock validation errors: "Only X items available in stock"
+
+4. State Management
+Cart State Structure:
+javascript{
+  cart: {
+    _id: string,
+    userId: string,
+    items: [
+      {
+        productId: string,
+        productName: string,
+        productImage: string,
+        quantity: number,
+        priceAtTime: number,  // Price when added (not current price)
+        addedAt: date
+      }
+    ],
+    totalAmount: number,
+    totalItems: number,
+    status: 'active' | 'abandoned' | 'converted',
+    createdAt: date,
+    updatedAt: date
+  },
+  loading: boolean,
+  error: string | null
+}
+Actions to Implement:
+
+fetchCart() - Get user's cart
+addToCart(productId, quantity) - Add item
+updateCartItem(productId, quantity) - Update quantity
+removeFromCart(productId) - Remove single item
+clearCart() - Clear all items
+setLoading(boolean) - Manage loading state
+setError(message) - Handle errors
+
+5. Business Logic Implementation
+Price Snapshot Logic
+
+Display priceAtTime in cart (not current product price)
+Show message if current price differs: "Price when added: ₹X"
+Honor the price user saw when adding to cart
+This protects users from price increases after adding
+
+Stock Validation
+
+Check availability before add/update
+Show available stock in quantity selector
+Disable increment button at stock limit
+Display: "Only X items available" warning
+Prevent over-ordering through UI constraints
+
+Optimistic Updates
+
+Update UI immediately on user action
+Send API request in background
+Rollback UI if API fails
+Maintains responsive feel while ensuring data consistency
+
+Session Persistence
+
+Cart persists across sessions (stored in backend)
+Fetch cart on app load if user is authenticated
+Cart survives browser refresh
+Clear local cart references on logout
+
+6. Integration Points
+With Authentication Flow:
+
+After login: Fetch and display user's cart
+After signup: Initialize empty cart
+On logout: Clear cart from UI state
+Token refresh: Maintain cart state
+
+With Product Pages:
+
+Check if item in cart, show appropriate CTA
+Quick add functionality
+Show cart quantity on product if already added
+Navigate to cart after adding (optional)
+
+With Checkout:
+
+Validate cart before proceeding
+Pass cart data to checkout process
+Update cart status to 'converted' after order
+Clear cart after successful order
+
+7. Advanced Features
+Real-time Stock Updates (Optional):
+
+Periodically validate stock availability
+Show warnings if items became unavailable
+Update UI if stock runs out
+
+Cart Recovery:
+
+Save cart intent before login redirect
+Restore add-to-cart action after login
+Merge guest cart with user cart (if applicable)
+
+Analytics Integration:
+
+Track add to cart events
+Monitor cart abandonment
+Track remove from cart actions
+Measure cart conversion rates
+
+8. Error Scenarios to Handle
+
+Network Errors: Show retry option
+Invalid Product ID: Show "Product not found"
+Insufficient Stock: Show available quantity
+Cart Not Found: Create new cart automatically
+Token Expired: Redirect to login
+Server Errors (500): Show generic error message
+
+9. Performance Considerations
+
+Debounce quantity updates (wait 500ms after user stops clicking)
+Cache cart data locally for instant display
+Lazy load cart drawer content
+Minimize API calls by batching updates where possible
+Use React.memo or similar for cart item components
+
+10. Testing Checklist
+
+ Add single item to cart
+ Add multiple quantities
+ Update quantity (increase/decrease)
+ Remove single item
+ Clear entire cart
+ Handle out of stock scenarios
+ Test with expired token
+ Test network failure recovery
+ Verify price snapshot functionality
+ Test cart persistence across sessions
+ Verify optimistic updates and rollbacks
+
+Success Criteria
+The cart implementation is complete when:
+
+All CRUD operations work seamlessly
+Authentication is properly integrated
+Error handling provides clear user feedback
+Cart state persists across sessions
+UI provides responsive, optimistic updates
+Stock validation prevents over-ordering
+Price snapshots protect user interests
+Cart badge accurately reflects item count
+Loading states provide visual feedback
+The experience feels smooth and professional
+
+Important Notes
+
+Never send userId from frontend - it's extracted from JWT token by backend
+Always use priceAtTime for display - not current product price
+Handle all error responses from the provided API documentation
+Maintain cart count in global state for navbar display
+Test with the provided product IDs during development
+
+This implementation should create a robust, user-friendly cart system that handles all edge cases while providing a smooth shopping experience.

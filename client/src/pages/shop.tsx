@@ -177,68 +177,72 @@ export default function ShopPage() {
 
 
   // Add to Cart with Animation
-  const addToCart = (productId: string, event: React.MouseEvent) => {
+  const addToCart = async (productId: string, event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
     
     const product = products.find(p => p._id === productId);
     if (!product) return;
     
-    // Add to global cart context
-    addToGlobalCart({
-      id: product._id as any,
-      name: product.Product_Name,
-      price: product.Selling_Price,
-      image: getProductImageUrl(product)
-    });
+    try {
+      // Add to global cart context using the new API-based interface
+      await addToGlobalCart(productId, 1);
 
-    // Show success toast
-    toast({
-      title: "Added to cart",
-      description: `${product.Product_Name} has been added to your cart`,
-    });
-    
-    // Animation
-    const productElement = productRefs.current[productId];
-    
-    if (productElement) {
-      setAnimatingProducts(prev => new Set(Array.from(prev).concat([productId])));
+      // Show success toast
+      toast({
+        title: "Added to cart",
+        description: `${product.Product_Name} has been added to your cart`,
+      });
       
-      // Create flying animation element
-      const flyingElement = document.createElement('div');
-      flyingElement.style.position = 'fixed';
-      flyingElement.style.zIndex = '9999';
-      flyingElement.style.pointerEvents = 'none';
-      flyingElement.style.width = '60px';
-      flyingElement.style.height = '60px';
-      flyingElement.style.borderRadius = '12px';
-      flyingElement.style.backgroundColor = '#B8734C';
-      flyingElement.style.transition = 'all 1s cubic-bezier(0.2, 0.8, 0.2, 1)';
-      flyingElement.style.boxShadow = '0 8px 25px rgba(184, 115, 76, 0.4)';
-      flyingElement.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: white;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="m16 10l-4 4l-4-4"></path></svg></div>`;
+      // Animation
+      const productElement = productRefs.current[productId];
       
-      const productRect = productElement.getBoundingClientRect();
-      flyingElement.style.left = (productRect.left + productRect.width / 2 - 30) + 'px';
-      flyingElement.style.top = (productRect.top + productRect.height / 2 - 30) + 'px';
-      
-      document.body.appendChild(flyingElement);
-      
-      setTimeout(() => {
-        flyingElement.style.top = (productRect.top - 100) + 'px';
-        flyingElement.style.opacity = '0';
-        flyingElement.style.transform = 'scale(0.5)';
-      }, 100);
-      
-      setTimeout(() => {
-        if (document.body.contains(flyingElement)) {
-          document.body.removeChild(flyingElement);
-        }
-        setAnimatingProducts(prev => {
-          const newSet = new Set(prev);
-          newSet.delete(productId);
-          return newSet;
-        });
-      }, 1000);
+      if (productElement) {
+        setAnimatingProducts(prev => new Set(Array.from(prev).concat([productId])));
+        
+        // Create flying animation element
+        const flyingElement = document.createElement('div');
+        flyingElement.style.position = 'fixed';
+        flyingElement.style.zIndex = '9999';
+        flyingElement.style.pointerEvents = 'none';
+        flyingElement.style.width = '60px';
+        flyingElement.style.height = '60px';
+        flyingElement.style.borderRadius = '12px';
+        flyingElement.style.backgroundColor = '#B8734C';
+        flyingElement.style.transition = 'all 1s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        flyingElement.style.boxShadow = '0 8px 25px rgba(184, 115, 76, 0.4)';
+        flyingElement.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: white;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="m16 10l-4 4l-4-4"></path></svg></div>`;
+        
+        const productRect = productElement.getBoundingClientRect();
+        flyingElement.style.left = (productRect.left + productRect.width / 2 - 30) + 'px';
+        flyingElement.style.top = (productRect.top + productRect.height / 2 - 30) + 'px';
+        
+        document.body.appendChild(flyingElement);
+        
+        setTimeout(() => {
+          flyingElement.style.top = (productRect.top - 100) + 'px';
+          flyingElement.style.opacity = '0';
+          flyingElement.style.transform = 'scale(0.5)';
+        }, 100);
+        
+        setTimeout(() => {
+          if (document.body.contains(flyingElement)) {
+            document.body.removeChild(flyingElement);
+          }
+          setAnimatingProducts(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(productId);
+            return newSet;
+          });
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 

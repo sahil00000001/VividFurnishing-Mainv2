@@ -13,12 +13,13 @@ interface HeaderProps {
 }
 
 export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-transparent", variant = "transparent" }: HeaderProps) {
-  const { cartCount, isCartOpen, setIsCartOpen, cart, updateQuantity, removeFromCart } = useCart();
+  const { cartCount, isCartOpen, setIsCartOpen, cart, cartItems, updateQuantity, removeFromCart, clearCart, isLoading } = useCart();
   const { user, isAuthenticated, logout } = useAuth();
   const { toast } = useToast();
 
   const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    if (!cart) return 0;
+    return cart.totalAmount;
   };
 
   const handleCheckout = () => {
@@ -182,7 +183,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
             </div>
 
             {/* Cart Items */}
-            {cart.length === 0 ? (
+            {cartItems.length === 0 ? (
               <div className="text-center py-12">
                 <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
                 <h3 className="text-lg font-medium mb-2">Your cart is empty</h3>
@@ -196,22 +197,25 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
               </div>
             ) : (
               <div className="space-y-4">
-                {cart.map((item) => (
-                  <div key={item.id} className="flex items-center space-x-4 border-b pb-4">
+                {cartItems.map((item) => (
+                  <div key={item.productId} className="flex items-center space-x-4 border-b pb-4">
                     {/* Product Image */}
                     <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
                       <img 
-                        src={item.image} 
-                        alt={item.name}
+                        src={item.productImage} 
+                        alt={item.productName}
                         className="w-full h-full object-cover"
                       />
                     </div>
                     
                     {/* Product Details */}
                     <div className="flex-1">
-                      <h3 className="font-medium">{item.name}</h3>
+                      <h3 className="font-medium">{item.productName}</h3>
                       <p className="text-lg font-bold text-terracotta">
-                        ₹{(item.price * item.quantity).toLocaleString()}
+                        ₹{(item.priceAtTime * item.quantity).toLocaleString()}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        Price when added: ₹{item.priceAtTime.toLocaleString()}
                       </p>
                     </div>
                     
@@ -220,8 +224,9 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                         className="h-8 w-8 p-0"
+                        disabled={isLoading}
                       >
                         <Minus className="w-3 h-3" />
                       </Button>
@@ -229,16 +234,18 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                         className="h-8 w-8 p-0"
+                        disabled={isLoading}
                       >
                         <Plus className="w-3 h-3" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item.productId)}
                         className="ml-2 text-red-500 hover:text-red-700"
+                        disabled={isLoading}
                       >
                         <X className="w-4 h-4" />
                       </Button>
@@ -260,14 +267,24 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                     variant="outline" 
                     className="flex-1"
                     onClick={() => setIsCartOpen(false)}
+                    disabled={isLoading}
                   >
                     Continue Shopping
                   </Button>
                   <Button 
+                    variant="outline" 
+                    onClick={clearCart}
+                    disabled={isLoading || cartItems.length === 0}
+                    className="text-red-600 hover:text-red-700"
+                  >
+                    Clear Cart
+                  </Button>
+                  <Button 
                     className="flex-1 bg-terracotta hover:bg-terracotta-dark text-white"
                     onClick={handleCheckout}
+                    disabled={isLoading || cartItems.length === 0}
                   >
-                    Checkout
+                    {isLoading ? 'Loading...' : 'Checkout'}
                   </Button>
                 </div>
               </div>

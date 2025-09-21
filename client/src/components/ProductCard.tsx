@@ -1,13 +1,61 @@
 import { Button } from "@/components/ui/button";
 import { HomeProduct } from "@/data/products";
+import { useCart } from "@/lib/cartContext";
+import { useAuth } from "@/lib/authContext";
+import { useToast } from "@/hooks/use-toast";
+import { ShoppingCart, Heart } from "lucide-react";
+import { useState } from "react";
 
 interface ProductCardProps {
   product: HomeProduct;
   variant: "bestseller" | "luxury";
   testIdPrefix?: string;
+  showAddToCart?: boolean;
 }
 
-export function ProductCard({ product, variant, testIdPrefix = "product" }: ProductCardProps) {
+export function ProductCard({ product, variant, testIdPrefix = "product", showAddToCart = true }: ProductCardProps) {
+  const { addToCart, getCartItemQuantity, isLoading } = useCart();
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  const cartQuantity = getCartItemQuantity(product.id.toString());
+  
+  // Extract numeric price from string (e.g., "$899" -> 899)
+  const extractPrice = (priceString: string): number => {
+    return parseInt(priceString.replace(/[^0-9]/g, '')) || 0;
+  };
+  
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!isAuthenticated) {
+      toast({
+        title: "Please Login",
+        description: "You need to login to add items to your cart.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    try {
+      setIsAnimating(true);
+      // For now, we'll use the product ID as string since the backend expects string IDs
+      // In a real implementation, you'd need to map these to actual backend product IDs
+      await addToCart(product.id.toString(), 1);
+      
+      // Show success animation
+      setTimeout(() => setIsAnimating(false), 600);
+    } catch (error) {
+      setIsAnimating(false);
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
   if (variant === "luxury") {
     return (
       <div 
@@ -38,7 +86,7 @@ export function ProductCard({ product, variant, testIdPrefix = "product" }: Prod
         </div>
         <div className="absolute bottom-6 left-6 right-6">
           <h4 
-            className="text-black text-left capitalize"
+            className="text-black text-left capitalize mb-2"
             style={{
               fontFamily: 'Prata, serif',
               fontWeight: 400,
@@ -49,6 +97,42 @@ export function ProductCard({ product, variant, testIdPrefix = "product" }: Prod
           >
             {product.name}
           </h4>
+          {showAddToCart && (
+            <div className="flex items-center justify-between">
+              <Button
+                size="sm"
+                onClick={handleAddToCart}
+                disabled={isLoading}
+                className="bg-terracotta hover:bg-terracotta-dark text-white text-xs px-3 py-1 h-7 transition-all duration-200"
+                data-testid={`${testIdPrefix}-add-to-cart-${product.id}`}
+              >
+                {isAnimating ? (
+                  <div className="flex items-center gap-1">
+                    <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Adding...</span>
+                  </div>
+                ) : cartQuantity > 0 ? (
+                  <div className="flex items-center gap-1">
+                    <ShoppingCart className="w-3 h-3" />
+                    <span>In Cart ({cartQuantity})</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1">
+                    <ShoppingCart className="w-3 h-3" />
+                    <span>Add to Cart</span>
+                  </div>
+                )}
+              </Button>
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-7 w-7 p-0 text-gray-600 hover:text-terracotta"
+                data-testid={`${testIdPrefix}-wishlist-${product.id}`}
+              >
+                <Heart className="w-4 h-4" />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -96,7 +180,7 @@ export function ProductCard({ product, variant, testIdPrefix = "product" }: Prod
           {product.name}
         </h4>
         <p 
-          className="text-black capitalize"
+          className="text-black capitalize mb-2"
           style={{
             fontFamily: 'Prata, serif',
             fontWeight: 400,
@@ -107,6 +191,42 @@ export function ProductCard({ product, variant, testIdPrefix = "product" }: Prod
         >
           {product.price}
         </p>
+        {showAddToCart && (
+          <div className="flex items-center justify-between">
+            <Button
+              size="sm"
+              onClick={handleAddToCart}
+              disabled={isLoading}
+              className="bg-terracotta hover:bg-terracotta-dark text-white text-xs px-3 py-1 h-7 transition-all duration-200"
+              data-testid={`${testIdPrefix}-add-to-cart-${product.id}`}
+            >
+              {isAnimating ? (
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Adding...</span>
+                </div>
+              ) : cartQuantity > 0 ? (
+                <div className="flex items-center gap-1">
+                  <ShoppingCart className="w-3 h-3" />
+                  <span>In Cart ({cartQuantity})</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1">
+                  <ShoppingCart className="w-3 h-3" />
+                  <span>Add to Cart</span>
+                </div>
+              )}
+            </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-7 w-7 p-0 text-gray-600 hover:text-terracotta"
+              data-testid={`${testIdPrefix}-wishlist-${product.id}`}
+            >
+              <Heart className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
