@@ -29,3 +29,5 @@
 [x] 29. Implementing API integrations for Order in Bulk form and newsletter subscriptions
 [x] 30. Migration to Replit environment completed successfully - project running without errors
 [x] 31. Starting shopping cart feature implementation with JWT authentication and external API integration
+[x] 32. Fixed critical cart functionality bug where products couldn't be added to cart - corrected product.tsx to call addToCart with string ID and quantity instead of object
+[x] 33. Removed duplicate close button from cart modal - keeping only the built-in DialogContent close button for better UX

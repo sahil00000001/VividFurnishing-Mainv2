@@ -133,21 +133,23 @@ export default function ProductPage() {
     );
   }
   
-  const handleAddToCart = () => {
-    // Add the selected quantity to cart
-    for (let i = 0; i < quantity; i++) {
-      addToGlobalCart({
-        id: product._id as any,
-        name: product.Product_Name,
-        price: product.Selling_Price,
-        image: getProductImageUrl(product)
+  const handleAddToCart = async () => {
+    try {
+      // Add the selected quantity to cart using the correct product ID and quantity
+      await addToGlobalCart(String(product._id), quantity);
+      
+      toast({
+        title: "Added to cart",
+        description: `${quantity}x ${product.Product_Name} has been added to your cart`,
+      });
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add item to cart. Please try again.",
+        variant: "destructive",
       });
     }
-    
-    toast({
-      title: "Added to cart",
-      description: `${quantity}x ${product.Product_Name} has been added to your cart`,
-    });
   };
   
   const handleGoBack = () => {
