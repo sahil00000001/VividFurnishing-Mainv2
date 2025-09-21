@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Cart, CartItem, fetchCart, addToCart as apiAddToCart, updateCartQuantity, removeFromCart as apiRemoveFromCart, clearCart as apiClearCart } from './api';
+import { Cart, CartItem, fetchCart, addToCart as apiAddToCart, updateCartQuantity, removeFromCart as apiRemoveFromCart, clearCart as apiClearCart, ApiProduct, fetchProductById } from './api';
 import { useAuth } from './authContext';
 import { useToast } from '@/hooks/use-toast';
 
@@ -33,36 +33,48 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const cartItems = cart?.items || [];
   const cartCount = cart?.totalItems || 0;
 
-  // Fetch cart when user authenticates or on mount
+  // Load cart when user authenticates or on mount (including guest users)
   useEffect(() => {
-    if (isAuthenticated && user) {
-      loadCart();
-    } else {
-      // Clear cart when user logs out
-      setCart(null);
-      setError(null);
-    }
+    loadCart();
   }, [isAuthenticated, user]);
 
-  // Load cart from API
+  // Load cart from localStorage
   const loadCart = async () => {
-    if (!isAuthenticated) return;
+    const userKey = isAuthenticated && user ? user.id : 'guest';
     
     try {
-      console.log('🛍️ Loading cart for authenticated user...');
-      console.log('User data:', user);
-      console.log('Auth token exists:', !!localStorage.getItem('authToken'));
+      console.log('🛍️ Loading cart from localStorage for user:', userKey);
       
       setIsLoading(true);
       setError(null);
-      const cartData = await fetchCart();
-      console.log('✅ Cart loaded successfully:', cartData);
-      setCart(cartData);
+      
+      const cartKey = `cart_${userKey}`;
+      const storedCart = localStorage.getItem(cartKey);
+      
+      if (storedCart) {
+        const cartData: Cart = JSON.parse(storedCart);
+        console.log('✅ Cart loaded from localStorage:', cartData);
+        setCart(cartData);
+      } else {
+        // Initialize empty cart for user
+        const emptyCart: Cart = {
+          _id: `cart_${userKey}_${Date.now()}`,
+          userId: userKey,
+          items: [],
+          totalAmount: 0,
+          totalItems: 0,
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        setCart(emptyCart);
+        localStorage.setItem(cartKey, JSON.stringify(emptyCart));
+        console.log('✅ Empty cart created for user');
+      }
     } catch (err) {
-      console.error('❌ Error loading cart:', err);
+      console.error('❌ Error loading cart from localStorage:', err);
       const errorMessage = err instanceof Error ? err.message : 'Failed to load cart';
       setError(errorMessage);
-      console.error('Error loading cart:', err);
     } finally {
       setIsLoading(false);
     }
@@ -71,48 +83,78 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const addToCart = async (productId: string, quantity = 1) => {
     console.log('🛒 AddToCart called:', { productId, quantity, isAuthenticated, user });
     
-    if (!isAuthenticated) {
-      console.log('❌ User not authenticated');
-      toast({
-        title: "Please Login",
-        description: "You need to login to add items to your cart.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Capture current state for potential rollback
-    const previousCart = cart ? JSON.parse(JSON.stringify(cart)) : null;
+    // Allow both authenticated users and guest users (temporary localStorage solution)
+    const userKey = isAuthenticated && user ? user.id : 'guest';
+    console.log('🔑 Using cart key for:', userKey);
 
     try {
-      console.log('🚀 Starting add to cart API call...');
+      console.log('🚀 Starting add to cart with localStorage...');
       setIsLoading(true);
       setError(null);
       
-      // Optimistic update
-      if (cart) {
-        const existingItem = cart.items.find(item => item.productId === productId);
-        if (existingItem) {
-          const updatedItems = cart.items.map(item =>
-            item.productId === productId 
-              ? { ...item, quantity: item.quantity + quantity }
-              : item
-          );
-          setCart({
-            ...cart,
-            items: updatedItems,
-            totalItems: cart.totalItems + quantity,
-            totalAmount: cart.totalAmount + (existingItem.priceAtTime * quantity)
-          });
-        } else {
-          // For new items, we'll skip optimistic update since we don't have all the data
-          // The server response will provide the complete item information
-        }
+      // Fetch product details for the cart item
+      const product: ApiProduct = await fetchProductById(productId);
+      console.log('📦 Product fetched:', product);
+      
+      const cartKey = `cart_${userKey}`;
+      const currentCart = cart || {
+        _id: `cart_${userKey}_${Date.now()}`,
+        userId: userKey,
+        items: [],
+        totalAmount: 0,
+        totalItems: 0,
+        status: 'active' as const,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      // Check if item already exists in cart
+      const existingItemIndex = currentCart.items.findIndex(item => item.productId === productId);
+      
+      let updatedCart: Cart;
+      
+      if (existingItemIndex >= 0) {
+        // Update existing item quantity
+        const existingItem = currentCart.items[existingItemIndex];
+        const updatedItems = [...currentCart.items];
+        updatedItems[existingItemIndex] = {
+          ...existingItem,
+          quantity: existingItem.quantity + quantity
+        };
+        
+        // Use existing item's priceAtTime to maintain consistency
+        updatedCart = {
+          ...currentCart,
+          items: updatedItems,
+          totalItems: currentCart.totalItems + quantity,
+          totalAmount: currentCart.totalAmount + (existingItem.priceAtTime * quantity),
+          updatedAt: new Date().toISOString()
+        };
+      } else {
+        // Add new item to cart
+        const newCartItem: CartItem = {
+          productId: productId,
+          productName: product.Product_Name,
+          productImage: `/api/placeholder/${product.Product_Name}`, // Placeholder since no image URL in API
+          quantity: quantity,
+          priceAtTime: product.Selling_Price,
+          addedAt: new Date().toISOString()
+        };
+        
+        updatedCart = {
+          ...currentCart,
+          items: [...currentCart.items, newCartItem],
+          totalItems: currentCart.totalItems + quantity,
+          totalAmount: currentCart.totalAmount + (product.Selling_Price * quantity),
+          updatedAt: new Date().toISOString()
+        };
       }
       
-      const updatedCart = await apiAddToCart(productId, quantity);
-      console.log('✅ Cart updated successfully:', updatedCart);
+      // Save to localStorage and update state
+      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
       setCart(updatedCart);
+      
+      console.log('✅ Cart updated successfully:', updatedCart);
       
       toast({
         title: "Added to Cart",
@@ -120,10 +162,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
     } catch (err) {
       console.error('❌ Add to cart failed:', err);
-      // Rollback optimistic update using the captured previous state
-      if (previousCart) {
-        setCart(previousCart);
-      }
       
       const errorMessage = err instanceof Error ? err.message : 'Failed to add item to cart';
       setError(errorMessage);
@@ -138,38 +176,36 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const removeFromCart = async (productId: string) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Please Login",
-        description: "You need to login to manage your cart.",
-        variant: "destructive",
-      });
-      return;
-    }
+    const userKey = isAuthenticated && user ? user.id : 'guest';
 
-    // Capture current state for potential rollback
-    const previousCart = cart ? JSON.parse(JSON.stringify(cart)) : null;
+    if (!cart) return;
 
     try {
       setIsLoading(true);
       setError(null);
       
-      // Optimistic update
-      if (cart) {
-        const updatedItems = cart.items.filter(item => item.productId !== productId);
-        const removedItem = cart.items.find(item => item.productId === productId);
-        const removedQuantity = removedItem?.quantity || 0;
-        const removedAmount = removedItem ? removedItem.priceAtTime * removedItem.quantity : 0;
-        
-        setCart({
-          ...cart,
-          items: updatedItems,
-          totalItems: cart.totalItems - removedQuantity,
-          totalAmount: cart.totalAmount - removedAmount
-        });
+      const cartKey = `cart_${userKey}`;
+      const removedItem = cart.items.find(item => item.productId === productId);
+      
+      if (!removedItem) {
+        console.log('Item not found in cart');
+        return;
       }
       
-      const updatedCart = await apiRemoveFromCart(productId);
+      const updatedItems = cart.items.filter(item => item.productId !== productId);
+      const removedQuantity = removedItem.quantity;
+      const removedAmount = removedItem.priceAtTime * removedItem.quantity;
+      
+      const updatedCart: Cart = {
+        ...cart,
+        items: updatedItems,
+        totalItems: cart.totalItems - removedQuantity,
+        totalAmount: cart.totalAmount - removedAmount,
+        updatedAt: new Date().toISOString()
+      };
+      
+      // Save to localStorage and update state
+      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
       setCart(updatedCart);
       
       toast({
@@ -177,11 +213,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
         description: "Item removed from your cart.",
       });
     } catch (err) {
-      // Rollback optimistic update using the captured previous state
-      if (previousCart) {
-        setCart(previousCart);
-      }
-      
       const errorMessage = err instanceof Error ? err.message : 'Failed to remove item from cart';
       setError(errorMessage);
       toast({
@@ -195,49 +226,50 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const updateQuantity = async (productId: string, quantity: number) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Please Login",
-        description: "You need to login to manage your cart.",
-        variant: "destructive",
-      });
-      return;
-    }
+    const userKey = isAuthenticated && user ? user.id : 'guest';
 
-    // Capture current state for potential rollback
-    const previousCart = cart ? JSON.parse(JSON.stringify(cart)) : null;
+    if (!cart) return;
 
     try {
       setIsLoading(true);
       setError(null);
       
-      // Optimistic update
-      if (cart) {
-        const updatedItems = cart.items.map(item =>
-          item.productId === productId 
-            ? { ...item, quantity }
-            : item
-        );
-        const oldItem = cart.items.find(item => item.productId === productId);
-        const quantityDiff = quantity - (oldItem?.quantity || 0);
-        const amountDiff = oldItem ? oldItem.priceAtTime * quantityDiff : 0;
-        
-        setCart({
-          ...cart,
-          items: updatedItems,
-          totalItems: cart.totalItems + quantityDiff,
-          totalAmount: cart.totalAmount + amountDiff
-        });
+      const cartKey = `cart_${userKey}`;
+      const oldItem = cart.items.find(item => item.productId === productId);
+      
+      if (!oldItem) {
+        console.log('Item not found in cart');
+        return;
       }
       
-      const updatedCart = await updateCartQuantity(productId, quantity);
+      // If quantity is 0, remove the item
+      if (quantity <= 0) {
+        await removeFromCart(productId);
+        return;
+      }
+      
+      const updatedItems = cart.items.map(item =>
+        item.productId === productId 
+          ? { ...item, quantity }
+          : item
+      );
+      
+      const quantityDiff = quantity - oldItem.quantity;
+      const amountDiff = oldItem.priceAtTime * quantityDiff;
+      
+      const updatedCart: Cart = {
+        ...cart,
+        items: updatedItems,
+        totalItems: cart.totalItems + quantityDiff,
+        totalAmount: cart.totalAmount + amountDiff,
+        updatedAt: new Date().toISOString()
+      };
+      
+      // Save to localStorage and update state
+      localStorage.setItem(cartKey, JSON.stringify(updatedCart));
       setCart(updatedCart);
-    } catch (err) {
-      // Rollback optimistic update using the captured previous state
-      if (previousCart) {
-        setCart(previousCart);
-      }
       
+    } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to update cart';
       setError(errorMessage);
       toast({
@@ -251,34 +283,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const clearCart = async () => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Please Login",
-        description: "You need to login to manage your cart.",
-        variant: "destructive",
-      });
-      return;
-    }
+    const userKey = isAuthenticated && user ? user.id : 'guest';
 
-    // Capture current state for potential rollback
-    const previousCart = cart ? JSON.parse(JSON.stringify(cart)) : null;
+    if (!cart) return;
 
     try {
       setIsLoading(true);
       setError(null);
       
-      // Optimistic update
-      if (cart) {
-        setCart({
-          ...cart,
-          items: [],
-          totalItems: 0,
-          totalAmount: 0
-        });
-      }
+      const cartKey = `cart_${userKey}`;
       
-      const updatedCart = await apiClearCart();
-      setCart(updatedCart);
+      const clearedCart: Cart = {
+        ...cart,
+        items: [],
+        totalItems: 0,
+        totalAmount: 0,
+        updatedAt: new Date().toISOString()
+      };
+      
+      // Save to localStorage and update state
+      localStorage.setItem(cartKey, JSON.stringify(clearedCart));
+      setCart(clearedCart);
       
       toast({
         title: "Cart Cleared",
@@ -286,11 +311,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
         variant: "destructive",
       });
     } catch (err) {
-      // Rollback optimistic update using the captured previous state
-      if (previousCart) {
-        setCart(previousCart);
-      }
-      
       const errorMessage = err instanceof Error ? err.message : 'Failed to clear cart';
       setError(errorMessage);
       toast({

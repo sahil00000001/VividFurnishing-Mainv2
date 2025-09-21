@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart, LogOut } from "lucide-react";
 import { useCart } from "@/lib/cartContext";
 import { useAuth } from "@/lib/authContext";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -23,10 +23,9 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
   };
 
   const handleCheckout = () => {
-    toast({
-      title: "Checkout",
-      description: "Checkout functionality coming soon!",
-    });
+    setIsCartOpen(false);
+    // Redirect to checkout page using wouter's setLocation
+    window.location.href = '/checkout';
   };
 
   return (
@@ -168,9 +167,10 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
       {/* Cart Modal */}
       <Dialog open={isCartOpen} onOpenChange={setIsCartOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogTitle className="sr-only">Shopping Cart</DialogTitle>
           <div className="space-y-6">
             {/* Cart Header */}
-            <div className="flex items-center justify-between border-b pb-4">
+            <div className="border-b pb-4">
               <h2 className="text-2xl font-serif font-bold">Shopping Cart ({cartCount} items)</h2>
             </div>
 
