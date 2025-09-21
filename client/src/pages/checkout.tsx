@@ -9,7 +9,7 @@ import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { useCart } from '@/lib/cartContext';
 import { useToast } from '@/hooks/use-toast';
-import { Minus, Plus, Package, CreditCard, MapPin, Phone, User, Mail, Truck, Wallet } from 'lucide-react';
+import { Minus, Plus, Package, CreditCard, MapPin, Phone, User, Mail, Truck, Wallet, Tag } from 'lucide-react';
 
 interface CheckoutFormData {
   firstName: string;
@@ -27,7 +27,7 @@ type PaymentMethod = 'razorpay' | 'cod' | 'debit_card';
 
 export default function CheckoutPage() {
   const [, setLocation] = useLocation();
-  const { cartItems, cartCount, cart, updateQuantity, removeFromCart, isLoading } = useCart();
+  const { cartItems, cartCount, cart, updateQuantity, removeFromCart, clearCart, isLoading } = useCart();
   const { toast } = useToast();
   
   const [formData, setFormData] = useState<CheckoutFormData>({
@@ -44,10 +44,13 @@ export default function CheckoutPage() {
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod | null>(null);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponError, setCouponError] = useState('');
+  const [razorpayResponse, setRazorpayResponse] = useState<any>(null);
 
   // Calculate totals
   const subtotal = cart?.totalAmount || 0;
-  const shippingCost = subtotal > 5000 ? 0 : 200; // Free shipping over ₹5000
+  const shippingCost = 0; // Always free shipping
   const taxRate = 0.18; // 18% GST
   const taxAmount = subtotal * taxRate;
   const totalAmount = subtotal + shippingCost + taxAmount;
@@ -65,6 +68,169 @@ export default function CheckoutPage() {
       await removeFromCart(productId);
     } else {
       await updateQuantity(productId, newQuantity);
+    }
+  };
+
+  const handleApplyCoupon = () => {
+    if (couponCode.trim()) {
+      setCouponError('Invalid coupon code');
+      toast({
+        title: "Invalid Coupon",
+        description: "The coupon code you entered is not valid.",
+        variant: "destructive",
+      });
+    } else {
+      setCouponError('');
+    }
+  };
+
+  const downloadJsonResponse = (data: any, filename: string) => {
+    const jsonString = JSON.stringify(data, null, 2);
+    const blob = new Blob([jsonString], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+
+    toast({
+      title: "Response Downloaded",
+      description: `${filename} has been downloaded to your device.`,
+    });
+  };
+
+  const handleRazorpayPayment = async (orderData: any) => {
+    try {
+      setRazorpayResponse(null);
+      
+      // Create Razorpay order
+      const response = await fetch('/api/razorpay/create-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: totalAmount,
+          currency: 'INR',
+          receipt: `order_${Date.now()}`
+        }),
+      });
+
+      const orderResponse = await response.json();
+      console.log('Razorpay Order Created:', orderResponse);
+      
+      // Download order creation response as TXT file
+      const orderData = {
+        step: 'Order Creation',
+        timestamp: new Date().toISOString(),
+        ...orderResponse
+      };
+      setRazorpayResponse(orderData);
+      downloadJsonResponse(orderData, `razorpay-order-${Date.now()}.txt`);
+      
+      if (!orderResponse.success) {
+        throw new Error(orderResponse.error || 'Failed to create order');
+      }
+
+      const options = {
+        key: orderResponse.key_id,
+        amount: orderResponse.order.amount,
+        currency: orderResponse.order.currency,
+        name: 'SM Furnishings',
+        description: `Order for ${cartItems.length} items`,
+        order_id: orderResponse.order.id,
+        handler: async (response: any) => {
+          console.log('Razorpay Payment Response:', response);
+          
+          // Verify payment
+          const verifyResponse = await fetch('/api/razorpay/verify-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              ...response,
+              orderData
+            }),
+          });
+
+          const verificationResult = await verifyResponse.json();
+          console.log('Payment Verification:', verificationResult);
+          
+          // Download payment verification response as TXT file
+          const verificationData = {
+            step: 'Payment Verification',
+            timestamp: new Date().toISOString(),
+            payment_response: response,
+            verification: verificationResult
+          };
+          setRazorpayResponse(verificationData);
+          downloadJsonResponse(verificationData, `razorpay-payment-verification-${Date.now()}.txt`);
+          
+          if (verificationResult.verified) {
+            // Clear cart and redirect to success page
+            await clearCart();
+            
+            toast({
+              title: "Payment Successful! 🎉",
+              description: `Your payment of ₹${totalAmount.toLocaleString()} has been processed successfully.`,
+            });
+            
+            setTimeout(() => {
+              setLocation('/success');
+            }, 2000);
+          } else {
+            toast({
+              title: "Payment Verification Failed",
+              description: "Payment could not be verified. Please contact support.",
+              variant: "destructive",
+            });
+          }
+        },
+        prefill: {
+          name: `${formData.firstName} ${formData.lastName}`,
+          email: formData.email,
+          contact: formData.phone
+        },
+        theme: {
+          color: '#B87333'
+        },
+        modal: {
+          ondismiss: () => {
+            console.log('Razorpay modal dismissed');
+            const dismissalData = {
+              step: 'Payment Dismissed',
+              timestamp: new Date().toISOString(),
+              message: 'Payment was cancelled by user'
+            };
+            setRazorpayResponse(dismissalData);
+            downloadJsonResponse(dismissalData, `razorpay-dismissed-${Date.now()}.txt`);
+          }
+        }
+      };
+
+      const razorpay = new (window as any).Razorpay(options);
+      razorpay.open();
+      
+    } catch (error) {
+      console.error('Razorpay payment error:', error);
+      
+      const errorData = {
+        step: 'Error',
+        timestamp: new Date().toISOString(),
+        error: error instanceof Error ? error.message : 'Payment failed'
+      };
+      setRazorpayResponse(errorData);
+      downloadJsonResponse(errorData, `razorpay-error-${Date.now()}.txt`);
+      
+      toast({
+        title: "Payment Error",
+        description: error instanceof Error ? error.message : "Payment failed. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -140,23 +306,14 @@ export default function CheckoutPage() {
         // COD - Process order successfully
         await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate processing
         
-        toast({
-          title: "Order Placed Successfully! 🎉",
-          description: `Your order has been confirmed. Total: ₹${totalAmount.toLocaleString()}. You can pay cash on delivery.`,
-        });
-
-        // Clear cart and redirect to success page
-        // TODO: Clear cart after successful order
-        setTimeout(() => {
-          setLocation('/');
-        }, 3000);
+        // Clear cart after successful order
+        await clearCart();
+        
+        // Redirect to success page
+        setLocation('/success');
 
       } else if (method === 'razorpay') {
-        toast({
-          title: "Razorpay Coming Soon",
-          description: "Razorpay payment integration will be available soon. Please use COD for now.",
-          variant: "destructive",
-        });
+        await handleRazorpayPayment(orderData);
         
       } else if (method === 'debit_card') {
         toast({
@@ -200,7 +357,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-gray-50">
       <Header variant="solid" />
       
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-6 py-12 mt-40">
         <div className="mb-8">
           <h1 className="text-3xl font-serif font-bold mb-2">Checkout</h1>
           <p className="text-muted-foreground">Review your order and provide shipping details</p>
@@ -270,12 +427,42 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping:</span>
-                    <span>{shippingCost === 0 ? 'Free' : `₹${shippingCost.toLocaleString()}`}</span>
+                    <span className="text-green-600 font-medium">Free</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Tax (GST 18%):</span>
                     <span>₹{taxAmount.toLocaleString()}</span>
                   </div>
+                  
+                  {/* Coupon Section */}
+                  <div className="border-t pt-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Tag className="w-4 h-4" />
+                      <span className="font-medium">Have a coupon?</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Enter coupon code"
+                        value={couponCode}
+                        onChange={(e) => {
+                          setCouponCode(e.target.value);
+                          setCouponError('');
+                        }}
+                        className={couponError ? 'border-red-500' : ''}
+                      />
+                      <Button 
+                        variant="outline" 
+                        onClick={handleApplyCoupon}
+                        disabled={!couponCode.trim()}
+                      >
+                        Apply
+                      </Button>
+                    </div>
+                    {couponError && (
+                      <p className="text-red-500 text-sm mt-1">{couponError}</p>
+                    )}
+                  </div>
+                  
                   <Separator />
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total:</span>
@@ -436,7 +623,7 @@ export default function CheckoutPage() {
                       <p className="text-sm text-muted-foreground">UPI, Cards, Net Banking, Wallets</p>
                     </div>
                     <div className="ml-auto">
-                      <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Coming Soon</span>
+                      <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Available</span>
                     </div>
                   </Button>
                 </div>
@@ -490,6 +677,18 @@ export default function CheckoutPage() {
                       <div className="animate-spin w-4 h-4 border-2 border-terracotta border-t-transparent rounded-full"></div>
                       Processing your order...
                     </div>
+                  </div>
+                )}
+
+                {/* Auto-download info */}
+                {razorpayResponse && (
+                  <div className="mt-4 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+                    <p className="text-sm text-blue-800">
+                      📁 API Response automatically downloaded as TXT file
+                    </p>
+                    <p className="text-xs text-blue-600 mt-1">
+                      Step: {razorpayResponse.step} • {new Date().toLocaleTimeString()}
+                    </p>
                   </div>
                 )}
 

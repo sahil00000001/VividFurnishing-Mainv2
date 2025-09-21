@@ -15,6 +15,7 @@ import Login from "@/pages/login";
 import Signup from "@/pages/signup";
 import Profile from "@/pages/profile";
 import Checkout from "@/pages/checkout";
+import Success from "@/pages/success";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -30,6 +31,7 @@ function Router() {
       <Route path="/signup" component={Signup} />
       <Route path="/profile" component={Profile} />
       <Route path="/checkout" component={Checkout} />
+      <Route path="/success" component={Success} />
       <Route component={NotFound} />
     </Switch>
   );
