@@ -59,7 +59,7 @@ export function ProductCard({ product, variant, testIdPrefix = "product", showAd
   if (variant === "luxury") {
     return (
       <div 
-        className="relative overflow-hidden shadow-[0px_4px_4px_rgba(0,0,0,0.25)] group cursor-pointer transform hover:scale-105 transition-all duration-300"
+        className="relative overflow-hidden shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
         style={{
           width: '220px',
           height: '280px',
@@ -72,7 +72,7 @@ export function ProductCard({ product, variant, testIdPrefix = "product", showAd
           <img 
             src={product.image}
             alt={product.alt}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover"
             data-testid={`${testIdPrefix}-image-${product.id}`}
           />
           {/* Gradient overlay matching the CSS specification */}
@@ -153,7 +153,7 @@ export function ProductCard({ product, variant, testIdPrefix = "product", showAd
   // Default bestseller variant with new styling effects
   return (
     <div 
-      className="relative overflow-hidden shadow-[0px_4px_4px_rgba(0,0,0,0.25)] group cursor-pointer transform hover:scale-105 transition-all duration-300"
+      className="relative overflow-hidden shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
       style={{
         width: '220px',
         height: '280px',
@@ -166,7 +166,7 @@ export function ProductCard({ product, variant, testIdPrefix = "product", showAd
         <img 
           src={product.image}
           alt={product.alt}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover"
           data-testid={`${testIdPrefix}-image-${product.id}`}
         />
         {/* Gradient overlay matching the CSS specification */}

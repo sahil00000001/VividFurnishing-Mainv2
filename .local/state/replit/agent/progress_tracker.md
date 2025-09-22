@@ -51,3 +51,11 @@
 [x] 51. Added user ID, username, and email display to checkout page and included in downloaded JSON files for both COD and Razorpay payments
 [x] 52. Updated JSON file MIME type to 'application/json' for proper file handling
 [x] 53. Migration from Replit Agent to Replit environment completed successfully
+[x] 54. Fixed gradient background placement: moved linear gradient from "Designing Luxury affordably" section to hero section (including navigation bar area) and applied solid #582308 background to "Designing Luxury affordably" section
+[x] 55. Updated font styles: SM Furnishing to "Fiona", navigation links (Home/Shop/About Us) to "Prata", "AFFORDABLE · LUXURY" to "Prata"; styled Explore button with rgba(255,255,255,0.47) background and 9px white border; expanded "LET'S STAY IN TOUCH" section to 80% page width
+[x] 56. Updated "LET'S STAY IN TOUCH" font sizing to clamp(0.75rem, 5.5vw, 10rem) and line-height to clamp(2rem, 7vw, 8.25rem); removed hover effects and clickable functionality from bestseller and luxury choice product images
+[x] 57. Footer updates: changed "SM Furnishing" font to "Fiona", added small logo to left of brand name, made all social media icons circular with 3px border radius; Navigation rearrangement: moved profile and search to left side, cart and wishlist to right side
+[x] 58. Updated hero section background image: replaced stock furniture image with new breakfast in bed concept image (delicious-breakfast-bed-concept_1758535580577.jpg)
+[x] 59. Newsletter section: shifted email input and subscribe button to the right side instead of center alignment; Order in Bulk section: updated image with minimal linen cushion covers on sofa (minimal-linen-cushion-covers-sofa_1758535928415.jpg)
+[x] 60. FAQ page improvements: added automatic scroll to top when page loads, reduced large gap above FAQ title (changed from pt-32 to pt-8), and implemented floating "scroll to top" button that appears when users scroll down
+[x] 61. Footer logo update: replaced placeholder "SM" text with actual SM Furnishings logo (2_1758536426953.png) - now displays the beautiful orange/terracotta colored logo alongside the brand name

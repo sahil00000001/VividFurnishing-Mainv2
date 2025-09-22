@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { submitNewsletter } from "@/lib/api";
+import smLogo from "@assets/2_1758536426953.png";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -42,9 +43,17 @@ export function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
             {/* Brand & About */}
             <div className="space-y-6">
-              <h3 className="font-serif text-2xl font-bold tracking-wider" data-testid="footer-brand">
-                SM FURNISHINGS
-              </h3>
+              <div className="flex items-center space-x-3">
+                {/* SM Furnishings Logo */}
+                <img 
+                  src={smLogo} 
+                  alt="SM Furnishings Logo" 
+                  className="w-12 h-12 object-contain"
+                />
+                <h3 className="text-2xl font-bold tracking-wider" style={{ fontFamily: '"Fiona", serif' }} data-testid="footer-brand">
+                  SM FURNISHINGS
+                </h3>
+              </div>
               <p className="text-cream leading-relaxed" data-testid="footer-description">
                 SM Furnishings is more than a home décor brand — it's a family legacy. Inspired by Shakuntala & Manohar's values of love, comfort, and quality, we design luxury that feels personal, timeless, and affordable.
               </p>
@@ -52,7 +61,8 @@ export function Footer() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200"
+                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200 rounded-full"
+                  style={{ borderRadius: '3px' }}
                   data-testid="footer-social-facebook"
                 >
                   <Facebook className="w-5 h-5" />
@@ -60,7 +70,8 @@ export function Footer() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200"
+                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200 rounded-full"
+                  style={{ borderRadius: '3px' }}
                   data-testid="footer-social-instagram"
                   onClick={() => window.open('https://www.instagram.com/sm_furnishings/', '_blank')}
                 >
@@ -69,7 +80,8 @@ export function Footer() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200"
+                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200 rounded-full"
+                  style={{ borderRadius: '3px' }}
                   data-testid="footer-social-linkedin"
                   onClick={() => window.open('https://www.linkedin.com/company/sm-furnishings/', '_blank')}
                 >
@@ -78,7 +90,8 @@ export function Footer() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200"
+                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200 rounded-full"
+                  style={{ borderRadius: '3px' }}
                   data-testid="footer-social-twitter"
                 >
                   <Twitter className="w-5 h-5" />

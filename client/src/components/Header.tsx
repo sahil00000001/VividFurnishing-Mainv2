@@ -112,11 +112,11 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
           {/* Brand Name */}
           <div className="text-center mb-6">
             <Link href="/">
-              <h1 className={`font-serif text-3xl md:text-4xl font-bold tracking-wider cursor-pointer transition-colors duration-200 ${
+              <h1 className={`text-3xl md:text-4xl font-bold tracking-wider cursor-pointer transition-colors duration-200 ${
                 variant === "solid" 
                   ? "text-foreground hover:text-terracotta" 
                   : "text-white hover:text-cream"
-              }`} data-testid="brand-logo">
+              }`} style={{ fontFamily: '"Fiona", serif' }} data-testid="brand-logo">
                 SM FURNISHINGS
               </h1>
             </Link>
@@ -135,7 +135,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
               <nav className="hidden md:flex">
                 <ul className={`flex space-x-12 font-medium ${
                   variant === "solid" ? "text-foreground" : "text-white"
-                }`}>
+                }`} style={{ fontFamily: '"Prata", serif' }}>
                   <li><Link href="/" className={`transition-colors duration-200 ${
                     variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
                   }`} data-testid="nav-home">HOME</Link></li>
@@ -148,7 +148,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                 </ul>
               </nav>
               
-              {/* Left side - User and Cart icons in normal position */}
+              {/* Left side - Profile and Search buttons */}
               <div className={`absolute left-0 flex items-center space-x-6 ${
                 variant === "solid" ? "text-foreground" : "text-white"
               }`}>
@@ -193,6 +193,21 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                   </Link>
                 )}
                 <button 
+                  className={`transition-colors duration-200 ${
+                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                  }`} 
+                  data-testid="button-search"
+                  onClick={handleSearchOpen}
+                >
+                  <Search className="w-5 h-5" />
+                </button>
+              </div>
+              
+              {/* Right side - Cart and Wishlist buttons */}
+              <div className={`absolute right-0 flex items-center space-x-6 ${
+                variant === "solid" ? "text-foreground" : "text-white"
+              }`}>
+                <button 
                   className={`relative transition-colors duration-200 ${
                     variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
                   }`}
@@ -205,21 +220,6 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                       {cartCount}
                     </span>
                   )}
-                </button>
-              </div>
-              
-              {/* Right side - Only Search and Heart icons moved far right */}
-              <div className={`absolute right-0 flex items-center space-x-6 ${
-                variant === "solid" ? "text-foreground" : "text-white"
-              }`}>
-                <button 
-                  className={`transition-colors duration-200 ${
-                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                  }`} 
-                  data-testid="button-search"
-                  onClick={handleSearchOpen}
-                >
-                  <Search className="w-5 h-5" />
                 </button>
                 <button 
                   className={`relative transition-colors duration-200 ${
@@ -355,7 +355,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                   </Button>
                   <Button 
                     variant="outline" 
-                    onClick={clearCart}
+                    onClick={() => clearCart()}
                     disabled={isLoading || cartItems.length === 0}
                     className="text-red-600 hover:text-red-700"
                   >

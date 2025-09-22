@@ -10,6 +10,8 @@ import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
 import { bestSellers, luxuryProducts } from "@/data/products";
 import { Footer } from "@/components/Footer";
 import newsletterBgImage from "@assets/Group 48_1758371284588.png";
+import heroBgImage from "@assets/delicious-breakfast-bed-concept_1758535580577.jpg";
+import bulkOrderImage from "@assets/minimal-linen-cushion-covers-sofa_1758535928415.jpg";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -176,14 +178,19 @@ export default function Home() {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
+            backgroundImage: `url(${heroBgImage})`
           }}
         >
-          <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+          <div 
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(180deg, #582308 -3.91%, rgba(175, 76, 15, 0.7) 11.73%, rgba(169, 142, 128, 0.708654) 41.34%, rgba(255, 255, 255, 0) 100%)'
+            }}
+          ></div>
         </div>
         
         <div className="relative z-10 text-center text-white px-6">
-          <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-wide" data-testid="hero-headline">
+          <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-wide" style={{ fontFamily: '"Prata", serif' }} data-testid="hero-headline">
             AFFORDABLE <span className="text-cream">·</span> LUXURY
           </h2>
           <p className="text-xl md:text-2xl font-light mb-8 tracking-wider" data-testid="hero-subheading">
@@ -193,7 +200,11 @@ export default function Home() {
             variant="outline" 
             size="lg"
             onClick={() => setLocation('/shop')}
-            className="border-2 border-white bg-transparent text-terracotta font-semibold px-8 py-4 text-lg tracking-wide hover:bg-white hover:text-terracotta-dark transition-all duration-300"
+            style={{
+              background: 'rgba(255, 255, 255, 0.47)',
+              border: '9px solid #FFFFFF'
+            }}
+            className="text-terracotta font-semibold px-8 py-4 text-lg tracking-wide hover:bg-white hover:text-terracotta-dark transition-all duration-300"
             data-testid="button-explore-collection"
           >
             Explore Collection
@@ -206,7 +217,7 @@ export default function Home() {
       <section 
         className="py-16 lg:py-20 text-center"
         style={{
-          background: 'linear-gradient(180deg, #582308 -3.91%, rgba(175, 76, 15, 0.7) 11.73%, rgba(169, 142, 128, 0.708654) 41.34%, rgba(255, 255, 255, 0) 100%)'
+          backgroundColor: '#582308'
         }}
       >
         <div className="container mx-auto px-6 max-w-5xl">
@@ -427,8 +438,8 @@ export default function Home() {
             className="text-white text-center mb-8 font-normal capitalize"
             style={{
               fontFamily: "'Prata', serif",
-              fontSize: 'clamp(1.75rem, 4.5vw, 3rem)',
-              lineHeight: 'clamp(2rem, 5vw, 3.25rem)',
+              fontSize: 'clamp(0.75rem, 5.5vw, 10rem)',
+              lineHeight: 'clamp(2rem, 7vw, 8.25rem)',
               letterSpacing: '1px'
             }}
           >
@@ -465,9 +476,9 @@ export default function Home() {
           {/* Email Input Section */}
           <div className="flex flex-col items-center space-y-6">
             {/* Email Input and Submit Button Row */}
-            <div className="flex flex-col items-center space-y-4">
-              {/* Email Input and Subscribe Button Row - 70% width */}
-              <div className="flex items-center space-x-6" style={{ width: '70vw', maxWidth: '800px' }}>
+            <div className="flex flex-col items-end space-y-4 w-full max-w-5xl">
+              {/* Email Input and Subscribe Button Row - positioned to right */}
+              <div className="flex items-center space-x-6 mr-8" style={{ width: '80vw', maxWidth: '1000px' }}>
                 {/* Email Input */}
                 <div className="relative">
                   <input 
@@ -701,8 +712,8 @@ export default function Home() {
                 >
                   {/* Furniture Image */}
                   <img
-                    src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000"
-                    alt="Luxury furniture collection"
+                    src={bulkOrderImage}
+                    alt="Minimal linen cushion covers on sofa"
                     className="w-full h-full object-cover object-left-top group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>

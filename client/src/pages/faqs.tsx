@@ -1,16 +1,40 @@
+import { useEffect, useState } from "react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import { ChevronUp } from "lucide-react";
 
 export default function FAQsPage() {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Show/hide scroll to top button based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
       <Header variant="solid" className="sticky top-0 bg-white shadow-sm z-50" />
 
       {/* Main Content */}
-      <main className="pt-32 pb-16">
+      <main className="pt-8 pb-16">
         <div className="container mx-auto px-6 max-w-4xl">
           {/* Page Header */}
           <div className="text-center mb-12">
@@ -179,6 +203,17 @@ export default function FAQsPage() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <Button
+          onClick={scrollToTop}
+          className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-terracotta hover:bg-terracotta-dark text-white shadow-lg transition-all duration-300"
+          size="icon"
+        >
+          <ChevronUp className="w-5 h-5" />
+        </Button>
+      )}
     </div>
   );
 }
