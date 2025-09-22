@@ -1,15 +1,17 @@
 import { Link, useLocation } from "wouter";
-import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart, LogOut } from "lucide-react";
+import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart, LogOut, MoreVertical } from "lucide-react";
 import { useCart } from "@/lib/cartContext";
 import { useWishlist } from "@/lib/wishlistContext";
 import { useAuth } from "@/lib/authContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useState, useEffect } from "react";
 import { fetchAllProducts, ApiProduct, formatPrice } from "@/lib/api";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface HeaderProps {
   className?: string;
@@ -22,6 +24,10 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
   const { user, isAuthenticated, logout } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const isMobile = useIsMobile();
+  
+  // Mobile menu state
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // Search functionality
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -108,56 +114,189 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
   return (
     <>
       <header className={className}>
-        <div className="container mx-auto px-6 py-6">
-          {/* Brand Name */}
-          <div className="text-center mb-6">
-            <Link href="/">
-              <h1 className={`text-3xl md:text-4xl font-bold tracking-wider cursor-pointer transition-colors duration-200 ${
-                variant === "solid" 
-                  ? "text-foreground hover:text-terracotta" 
-                  : "text-white hover:text-cream"
-              }`} style={{ fontFamily: '"Fiona", serif' }} data-testid="brand-logo">
-                SM FURNISHINGS
-              </h1>
-            </Link>
-          </div>
-          
-          {/* Top horizontal line - 80% of page width */}
-          <div className={`w-4/5 h-px mb-3 mx-auto ${
-            variant === "solid" ? "bg-foreground/20" : "bg-white/30"
-          }`}></div>
-          
-          {/* Navigation Container */}
-          <div className="w-full max-w-4xl mx-auto">
-            {/* Navigation section - between lines */}
-            <div className="relative flex items-center justify-center py-2">
-              {/* Main Navigation - Center */}
-              <nav className="hidden md:flex">
-                <ul className={`flex space-x-12 font-medium ${
+        {/* Desktop Layout */}
+        <div className="hidden md:block">
+          <div className="container mx-auto px-6 py-6">
+            {/* Brand Name */}
+            <div className="text-center mb-6">
+              <Link href="/">
+                <h1 className={`text-3xl md:text-4xl font-bold tracking-wider cursor-pointer transition-colors duration-200 ${
+                  variant === "solid" 
+                    ? "text-foreground hover:text-terracotta" 
+                    : "text-white hover:text-cream"
+                }`} style={{ fontFamily: '"Fiona", serif' }} data-testid="brand-logo">
+                  SM FURNISHINGS
+                </h1>
+              </Link>
+            </div>
+            
+            {/* Top horizontal line - 80% of page width */}
+            <div className={`w-4/5 h-px mb-3 mx-auto ${
+              variant === "solid" ? "bg-foreground/20" : "bg-white/30"
+            }`}></div>
+            
+            {/* Navigation Container */}
+            <div className="w-full max-w-4xl mx-auto">
+              {/* Navigation section - between lines */}
+              <div className="relative flex items-center justify-center py-2">
+                {/* Main Navigation - Center */}
+                <nav className="flex">
+                  <ul className={`flex space-x-12 font-medium ${
+                    variant === "solid" ? "text-foreground" : "text-white"
+                  }`} style={{ fontFamily: '"Prata", serif' }}>
+                    <li><Link href="/" className={`transition-colors duration-200 ${
+                      variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                    }`} data-testid="nav-home">Home</Link></li>
+                    <li><Link href="/shop" className={`transition-colors duration-200 ${
+                      variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                    }`} data-testid="nav-shop">Shop</Link></li>
+                    <li><Link href="/about" className={`transition-colors duration-200 ${
+                      variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                    }`} data-testid="nav-about">About</Link></li>
+                  </ul>
+                </nav>
+                
+                {/* Left side - Profile and Search buttons */}
+                <div className={`absolute left-0 flex items-center space-x-6 ${
                   variant === "solid" ? "text-foreground" : "text-white"
-                }`} style={{ fontFamily: '"Prata", serif' }}>
-                  <li><Link href="/" className={`transition-colors duration-200 ${
-                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                  }`} data-testid="nav-home">Home</Link></li>
-                  <li><Link href="/shop" className={`transition-colors duration-200 ${
-                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                  }`} data-testid="nav-shop">Shop</Link></li>
-                  <li><Link href="/about" className={`transition-colors duration-200 ${
-                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                  }`} data-testid="nav-about">About</Link></li>
-                </ul>
-              </nav>
-              
-              {/* Left side - Profile and Search buttons */}
-              <div className={`absolute left-0 flex items-center space-x-6 ${
+                }`}>
+                  {isAuthenticated ? (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button 
+                          className={`transition-colors duration-200 ${
+                            variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                          }`} 
+                          data-testid="button-account"
+                          aria-label="Account menu"
+                        >
+                          <User className="w-5 h-5" />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-56">
+                        <div className="px-2 py-1.5">
+                          <p className="text-sm font-medium">{user?.name}</p>
+                          <p className="text-xs text-muted-foreground">{user?.email}</p>
+                        </div>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem asChild>
+                          <Link href="/profile" className="w-full cursor-pointer">
+                            <User className="w-4 h-4 mr-2" />
+                            My Profile
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem 
+                          onClick={logout} 
+                          className="text-red-600 cursor-pointer"
+                        >
+                          <LogOut className="w-4 h-4 mr-2" />
+                          Sign Out
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  ) : (
+                    <Link href="/login">
+                      <button 
+                        className={`transition-colors duration-200 ${
+                          variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                        }`} 
+                        data-testid="button-account"
+                        aria-label="Login"
+                      >
+                        <User className="w-5 h-5" />
+                      </button>
+                    </Link>
+                  )}
+                  <button 
+                    className={`transition-colors duration-200 ${
+                      variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                    }`} 
+                    data-testid="button-search"
+                    onClick={handleSearchOpen}
+                    aria-label="Search products"
+                  >
+                    <Search className="w-5 h-5" />
+                  </button>
+                </div>
+                
+                {/* Right side - Cart and Wishlist buttons */}
+                <div className={`absolute right-0 flex items-center space-x-6 ${
+                  variant === "solid" ? "text-foreground" : "text-white"
+                }`}>
+                  <button 
+                    className={`relative transition-colors duration-200 ${
+                      variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                    }`}
+                    data-testid="button-cart"
+                    onClick={() => setIsCartOpen(true)}
+                    aria-label={`Shopping cart${cartCount > 0 ? ` (${cartCount} items)` : ''}`}
+                  >
+                    <ShoppingBag className="w-5 h-5" />
+                    {cartCount > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-terracotta text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="cart-count">
+                        {cartCount}
+                      </span>
+                    )}
+                  </button>
+                  <button 
+                    className={`relative transition-colors duration-200 ${
+                      variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                    }`} 
+                    data-testid="button-wishlist"
+                    onClick={() => setIsWishlistOpen(true)}
+                    aria-label={`Wishlist${wishlistCount > 0 ? ` (${wishlistCount} items)` : ''}`}
+                  >
+                    <Heart className="w-5 h-5" />
+                    {wishlistCount > 0 && (
+                      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="wishlist-count">
+                        {wishlistCount}
+                      </span>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            {/* Bottom horizontal line - 80% of page width */}
+            <div className={`w-4/5 h-px mt-3 mx-auto ${
+              variant === "solid" ? "bg-foreground/20" : "bg-white/30"
+            }`}></div>
+          </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="md:hidden">
+          <div className="px-4 py-3">
+            {/* Brand Name - Centered */}
+            <div className="text-center mb-3">
+              <Link href="/">
+                <h1 className={`text-lg font-bold tracking-wider cursor-pointer transition-colors duration-200 ${
+                  variant === "solid" 
+                    ? "text-foreground hover:text-terracotta" 
+                    : "text-white hover:text-cream"
+                }`} style={{ fontFamily: '"Fiona", serif' }} data-testid="brand-logo-mobile">
+                  SM FURNISHINGS
+                </h1>
+              </Link>
+            </div>
+            
+            {/* Mobile Navigation Bar */}
+            <div className="flex items-center justify-between">
+              {/* Left side - Profile and Cart */}
+              <div className={`flex items-center space-x-4 ${
                 variant === "solid" ? "text-foreground" : "text-white"
               }`}>
                 {isAuthenticated ? (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className={`transition-colors duration-200 ${
-                        variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                      }`} data-testid="button-account">
+                      <button 
+                        className={`w-11 h-11 flex items-center justify-center rounded-md active:scale-95 transition-all duration-200 ${
+                          variant === "solid" ? "hover:text-terracotta hover:bg-terracotta/10" : "hover:text-cream hover:bg-white/10"
+                        }`} 
+                        data-testid="button-account-mobile"
+                        aria-label="Account menu"
+                      >
                         <User className="w-5 h-5" />
                       </button>
                     </DropdownMenuTrigger>
@@ -185,72 +324,113 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                   </DropdownMenu>
                 ) : (
                   <Link href="/login">
-                    <button className={`transition-colors duration-200 ${
-                      variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                    }`} data-testid="button-account">
+                    <button 
+                      className={`w-11 h-11 flex items-center justify-center rounded-md active:scale-95 transition-all duration-200 ${
+                        variant === "solid" ? "hover:text-terracotta hover:bg-terracotta/10" : "hover:text-cream hover:bg-white/10"
+                      }`} 
+                      data-testid="button-account-mobile"
+                      aria-label="Login"
+                    >
                       <User className="w-5 h-5" />
                     </button>
                   </Link>
                 )}
+                
                 <button 
-                  className={`transition-colors duration-200 ${
-                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                  }`} 
-                  data-testid="button-search"
-                  onClick={handleSearchOpen}
-                >
-                  <Search className="w-5 h-5" />
-                </button>
-              </div>
-              
-              {/* Right side - Cart and Wishlist buttons */}
-              <div className={`absolute right-0 flex items-center space-x-6 ${
-                variant === "solid" ? "text-foreground" : "text-white"
-              }`}>
-                <button 
-                  className={`relative transition-colors duration-200 ${
-                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                  className={`relative w-11 h-11 flex items-center justify-center rounded-md active:scale-95 transition-all duration-200 ${
+                    variant === "solid" ? "hover:text-terracotta hover:bg-terracotta/10" : "hover:text-cream hover:bg-white/10"
                   }`}
-                  data-testid="button-cart"
+                  data-testid="button-cart-mobile"
                   onClick={() => setIsCartOpen(true)}
+                  aria-label={`Shopping cart${cartCount > 0 ? ` (${cartCount} items)` : ''}`}
                 >
                   <ShoppingBag className="w-5 h-5" />
                   {cartCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-terracotta text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="cart-count">
+                    <span className="absolute -top-1 -right-1 bg-terracotta text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="cart-count-mobile">
                       {cartCount}
                     </span>
                   )}
                 </button>
+              </div>
+              
+              {/* Right side - Wishlist and More Menu */}
+              <div className={`flex items-center space-x-4 ${
+                variant === "solid" ? "text-foreground" : "text-white"
+              }`}>
                 <button 
-                  className={`relative transition-colors duration-200 ${
-                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                  className={`relative w-11 h-11 flex items-center justify-center rounded-md active:scale-95 transition-all duration-200 ${
+                    variant === "solid" ? "hover:text-terracotta hover:bg-terracotta/10" : "hover:text-cream hover:bg-white/10"
                   }`} 
-                  data-testid="button-wishlist"
+                  data-testid="button-wishlist-mobile"
                   onClick={() => setIsWishlistOpen(true)}
+                  aria-label={`Wishlist${wishlistCount > 0 ? ` (${wishlistCount} items)` : ''}`}
                 >
                   <Heart className="w-5 h-5" />
                   {wishlistCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="wishlist-count">
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center" data-testid="wishlist-count-mobile">
                       {wishlistCount}
                     </span>
                   )}
                 </button>
+                
+                <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                  <SheetTrigger asChild>
+                    <button 
+                      className={`w-11 h-11 flex items-center justify-center rounded-md active:scale-95 transition-all duration-200 pointer-events-auto z-50 ${
+                        variant === "solid" ? "hover:text-terracotta hover:bg-terracotta/10" : "hover:text-cream hover:bg-white/10"
+                      }`} 
+                      data-testid="button-mobile-menu"
+                      aria-label="Open menu"
+                    >
+                      <MoreVertical className="w-5 h-5" />
+                    </button>
+                  </SheetTrigger>
+                  <SheetContent side="right" className="w-80">
+                    <SheetHeader>
+                      <SheetTitle>Menu</SheetTitle>
+                      <SheetDescription>
+                        Navigate through SM Furnishings
+                      </SheetDescription>
+                    </SheetHeader>
+                    <div className="flex flex-col space-y-4 mt-6">
+                      {/* Search */}
+                      <div className="pb-4 border-b">
+                        <button 
+                          onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            handleSearchOpen();
+                          }}
+                          className="w-full flex items-center space-x-3 text-left p-3 rounded-lg hover:bg-accent transition-colors"
+                        >
+                          <Search className="w-5 h-5" />
+                          <span className="font-medium">Search Products</span>
+                        </button>
+                      </div>
+                      
+                      {/* Navigation Links */}
+                      <div className="space-y-2">
+                        <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                          <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors">
+                            <span className="font-medium text-lg" style={{ fontFamily: '"Prata", serif' }}>Home</span>
+                          </div>
+                        </Link>
+                        <Link href="/shop" onClick={() => setIsMobileMenuOpen(false)}>
+                          <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors">
+                            <span className="font-medium text-lg" style={{ fontFamily: '"Prata", serif' }}>Shop</span>
+                          </div>
+                        </Link>
+                        <Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>
+                          <div className="flex items-center space-x-3 p-3 rounded-lg hover:bg-accent transition-colors">
+                            <span className="font-medium text-lg" style={{ fontFamily: '"Prata", serif' }}>About</span>
+                          </div>
+                        </Link>
+                      </div>
+                    </div>
+                  </SheetContent>
+                </Sheet>
               </div>
-              
-              {/* Mobile Menu Button */}
-              <button className={`md:hidden ${
-                variant === "solid" ? "text-foreground" : "text-white"
-              }`} data-testid="button-mobile-menu">
-                <Menu className="w-5 h-5" />
-              </button>
             </div>
-            
           </div>
-          
-          {/* Bottom horizontal line - 80% of page width */}
-          <div className={`w-4/5 h-px mt-3 mx-auto ${
-            variant === "solid" ? "bg-foreground/20" : "bg-white/30"
-          }`}></div>
         </div>
       </header>
 

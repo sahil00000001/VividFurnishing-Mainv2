@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -14,6 +15,7 @@ import { Header } from '@/components/Header';
 import { useCart } from '@/lib/cartContext';
 import { useWishlist } from '@/lib/wishlistContext';
 import { useToast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { fetchAllProducts, ApiProduct, formatPrice, getUniqueValues, getProductImageUrl } from '@/lib/api';
 import bedArrangementsImg from '@assets/bed-arrangements-still-life_1758546337727.jpg';
 import { 
@@ -29,7 +31,8 @@ import {
   Shield,
   Award,
   Eye,
-  AlertCircle
+  AlertCircle,
+  MoreVertical
 } from 'lucide-react';
 
 // Color mapping for visual display
@@ -71,7 +74,9 @@ export default function ShopPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [animatingProducts, setAnimatingProducts] = useState<Set<string>>(new Set());
   
-  // Removed image carousel state as requested
+  // Mobile state
+  const isMobile = useIsMobile();
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   
   // Use global cart and wishlist contexts
   const { addToCart: addToGlobalCart } = useCart();
@@ -403,9 +408,164 @@ export default function ShopPage() {
           </div>
         </div>
         
+        {/* Mobile Toolbar */}
+        {isMobile && (
+          <div className="md:hidden sticky top-0 z-40 bg-background px-4 py-2 mb-4 border-b">
+            <div className="flex items-center justify-between">
+              {/* Left - Filter Button */}
+              <Sheet open={isMobileFilterOpen} onOpenChange={setIsMobileFilterOpen}>
+                <SheetTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="w-11 h-11 p-0"
+                    aria-label="Open filters"
+                    data-testid="button-open-filters-mobile"
+                  >
+                    <MoreVertical className="w-4 h-4" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-80 overflow-y-auto">
+                  <SheetHeader>
+                    <SheetTitle>Filters</SheetTitle>
+                    <SheetDescription>
+                      Filter products by your preferences
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div className="mt-6">
+                    {/* Mobile Filter Content - Same as desktop sidebar */}
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="font-semibold text-lg flex items-center">
+                        <Filter className="w-5 h-5 mr-2 text-terracotta" />
+                        Filters
+                      </h3>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          clearAllFilters();
+                          setIsMobileFilterOpen(false);
+                        }}
+                        className="text-terracotta hover:text-terracotta-dark"
+                        data-testid="button-clear-all-mobile"
+                      >
+                        Clear All
+                      </Button>
+                    </div>
+                    {/* Collections */}
+                    <div className="mb-6">
+                      <h4 className="font-medium mb-3 text-terracotta">Collections</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {collections.map((collection) => (
+                          <Button
+                            key={collection}
+                            variant={selectedCollections.includes(collection) ? "default" : "outline"}
+                            size="sm"
+                            className={`h-12 text-xs ${selectedCollections.includes(collection) ? 'bg-terracotta text-white' : ''}`}
+                            onClick={() => {
+                              if (selectedCollections.includes(collection)) {
+                                setSelectedCollections(prev => prev.filter(c => c !== collection));
+                              } else {
+                                setSelectedCollections([collection]);
+                              }
+                            }}
+                          >
+                            {collection}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <Separator className="my-6" />
+                    
+                    {/* Categories */}
+                    <div className="mb-6">
+                      <h4 className="font-medium mb-3 text-terracotta">Categories</h4>
+                      <div className="space-y-2">
+                        {categories.map((category) => (
+                          <div key={category} className="flex items-center space-x-2">
+                            <Checkbox
+                              id={`mobile-category-${category}`}
+                              checked={selectedCategories.includes(category)}
+                              onCheckedChange={(checked) => {
+                                if (checked) {
+                                  setSelectedCategories(prev => [...prev, category]);
+                                } else {
+                                  setSelectedCategories(prev => prev.filter(c => c !== category));
+                                }
+                              }}
+                            />
+                            <label 
+                              htmlFor={`mobile-category-${category}`}
+                              className="text-sm cursor-pointer flex-1"
+                            >
+                              {category}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Separator className="my-6" />
+                    
+                    {/* Colors */}
+                    <div className="mb-6">
+                      <h4 className="font-medium mb-3 text-terracotta">Colors</h4>
+                      <div className="grid grid-cols-3 gap-2">
+                        {colors.map((color) => (
+                          <div
+                            key={color}
+                            className={`
+                              w-8 h-8 rounded-full border-2 cursor-pointer relative transition-all hover:scale-110
+                              ${selectedColors.includes(color) ? 'border-terracotta scale-110 ring-2 ring-terracotta ring-opacity-30' : 'border-gray-300'}
+                            `}
+                            style={{ backgroundColor: colorDisplay[color] || '#6B7280' }}
+                            onClick={() => {
+                              if (selectedColors.includes(color)) {
+                                setSelectedColors(prev => prev.filter(c => c !== color));
+                              } else {
+                                setSelectedColors(prev => [...prev, color]);
+                              }
+                            }}
+                            title={color}
+                          >
+                            {selectedColors.includes(color) && (
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-2 h-2 bg-white rounded-full"></div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              {/* Center - Grid Icon */}
+              <div className="flex items-center">
+                <Grid3X3 className="w-6 h-6 text-terracotta" />
+              </div>
+
+              {/* Right - Sort Dropdown */}
+              <Select value={sortBy} onValueChange={(value) => setSortBy(value as typeof sortBy)}>
+                <SelectTrigger className="w-32" aria-label="Sort products">
+                  <SelectValue placeholder="Sort" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="featured">Featured</SelectItem>
+                  <SelectItem value="price-low">Low to High</SelectItem>
+                  <SelectItem value="price-high">High to Low</SelectItem>
+                  <SelectItem value="newest">Newest</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        )}
+
         <div className="flex gap-8">
-          {/* Filters Sidebar */}
-          <div className="w-80">
+          {/* Filters Sidebar - Hidden on Mobile */}
+          <div className="hidden md:block w-80">
             <Card className="sticky top-4 max-h-[calc(100vh-2rem)] flex flex-col shadow-lg">
               <CardContent className="p-6 flex-1 min-h-0 overflow-y-auto overscroll-contain pr-2 scrollbar-hide">
                 <div className="sticky top-0 z-10 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 mb-6 pt-2 pb-2 flex items-center justify-between">
@@ -676,8 +836,8 @@ export default function ShopPage() {
             
             {/* Product Grid */}
             <div className={`
-              grid gap-6 transition-all duration-300
-              ${viewMode === "grid" ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}
+              grid gap-3 md:gap-6 transition-all duration-300
+              ${viewMode === "grid" ? "grid-cols-2 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}
             `}>
               {filteredProducts.map((product, index) => (
                 <Card 
