@@ -17,6 +17,7 @@ export interface ApiProduct {
   Qty_in_Stock: number;
   Description: string;
   Wash_Care_Instructions: string[];
+  Pictures: string[];
 }
 
 export interface ApiResponse {
@@ -161,30 +162,22 @@ export async function submitNewsletter(data: NewsletterData): Promise<{success: 
   }
 }
 
-// Helper function to create placeholder image URL
-export function getProductImageUrl(product: ApiProduct): string {
-  // Create a gradient based on color name
-  const colorMap: { [key: string]: string } = {
-    'Red': 'from-red-400 to-red-600',
-    'Blue': 'from-blue-400 to-blue-600',
-    'Green': 'from-green-400 to-green-600',
-    'Purple': 'from-purple-400 to-purple-600',
-    'Orange': 'from-orange-400 to-orange-600',
-    'Pink': 'from-pink-400 to-pink-600',
-    'Brown': 'from-amber-600 to-amber-800',
-    'Grey': 'from-gray-400 to-gray-600',
-    'Gray': 'from-gray-400 to-gray-600',
-    'White': 'from-gray-100 to-gray-300',
-    'Off White': 'from-gray-50 to-gray-200',
-    'Beige': 'from-amber-100 to-amber-300',
-    'Black': 'from-gray-800 to-black'
-  };
+// Helper function to get product image URL from API data
+export function getProductImageUrl(product: ApiProduct, imageIndex: number = 0): string {
+  // Return actual image URL from the Pictures array if available
+  if (product.Pictures && product.Pictures.length > 0) {
+    // Use the specified index, or fallback to first image if index is out of bounds
+    const imageUrl = product.Pictures[imageIndex] || product.Pictures[0];
+    return imageUrl;
+  }
   
-  const gradient = colorMap[product.Color] || 'from-terracotta to-terracotta-dark';
-  
-  // For now, return a placeholder URL with product info
-  // In the future, this would be replaced with actual product image URLs
+  // Fallback to placeholder if no images are available
   return `https://via.placeholder.com/400x400/f0f0f0/666666?text=${encodeURIComponent(product.Product_Name)}`;
+}
+
+// Helper function to get all product images
+export function getProductImages(product: ApiProduct): string[] {
+  return product.Pictures || [];
 }
 
 // Cart API interfaces

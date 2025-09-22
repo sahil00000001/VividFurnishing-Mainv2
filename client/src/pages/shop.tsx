@@ -15,6 +15,7 @@ import { useCart } from '@/lib/cartContext';
 import { useWishlist } from '@/lib/wishlistContext';
 import { useToast } from '@/hooks/use-toast';
 import { fetchAllProducts, ApiProduct, formatPrice, getUniqueValues, getProductImageUrl } from '@/lib/api';
+import bedArrangementsImg from '@assets/bed-arrangements-still-life_1758546337727.jpg';
 import { 
   Heart, 
   ShoppingCart, 
@@ -70,6 +71,10 @@ export default function ShopPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [animatingProducts, setAnimatingProducts] = useState<Set<string>>(new Set());
   
+  // Image carousel state
+  const [currentImageIndexes, setCurrentImageIndexes] = useState<{[key: string]: number}>({});
+  const [imageIntervals, setImageIntervals] = useState<{[key: string]: NodeJS.Timeout}>({});
+  
   // Use global cart and wishlist contexts
   const { addToCart: addToGlobalCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
@@ -85,6 +90,42 @@ export default function ShopPage() {
   const [sizes, setSizes] = useState<string[]>([]);
   
   const productRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
+
+  // Handle product hover for image carousel
+  const handleProductHover = (productId: string, product: ApiProduct, isHovering: boolean) => {
+    if (isHovering && product.Pictures && product.Pictures.length > 1) {
+      // Start cycling through images
+      const interval = setInterval(() => {
+        setCurrentImageIndexes(prev => {
+          const currentIndex = prev[productId] || 0;
+          const nextIndex = (currentIndex + 1) % product.Pictures.length;
+          return { ...prev, [productId]: nextIndex };
+        });
+      }, 800); // Change image every 800ms
+      
+      setImageIntervals(prev => ({ ...prev, [productId]: interval }));
+    } else {
+      // Stop cycling and reset to first image
+      const interval = imageIntervals[productId];
+      if (interval) {
+        clearInterval(interval);
+        setImageIntervals(prev => {
+          const newIntervals = { ...prev };
+          delete newIntervals[productId];
+          return newIntervals;
+        });
+      }
+      
+      setCurrentImageIndexes(prev => ({ ...prev, [productId]: 0 }));
+    }
+  };
+
+  // Cleanup intervals on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(imageIntervals).forEach(interval => clearInterval(interval));
+    };
+  }, [imageIntervals]);
 
   // Parse URL search parameters
   useEffect(() => {
@@ -348,20 +389,23 @@ export default function ShopPage() {
 
       {/* Hero Section */}
       <section 
-        className="relative h-64 flex items-center justify-center bg-gradient-to-br from-terracotta via-terracotta-dark to-amber-700"
+        className="relative h-64 flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${bedArrangementsImg})`
+        }}
         data-testid="hero-section"
       >
-        <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative z-10 text-center text-white px-4">
           <div className="flex items-center justify-center mb-4">
             <Sparkles className="w-6 h-6 mr-2 text-yellow-300" />
             <h1 className="font-serif text-3xl md:text-5xl font-bold" data-testid="hero-title">
-              Premium Collections
+              COMPLETE YOUR SPACE
             </h1>
             <Sparkles className="w-6 h-6 ml-2 text-yellow-300" />
           </div>
           <p className="text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed mb-6" data-testid="hero-subtitle">
-            Discover luxury bedding and home furnishings crafted with the finest materials and exquisite attention to detail
+            Explore our entire world of furnishings. From daily essentials to statement pieces, discover luxury made affordable.
           </p>
           <div className="flex items-center justify-center space-x-6 text-sm">
             <div className="flex items-center">
@@ -398,9 +442,9 @@ export default function ShopPage() {
         <div className="flex gap-8">
           {/* Filters Sidebar */}
           <div className="w-80">
-            <Card className="sticky top-4 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-6">
+            <Card className="sticky top-4 max-h-[calc(100vh-2rem)] flex flex-col shadow-lg">
+              <CardContent className="p-6 flex-1 min-h-0 overflow-y-auto overscroll-contain pr-2 scrollbar-hide">
+                <div className="sticky top-0 z-10 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 mb-6 pt-2 pb-2 flex items-center justify-between">
                   <h3 className="font-semibold text-lg flex items-center">
                     <Filter className="w-5 h-5 mr-2 text-terracotta" />
                     Filters
@@ -683,12 +727,45 @@ export default function ShopPage() {
                     animationDelay: `${index * 0.1}s`
                   }}
                   onClick={() => setLocation(`/product/${product._id}`)}
+                  onMouseEnter={() => handleProductHover(product._id, product, true)}
+                  onMouseLeave={() => handleProductHover(product._id, product, false)}
                   data-testid={`product-card-${product._id}`}
                 >
                   {/* Product Image */}
                   <div className="aspect-square overflow-hidden relative bg-gradient-to-br from-gray-100 to-gray-200">
+                    <img 
+                      src={getProductImageUrl(product, currentImageIndexes[product._id] || 0)}
+                      alt={product.Product_Name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                      loading="lazy"
+                      onError={(e) => {
+                        // Fallback to colored placeholder if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallbackDiv = target.nextElementSibling as HTMLElement;
+                        if (fallbackDiv) {
+                          fallbackDiv.style.display = 'flex';
+                        }
+                      }}
+                    />
+                    
+                    {/* Image indicators for multiple images */}
+                    {product.Pictures && product.Pictures.length > 1 && (
+                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {product.Pictures.map((_, imageIndex) => (
+                          <div
+                            key={imageIndex}
+                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                              (currentImageIndexes[product._id] || 0) === imageIndex
+                                ? 'bg-white scale-125'
+                                : 'bg-white/50'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    )}
                     <div 
-                      className="w-full h-full flex items-center justify-center text-4xl font-serif font-bold text-gray-400 bg-gradient-to-br"
+                      className="w-full h-full flex items-center justify-center text-4xl font-serif font-bold text-gray-400 bg-gradient-to-br absolute inset-0 hidden"
                       style={{
                         background: `linear-gradient(135deg, ${colorDisplay[product.Color] || '#6B7280'}20, ${colorDisplay[product.Color] || '#6B7280'}40)`
                       }}
