@@ -24,7 +24,7 @@ interface CheckoutFormData {
   country: string;
 }
 
-type PaymentMethod = 'razorpay' | 'cod' | 'debit_card';
+type PaymentMethod = 'razorpay' | 'cod';
 
 export default function CheckoutPage() {
   const [, setLocation] = useLocation();
@@ -447,13 +447,6 @@ export default function CheckoutPage() {
 
       } else if (method === 'razorpay') {
         await handleRazorpayPayment(orderData);
-        
-      } else if (method === 'debit_card') {
-        toast({
-          title: "Debit Card Coming Soon",
-          description: "Debit card payment integration will be available soon. Please use COD for now.",
-          variant: "destructive",
-        });
       }
       
     } catch (error) {
@@ -793,26 +786,6 @@ export default function CheckoutPage() {
                   </Button>
                 </div>
 
-                {/* Debit Card */}
-                <div className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
-                  <Button
-                    onClick={() => handlePaymentMethodSelect('debit_card')}
-                    disabled={isProcessing || isLoading}
-                    variant="outline"
-                    className="w-full justify-start gap-3 h-auto py-4"
-                  >
-                    <div className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center">
-                      <CreditCard className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="text-left">
-                      <p className="font-medium">Debit Card</p>
-                      <p className="text-sm text-muted-foreground">Visa, Mastercard, RuPay</p>
-                    </div>
-                    <div className="ml-auto">
-                      <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Coming Soon</span>
-                    </div>
-                  </Button>
-                </div>
 
                 {/* Processing State */}
                 {isProcessing && (

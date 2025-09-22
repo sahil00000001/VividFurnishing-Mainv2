@@ -191,7 +191,7 @@ export default function Home() {
         
         <div className="relative z-10 text-center text-white px-6">
           <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-wide" style={{ fontFamily: '"Prata", serif' }} data-testid="hero-headline">
-            AFFORDABLE <span className="text-cream">·</span> LUXURY
+            AFFORDABLE LUXURY
           </h2>
           <p className="text-xl md:text-2xl font-light mb-8 tracking-wider" data-testid="hero-subheading">
             Where Comfort Meets Elegance

@@ -59,3 +59,8 @@
 [x] 59. Newsletter section: shifted email input and subscribe button to the right side instead of center alignment; Order in Bulk section: updated image with minimal linen cushion covers on sofa (minimal-linen-cushion-covers-sofa_1758535928415.jpg)
 [x] 60. FAQ page improvements: added automatic scroll to top when page loads, reduced large gap above FAQ title (changed from pt-32 to pt-8), and implemented floating "scroll to top" button that appears when users scroll down
 [x] 61. Footer logo update: replaced placeholder "SM" text with actual SM Furnishings logo (2_1758536426953.png) - now displays the beautiful orange/terracotta colored logo alongside the brand name
+[x] 62. UI/UX improvements based on user feedback: centered newsletter subscription, removed Facebook/Twitter icons, changed navigation to sentence case (Home, Shop, About)
+[x] 63. Hero section improvement: removed dot between "Affordable" and "Luxury" text for cleaner look
+[x] 64. Checkout page enhancements: removed debit card payment option, confirmed coupon functionality exists, cleaned up payment method types
+[x] 65. Razorpay production readiness: configured to use environment variables for seamless test/production mode switching via .env file
+[x] 66. Code cleanup: removed unused Facebook/Twitter imports from Footer component for better performance

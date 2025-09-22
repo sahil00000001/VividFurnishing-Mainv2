@@ -4,6 +4,8 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import heroImage from "@assets/57d601fcd7f59ad26c4c4920899c1857_1758543449530.jpg";
+import differenceImage from "@assets/Classy False Ceiling Design For Living Room_1758543625748.jpeg";
 import { 
   Heart, 
   Users, 
@@ -192,7 +194,7 @@ export default function About() {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080')"
+            backgroundImage: `url(${heroImage})`
           }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
@@ -203,7 +205,7 @@ export default function About() {
             OUR <span className="text-cream italic font-script">story</span>
           </h1>
           <p className="text-xl md:text-2xl font-light mb-8 tracking-wider animate-fade-in-up animation-delay-300">
-            Crafting beautiful homes, one piece at a time
+            Because a home is built not just with walls, but with warmth.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-600">
             <Button 
@@ -477,7 +479,7 @@ export default function About() {
               }`}
             >
               <img 
-                src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
+                src={differenceImage}
                 alt="Our Difference"
                 className="w-full h-96 object-cover rounded-lg shadow-xl"
               />

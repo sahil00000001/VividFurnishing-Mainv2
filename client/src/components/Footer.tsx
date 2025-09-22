@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -63,15 +63,6 @@ export function Footer() {
                   size="sm"
                   className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200 rounded-full"
                   style={{ borderRadius: '3px' }}
-                  data-testid="footer-social-facebook"
-                >
-                  <Facebook className="w-5 h-5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200 rounded-full"
-                  style={{ borderRadius: '3px' }}
                   data-testid="footer-social-instagram"
                   onClick={() => window.open('https://www.instagram.com/sm_furnishings/', '_blank')}
                 >
@@ -86,15 +77,6 @@ export function Footer() {
                   onClick={() => window.open('https://www.linkedin.com/company/sm-furnishings/', '_blank')}
                 >
                   <Linkedin className="w-5 h-5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200 rounded-full"
-                  style={{ borderRadius: '3px' }}
-                  data-testid="footer-social-twitter"
-                >
-                  <Twitter className="w-5 h-5" />
                 </Button>
               </div>
             </div>
@@ -162,8 +144,8 @@ export function Footer() {
               
               {/* Newsletter Signup */}
               <div className="space-y-3">
-                <h5 className="font-medium" data-testid="footer-newsletter-title">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</h5>
-                <div className="flex space-x-2">
+                <h5 className="font-medium text-center" data-testid="footer-newsletter-title">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</h5>
+                <div className="flex space-x-2 justify-center">
                   <Input
                     type="email"
                     placeholder="Enter your email"
