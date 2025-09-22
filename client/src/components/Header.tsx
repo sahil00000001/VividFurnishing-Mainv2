@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart, LogOut, MoreVertical } from "lucide-react";
+import { Search, User, ShoppingBag, Menu, X, Minus, Plus, Heart, LogOut } from "lucide-react";
 import { useCart } from "@/lib/cartContext";
 import { useWishlist } from "@/lib/wishlistContext";
 import { useAuth } from "@/lib/authContext";
@@ -382,7 +382,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                       data-testid="button-mobile-menu"
                       aria-label="Open menu"
                     >
-                      <MoreVertical className="w-5 h-5" />
+                      <Menu className="w-5 h-5" />
                     </button>
                   </SheetTrigger>
                   <SheetContent side="right" className="w-80">

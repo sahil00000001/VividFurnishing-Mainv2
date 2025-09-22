@@ -59,9 +59,8 @@ export function ProductCard({ product, variant, testIdPrefix = "product", showAd
   if (variant === "luxury") {
     return (
       <div 
-        className="relative overflow-hidden shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
+        className="relative overflow-hidden shadow-[0px_4px_4px_rgba(0,0,0,0.25)] w-[300px] max-w-[80%] md:w-[220px] mx-auto md:mx-0"
         style={{
-          width: '220px',
           height: '280px',
           background: '#FFF9EA',
           borderRadius: '50px'
@@ -153,9 +152,8 @@ export function ProductCard({ product, variant, testIdPrefix = "product", showAd
   // Default bestseller variant with new styling effects
   return (
     <div 
-      className="relative overflow-hidden shadow-[0px_4px_4px_rgba(0,0,0,0.25)]"
+      className="relative overflow-hidden shadow-[0px_4px_4px_rgba(0,0,0,0.25)] w-[300px] max-w-[80%] md:w-[220px] mx-auto md:mx-0"
       style={{
-        width: '220px',
         height: '280px',
         background: '#FFF9EA',
         borderRadius: '50px'

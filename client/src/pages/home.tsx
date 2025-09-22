@@ -268,11 +268,9 @@ export default function Home() {
             <div 
               style={{
                 border: '2px solid #582308',
-                borderRadius: '20px',
-                width: '1485px',
-                maxWidth: '100%'
+                borderRadius: '20px'
               }}
-              className="px-8 md:px-12 py-4 md:py-6"
+              className="px-8 md:px-12 py-4 md:py-6 w-full"
             >
               <div className="flex flex-col lg:flex-row gap-12 items-center">
                 {/* Left Content Area - 30% */}
@@ -302,7 +300,7 @@ export default function Home() {
                       borderRadius: '14px',
                       boxSizing: 'border-box'
                     }}
-                    className="text-terracotta font-semibold"
+                    className="text-terracotta font-semibold lg:mx-0 mx-auto"
                     data-testid="button-explore-more"
                   >
                     Explore More
@@ -311,7 +309,7 @@ export default function Home() {
                 
                 {/* Right Product Showcase - 70% */}
                 <div className="lg:w-[70%]">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                     {bestSellers.map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -336,16 +334,14 @@ export default function Home() {
             <div 
               style={{
                 border: '2px solid #582308',
-                borderRadius: '20px',
-                width: '1485px',
-                maxWidth: '100%'
+                borderRadius: '20px'
               }}
-              className="px-8 md:px-12 py-4 md:py-6 bg-white shadow-xl"
+              className="px-8 md:px-12 py-4 md:py-6 bg-white shadow-xl w-full"
             >
               <div className="flex flex-col lg:flex-row gap-8 items-center">
                 {/* Left Product Showcase - 70% */}
                 <div className="lg:w-[70%] order-2 lg:order-1">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:gap-4">
                     {luxuryProducts.map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -385,7 +381,7 @@ export default function Home() {
                       borderRadius: '14px',
                       boxSizing: 'border-box'
                     }}
-                    className="text-terracotta font-semibold"
+                    className="text-terracotta font-semibold lg:mx-0 mx-auto"
                     data-testid="button-luxury-explore-more"
                   >
                     EXPLORE LUXURY
@@ -699,8 +695,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Side - Curved Rectangle Figure */}
-            <div className="order-1 lg:order-2 flex justify-center lg:justify-end">
+            {/* Right Side - Curved Rectangle Figure - Hidden on mobile */}
+            <div className="order-1 lg:order-2 hidden lg:flex justify-center lg:justify-end">
               <div className="relative lg:w-[450px] lg:h-[580px]" data-testid="bulk-figure">
                 {/* Main Image Container - Only top-left curved */}
                 <div 

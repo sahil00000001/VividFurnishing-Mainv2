@@ -40,7 +40,7 @@ export function Footer() {
       <div className="container mx-auto px-6">
         <div className="max-w-7xl mx-auto">
           {/* Main Footer Content */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
             {/* Brand & About */}
             <div className="space-y-6">
               <div className="flex items-center space-x-3">
@@ -81,66 +81,73 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Quick Links */}
-            <div className="space-y-6">
-              <h4 className="font-semibold text-lg" data-testid="footer-links-title">Quick Links</h4>
-              <ul className="space-y-3">
-                <li>
-                  <Link 
-                    href="/" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-link-home"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/shop" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-link-shop"
-                  >
-                    Shop
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/about" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-link-about"
-                  >
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link 
-                    href="/faqs" 
-                    className="text-cream hover:text-white transition-colors duration-200"
-                    data-testid="footer-link-faqs"
-                  >
-                    FAQs
-                  </Link>
-                </li>
-              </ul>
-            </div>
+            {/* Quick Links & Contact */}
+            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Quick Links */}
+              <div className="space-y-6">
+                <h4 className="font-semibold text-lg" data-testid="footer-links-title">Quick Links</h4>
+                <ul className="space-y-3">
+                  <li>
+                    <Link 
+                      href="/" 
+                      className="text-cream hover:text-white transition-colors duration-200"
+                      data-testid="footer-link-home"
+                    >
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/shop" 
+                      className="text-cream hover:text-white transition-colors duration-200"
+                      data-testid="footer-link-shop"
+                    >
+                      Shop
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/about" 
+                      className="text-cream hover:text-white transition-colors duration-200"
+                      data-testid="footer-link-about"
+                    >
+                      About Us
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="/faqs" 
+                      className="text-cream hover:text-white transition-colors duration-200"
+                      data-testid="footer-link-faqs"
+                    >
+                      FAQs
+                    </Link>
+                  </li>
+                </ul>
+              </div>
 
-
-            {/* Contact & Newsletter */}
-            <div className="space-y-6">
-              <h4 className="font-semibold text-lg" data-testid="footer-contact-title">Contact Us</h4>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-cream">
-                  <Mail className="w-4 h-4" />
-                  <span data-testid="footer-email">Info@smfurnishings.com</span>
-                </div>
-                <div className="flex items-start space-x-3 text-cream">
-                  <MapPin className="w-4 h-4 mt-1" />
-                  <span data-testid="footer-address">
-                    233, Model Town, Tosham Road<br />
-                    Hisar, 1250001
-                  </span>
+              {/* Contact */}
+              <div className="space-y-6">
+                <h4 className="font-semibold text-lg" data-testid="footer-contact-title">Contact Us</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3 text-cream">
+                    <Mail className="w-4 h-4" />
+                    <span data-testid="footer-email">Info@smfurnishings.com</span>
+                  </div>
+                  <div className="flex items-start space-x-3 text-cream">
+                    <MapPin className="w-4 h-4 mt-1" />
+                    <span data-testid="footer-address">
+                      233, Model Town, Tosham Road<br />
+                      Hisar, 1250001
+                    </span>
+                  </div>
                 </div>
               </div>
+            </div>
+
+            {/* Newsletter */}
+            <div className="space-y-6">
+              <h4 className="font-semibold text-lg" data-testid="footer-newsletter-title">Newsletter</h4>
               
               {/* Newsletter Signup */}
               <div className="space-y-3">
