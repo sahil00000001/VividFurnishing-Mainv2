@@ -53,9 +53,7 @@ export default function CheckoutPage() {
   // Calculate totals
   const subtotal = cart?.totalAmount || 0;
   const shippingCost = 0; // Always free shipping
-  const taxRate = 0.18; // 18% GST
-  const taxAmount = subtotal * taxRate;
-  const totalAmount = subtotal + shippingCost + taxAmount;
+  const totalAmount = subtotal + shippingCost;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -215,7 +213,6 @@ export default function CheckoutPage() {
               
               pricing: {
                 subtotal: subtotal,
-                tax: taxAmount,
                 shipping: shippingCost,
                 total: totalAmount
               },
@@ -363,7 +360,6 @@ export default function CheckoutPage() {
         pricing: {
           subtotal,
           shipping: shippingCost,
-          tax: taxAmount,
           total: totalAmount
         },
         paymentMethod: method
@@ -410,7 +406,6 @@ export default function CheckoutPage() {
           
           pricing: {
             subtotal: subtotal,
-            tax: taxAmount,
             shipping: shippingCost,
             total: totalAmount
           },
@@ -514,10 +509,26 @@ export default function CheckoutPage() {
                 {cartItems.map((item) => (
                   <div key={item.productId} className="flex items-center space-x-4 border-b pb-4 last:border-b-0">
                     {/* Product Image */}
-                    <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center">
-                      <span className="text-2xl font-serif font-bold text-gray-400">
-                        {item.productName.charAt(0)}
-                      </span>
+                    <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+                      <img 
+                        src={item.productImage}
+                        alt={item.productName}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => {
+                          // Fallback to placeholder if image fails to load
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          target.nextElementSibling?.classList.remove('hidden');
+                        }}
+                      />
+                      {/* Fallback placeholder */}
+                      <div className="hidden w-full h-full flex items-center justify-center">
+                        <span className="text-2xl font-serif font-bold text-gray-400">
+                          {item.productName.charAt(0)}
+                        </span>
+                      </div>
                     </div>
                     
                     {/* Product Details */}
@@ -565,10 +576,6 @@ export default function CheckoutPage() {
                   <div className="flex justify-between">
                     <span>Shipping:</span>
                     <span className="text-green-600 font-medium">Free</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Tax (GST 18%):</span>
-                    <span>₹{taxAmount.toLocaleString()}</span>
                   </div>
                   
                   {/* Coupon Section */}

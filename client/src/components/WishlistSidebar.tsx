@@ -169,9 +169,23 @@ export function WishlistSidebar() {
                     <CardContent className="p-4">
                       <div className="flex space-x-3">
                         {/* Product Image */}
-                        <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
+                        <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex-shrink-0 overflow-hidden">
+                          <img 
+                            src={getProductImageUrl(item.product, 0)}
+                            alt={item.product.Product_Name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                            loading="lazy"
+                            decoding="async"
+                            onError={(e) => {
+                              // Fallback to placeholder if image fails to load
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                              target.nextElementSibling?.classList.remove('hidden');
+                            }}
+                          />
+                          {/* Fallback placeholder */}
                           <div 
-                            className="w-full h-full flex items-center justify-center text-2xl font-serif font-bold text-gray-400 group-hover:scale-105 transition-transform duration-200"
+                            className="hidden w-full h-full flex items-center justify-center text-2xl font-serif font-bold text-gray-400 group-hover:scale-105 transition-transform duration-200"
                             style={{
                               background: `linear-gradient(135deg, ${item.product.Color ? '#B8734C' : '#6B7280'}20, ${item.product.Color ? '#B8734C' : '#6B7280'}40)`
                             }}

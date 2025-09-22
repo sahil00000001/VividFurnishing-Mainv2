@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Cart, CartItem, fetchCart, addToCart as apiAddToCart, updateCartQuantity, removeFromCart as apiRemoveFromCart, clearCart as apiClearCart, ApiProduct, fetchProductById } from './api';
+import { Cart, CartItem, fetchCart, addToCart as apiAddToCart, updateCartQuantity, removeFromCart as apiRemoveFromCart, clearCart as apiClearCart, ApiProduct, fetchProductById, getProductImageUrl } from './api';
 import { useAuth } from './authContext';
 import { useToast } from '@/hooks/use-toast';
 
@@ -135,7 +135,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         const newCartItem: CartItem = {
           productId: productId,
           productName: product.Product_Name,
-          productImage: `/api/placeholder/${product.Product_Name}`, // Placeholder since no image URL in API
+          productImage: getProductImageUrl(product, 0), // Use real product image from Pictures array
           quantity: quantity,
           priceAtTime: product.Selling_Price,
           addedAt: new Date().toISOString()

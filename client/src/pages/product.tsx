@@ -33,6 +33,8 @@ export default function ProductPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState<ApiProduct | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [imageLoadError, setImageLoadError] = useState(false);
   
   // Use global cart and wishlist contexts
   const { addToCart: addToGlobalCart } = useCart();
@@ -54,6 +56,8 @@ export default function ProductPage() {
         setError(null);
         const fetchedProduct = await fetchProductById(productId);
         setProduct(fetchedProduct);
+        setSelectedImageIndex(0); // Reset selected image when new product loads
+        setImageLoadError(false); // Reset image error state
       } catch (err) {
         console.error('Error loading product:', err);
         setError('Failed to load product. Please try again later.');
@@ -167,6 +171,18 @@ export default function ProductPage() {
     await toggleWishlist(product._id);
   };
   
+  const handleImageSelect = (imageIndex: number) => {
+    setSelectedImageIndex(imageIndex);
+    setImageLoadError(false); // Reset error state when selecting new image
+  };
+  
+  const handleKeySelect = (event: React.KeyboardEvent, imageIndex: number) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleImageSelect(imageIndex);
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-background">
       <Header className="relative bg-white border-b shadow-sm" variant="solid" />
@@ -190,15 +206,66 @@ export default function ProductPage() {
           <div className="space-y-4">
             {/* Main Image */}
             <div className="aspect-square overflow-hidden rounded-lg bg-gradient-to-br from-gray-100 to-gray-200">
-              <div 
-                className="w-full h-full flex items-center justify-center text-6xl font-serif font-bold text-gray-400"
-                style={{
-                  background: `linear-gradient(135deg, ${colorDisplay[product.Color] || '#6B7280'}20, ${colorDisplay[product.Color] || '#6B7280'}40)`
-                }}
-              >
-                {product.Product_Name.charAt(0)}
-              </div>
+              {!imageLoadError ? (
+                <img 
+                  key={selectedImageIndex} // Force re-render on image change
+                  src={getProductImageUrl(product, selectedImageIndex)}
+                  alt={`${product.Product_Name} - Image ${selectedImageIndex + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  loading="eager"
+                  decoding="async"
+                  onError={() => setImageLoadError(true)}
+                />
+              ) : (
+                <div 
+                  className="w-full h-full flex items-center justify-center text-6xl font-serif font-bold text-gray-400"
+                  style={{
+                    background: `linear-gradient(135deg, ${colorDisplay[product.Color] || '#6B7280'}20, ${colorDisplay[product.Color] || '#6B7280'}40)`
+                  }}
+                >
+                  {product.Product_Name.charAt(0)}
+                </div>
+              )}
             </div>
+            
+            {/* Thumbnail Images */}
+            {product.Pictures && product.Pictures.length > 1 && (
+              <div className="grid grid-cols-4 gap-2">
+                {product.Pictures.map((_, imageIndex) => (
+                  <div
+                    key={imageIndex}
+                    role="button"
+                    tabIndex={0}
+                    className={`aspect-square overflow-hidden rounded-lg cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-terracotta focus:ring-offset-2 ${
+                      selectedImageIndex === imageIndex
+                        ? 'ring-2 ring-terracotta ring-offset-2'
+                        : 'hover:ring-1 hover:ring-gray-300 hover:ring-offset-1'
+                    }`}
+                    onClick={() => handleImageSelect(imageIndex)}
+                    onKeyDown={(e) => handleKeySelect(e, imageIndex)}
+                    aria-selected={selectedImageIndex === imageIndex}
+                    aria-label={`View image ${imageIndex + 1} of ${product.Pictures.length}`}
+                    data-testid={`product-thumbnail-${imageIndex}`}
+                  >
+                    <img 
+                      src={getProductImageUrl(product, imageIndex)}
+                      alt={`${product.Product_Name} - Thumbnail ${imageIndex + 1}`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        // Hide thumbnail if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        const parent = target.parentElement;
+                        if (parent) {
+                          parent.style.display = 'none';
+                        }
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
             
             {/* Collection Badge */}
             <div className="text-center">

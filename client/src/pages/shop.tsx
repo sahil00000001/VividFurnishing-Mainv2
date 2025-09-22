@@ -71,9 +71,7 @@ export default function ShopPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [animatingProducts, setAnimatingProducts] = useState<Set<string>>(new Set());
   
-  // Image carousel state
-  const [currentImageIndexes, setCurrentImageIndexes] = useState<{[key: string]: number}>({});
-  const [imageIntervals, setImageIntervals] = useState<{[key: string]: NodeJS.Timeout}>({});
+  // Removed image carousel state as requested
   
   // Use global cart and wishlist contexts
   const { addToCart: addToGlobalCart } = useCart();
@@ -91,41 +89,7 @@ export default function ShopPage() {
   
   const productRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
 
-  // Handle product hover for image carousel
-  const handleProductHover = (productId: string, product: ApiProduct, isHovering: boolean) => {
-    if (isHovering && product.Pictures && product.Pictures.length > 1) {
-      // Start cycling through images
-      const interval = setInterval(() => {
-        setCurrentImageIndexes(prev => {
-          const currentIndex = prev[productId] || 0;
-          const nextIndex = (currentIndex + 1) % product.Pictures.length;
-          return { ...prev, [productId]: nextIndex };
-        });
-      }, 800); // Change image every 800ms
-      
-      setImageIntervals(prev => ({ ...prev, [productId]: interval }));
-    } else {
-      // Stop cycling and reset to first image
-      const interval = imageIntervals[productId];
-      if (interval) {
-        clearInterval(interval);
-        setImageIntervals(prev => {
-          const newIntervals = { ...prev };
-          delete newIntervals[productId];
-          return newIntervals;
-        });
-      }
-      
-      setCurrentImageIndexes(prev => ({ ...prev, [productId]: 0 }));
-    }
-  };
-
-  // Cleanup intervals on unmount
-  useEffect(() => {
-    return () => {
-      Object.values(imageIntervals).forEach(interval => clearInterval(interval));
-    };
-  }, [imageIntervals]);
+  // Removed image carousel hover functionality as requested
 
   // Parse URL search parameters
   useEffect(() => {
@@ -727,17 +691,16 @@ export default function ShopPage() {
                     animationDelay: `${index * 0.1}s`
                   }}
                   onClick={() => setLocation(`/product/${product._id}`)}
-                  onMouseEnter={() => handleProductHover(product._id, product, true)}
-                  onMouseLeave={() => handleProductHover(product._id, product, false)}
                   data-testid={`product-card-${product._id}`}
                 >
                   {/* Product Image */}
                   <div className="aspect-square overflow-hidden relative bg-gradient-to-br from-gray-100 to-gray-200">
                     <img 
-                      src={getProductImageUrl(product, currentImageIndexes[product._id] || 0)}
+                      src={getProductImageUrl(product, 0)}
                       alt={product.Product_Name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                       loading="lazy"
+                      decoding="async"
                       onError={(e) => {
                         // Fallback to colored placeholder if image fails to load
                         const target = e.target as HTMLImageElement;
@@ -748,22 +711,6 @@ export default function ShopPage() {
                         }
                       }}
                     />
-                    
-                    {/* Image indicators for multiple images */}
-                    {product.Pictures && product.Pictures.length > 1 && (
-                      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        {product.Pictures.map((_, imageIndex) => (
-                          <div
-                            key={imageIndex}
-                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                              (currentImageIndexes[product._id] || 0) === imageIndex
-                                ? 'bg-white scale-125'
-                                : 'bg-white/50'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    )}
                     <div 
                       className="w-full h-full flex items-center justify-center text-4xl font-serif font-bold text-gray-400 bg-gradient-to-br absolute inset-0 hidden"
                       style={{
