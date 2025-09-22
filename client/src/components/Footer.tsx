@@ -146,25 +146,25 @@ export function Footer() {
             </div>
 
             {/* Newsletter */}
-            <div className="space-y-6">
+            <div className="space-y-6 text-center">
               <h4 className="font-semibold text-lg" data-testid="footer-newsletter-title">Newsletter</h4>
               
               {/* Newsletter Signup */}
               <div className="space-y-3">
                 <h5 className="font-medium text-center" data-testid="footer-newsletter-title">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</h5>
-                <div className="flex space-x-2 justify-center">
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 justify-center items-center">
                   <Input
                     type="email"
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-cream text-foreground border-cream-dark placeholder:text-muted-foreground"
+                    className="bg-cream text-foreground border-cream-dark placeholder:text-muted-foreground w-full sm:w-auto"
                     data-testid="footer-newsletter-input"
                   />
                   <Button
                     onClick={handleNewsletterSubmit}
                     disabled={isSubmitting || !email.trim()}
-                    className="bg-cream text-terracotta hover:bg-cream-dark transition-colors duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-cream text-terracotta hover:bg-cream-dark transition-colors duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                     data-testid="footer-newsletter-button"
                   >
                     {isSubmitting ? 'Subscribing...' : 'Subscribe'}

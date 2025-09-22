@@ -32,7 +32,7 @@ const features: Feature[] = [
 export function ServiceFeaturesBar() {
   return (
     <section 
-      className="w-full h-[120px]"
+      className="w-full h-[140px] sm:h-[120px]"
       style={{ 
         backgroundColor: '#D4A39C'
       }}
@@ -57,13 +57,13 @@ export function ServiceFeaturesBar() {
                 </div>
                 
                 {/* Feature Title */}
-                <h4 className="font-semibold text-base mb-1" data-testid={`feature-title-${feature.id}`}>
+                <h4 className="font-semibold text-sm sm:text-base mb-1" data-testid={`feature-title-${feature.id}`}>
                   {feature.title}
                 </h4>
                 
                 {/* Feature Description */}
                 <p 
-                  className="text-xs opacity-90 leading-relaxed"
+                  className="text-xs sm:text-xs opacity-90 leading-relaxed"
                   data-testid={`feature-description-${feature.id}`}
                 >
                   {feature.description}

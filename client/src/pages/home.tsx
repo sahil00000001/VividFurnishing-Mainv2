@@ -274,7 +274,7 @@ export default function Home() {
             >
               <div className="flex flex-col lg:flex-row gap-12 items-center">
                 {/* Left Content Area - 30% */}
-                <div className="lg:w-[30%] space-y-6">
+                <div className="lg:w-[30%] space-y-6 text-center lg:text-left">
                   <h3 
                     className="text-3xl md:text-4xl font-bold text-foreground" 
                     style={{ fontFamily: '"Playfair Display", serif' }}
@@ -289,27 +289,29 @@ export default function Home() {
                   >
                     Discover the pieces our customers can't get enough of. These bestselling designs combine comfort, elegance, and everyday luxury.
                   </p>
-                  <Button 
-                    variant="outline"
-                    onClick={() => setLocation('/shop')}
-                    style={{
-                      width: '198px',
-                      height: '72px',
-                      background: 'rgba(255, 255, 255, 0.47)',
-                      border: '9px solid #FFD0B3',
-                      borderRadius: '14px',
-                      boxSizing: 'border-box'
-                    }}
-                    className="text-terracotta font-semibold lg:mx-0 mx-auto"
-                    data-testid="button-explore-more"
-                  >
-                    Explore More
-                  </Button>
+                  <div className="flex justify-center lg:justify-start">
+                    <Button 
+                      variant="outline"
+                      onClick={() => setLocation('/shop')}
+                      style={{
+                        width: '198px',
+                        height: '72px',
+                        background: 'rgba(255, 255, 255, 0.47)',
+                        border: '9px solid #FFD0B3',
+                        borderRadius: '14px',
+                        boxSizing: 'border-box'
+                      }}
+                      className="text-terracotta font-semibold"
+                      data-testid="button-explore-more"
+                    >
+                      Explore More
+                    </Button>
+                  </div>
                 </div>
                 
                 {/* Right Product Showcase - 70% */}
-                <div className="lg:w-[70%]">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                <div className="lg:w-[70%] w-full">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                     {bestSellers.map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -340,8 +342,8 @@ export default function Home() {
             >
               <div className="flex flex-col lg:flex-row gap-8 items-center">
                 {/* Left Product Showcase - 70% */}
-                <div className="lg:w-[70%] order-2 lg:order-1">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:gap-4">
+                <div className="lg:w-[70%] w-full order-2 lg:order-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-4">
                     {luxuryProducts.map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -355,7 +357,7 @@ export default function Home() {
                 </div>
                 
                 {/* Right Content Area - 30% */}
-                <div className="lg:w-[30%] space-y-4 order-1 lg:order-2">
+                <div className="lg:w-[30%] space-y-4 order-1 lg:order-2 text-center lg:text-left">
                   <h3 
                     className="text-3xl md:text-4xl font-bold text-foreground tracking-wider" 
                     style={{ fontFamily: '"Playfair Display", serif' }}
@@ -370,22 +372,24 @@ export default function Home() {
                   >
                     Handpicked selections that embody luxury and sophistication, thoughtfully crafted to bring warmth and style to your home.
                   </p>
-                  <Button 
-                    variant="outline"
-                    onClick={() => setLocation('/shop')}
-                    style={{
-                      width: '198px',
-                      height: '72px',
-                      background: 'rgba(255, 255, 255, 0.47)',
-                      border: '9px solid #FFD0B3',
-                      borderRadius: '14px',
-                      boxSizing: 'border-box'
-                    }}
-                    className="text-terracotta font-semibold lg:mx-0 mx-auto"
-                    data-testid="button-luxury-explore-more"
-                  >
-                    EXPLORE LUXURY
-                  </Button>
+                  <div className="flex justify-center lg:justify-start">
+                    <Button 
+                      variant="outline"
+                      onClick={() => setLocation('/shop')}
+                      style={{
+                        width: '198px',
+                        height: '72px',
+                        background: 'rgba(255, 255, 255, 0.47)',
+                        border: '9px solid #FFD0B3',
+                        borderRadius: '14px',
+                        boxSizing: 'border-box'
+                      }}
+                      className="text-terracotta font-semibold"
+                      data-testid="button-luxury-explore-more"
+                    >
+                      EXPLORE LUXURY
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -404,11 +408,7 @@ export default function Home() {
 
       {/* Newsletter Section */}
       <section 
-        className="relative w-full overflow-hidden"
-        style={{ 
-          minHeight: 'clamp(28rem, 55vh, 42rem)',
-          height: 'clamp(28rem, 55vh, 42rem)'
-        }}
+        className="relative w-full overflow-hidden h-[22rem] sm:h-[28rem] lg:h-[clamp(28rem,55vh,42rem)]"
       >
         {/* Background Image */}
         <div className="absolute inset-0">
@@ -472,22 +472,22 @@ export default function Home() {
           {/* Email Input Section */}
           <div className="flex flex-col items-center space-y-6">
             {/* Email Input and Submit Button Row */}
-            <div className="flex flex-col items-end space-y-4 w-full max-w-5xl">
-              {/* Email Input and Subscribe Button Row - positioned to right */}
-              <div className="flex items-center space-x-6 mr-8" style={{ width: '80vw', maxWidth: '1000px' }}>
+            <div className="flex flex-col items-center space-y-4 w-full max-w-5xl px-4 sm:px-0">
+              {/* Email Input and Subscribe Button Row - responsive layout */}
+              <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-6 w-full sm:w-auto sm:mr-8">
                 {/* Email Input */}
-                <div className="relative">
+                <div className="relative w-full sm:w-auto">
                   <input 
                     type="email" 
                     placeholder="Enter your Email ......."
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-transparent text-white placeholder-white/80 border-none outline-none text-center pb-2"
+                    className="bg-transparent text-white placeholder-white/80 border-none outline-none text-center pb-2 w-full sm:w-auto"
                     style={{
                       fontFamily: "'Anonymous Pro', monospace",
                       fontSize: '16px',
                       fontWeight: '700',
-                      width: 'clamp(300px, 50vw, 500px)',
+                      width: 'clamp(220px, 80vw, 500px)',
                       borderBottom: '2px solid white',
                       paddingBottom: '4px'
                     }}
@@ -499,10 +499,10 @@ export default function Home() {
                 <button 
                   onClick={handleSubscribe}
                   disabled={isNewsletterSubmitting || !email.trim()}
-                  className="text-white hover:text-white/80 transition-colors duration-300 group flex items-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="text-white hover:text-white/80 transition-colors duration-300 group flex items-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
                   style={{
                     fontFamily: "'Anonymous Pro', monospace",
-                    fontSize: '20px',
+                    fontSize: '18px',
                     fontWeight: '700',
                     letterSpacing: '0.5px'
                   }}
