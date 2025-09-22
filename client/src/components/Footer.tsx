@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
@@ -62,8 +62,18 @@ export function Footer() {
                   size="sm"
                   className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200"
                   data-testid="footer-social-instagram"
+                  onClick={() => window.open('https://www.instagram.com/sm_furnishings/', '_blank')}
                 >
                   <Instagram className="w-5 h-5" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="p-2 text-cream hover:text-white hover:bg-terracotta-dark transition-colors duration-200"
+                  data-testid="footer-social-linkedin"
+                  onClick={() => window.open('https://www.linkedin.com/company/sm-furnishings/', '_blank')}
+                >
+                  <Linkedin className="w-5 h-5" />
                 </Button>
                 <Button
                   variant="ghost"
@@ -107,6 +117,15 @@ export function Footer() {
                     About Us
                   </Link>
                 </li>
+                <li>
+                  <Link 
+                    href="/faqs" 
+                    className="text-cream hover:text-white transition-colors duration-200"
+                    data-testid="footer-link-faqs"
+                  >
+                    FAQs
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -117,7 +136,7 @@ export function Footer() {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-cream">
                   <Mail className="w-4 h-4" />
-                  <span data-testid="footer-email">hello@smfurnishings.com</span>
+                  <span data-testid="footer-email">Info@smfurnishings.com</span>
                 </div>
                 <div className="flex items-start space-x-3 text-cream">
                   <MapPin className="w-4 h-4 mt-1" />

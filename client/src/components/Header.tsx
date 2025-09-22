@@ -5,8 +5,11 @@ import { useWishlist } from "@/lib/wishlistContext";
 import { useAuth } from "@/lib/authContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useState, useEffect } from "react";
+import { fetchAllProducts, ApiProduct, formatPrice } from "@/lib/api";
 
 interface HeaderProps {
   className?: string;
@@ -19,6 +22,12 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
   const { user, isAuthenticated, logout } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  
+  // Search functionality
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<ApiProduct[]>([]);
+  const [isSearchLoading, setIsSearchLoading] = useState(false);
 
   const getTotalPrice = () => {
     if (!cart) return 0;
@@ -34,6 +43,67 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
     setIsCartOpen(false);
     setLocation('/shop');
   };
+  
+  // Search functions
+  const handleSearchOpen = () => {
+    setIsSearchOpen(true);
+  };
+  
+  const handleSearchClose = () => {
+    setIsSearchOpen(false);
+    setSearchQuery("");
+    setSearchResults([]);
+  };
+  
+  const performSearch = async (query: string) => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    
+    setIsSearchLoading(true);
+    try {
+      const products = await fetchAllProducts();
+      const filtered = products.filter(product => 
+        product.Product_Name.toLowerCase().includes(query.toLowerCase()) ||
+        product.Category.toLowerCase().includes(query.toLowerCase()) ||
+        product.Collection.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(filtered.slice(0, 6)); // Limit to 6 results
+    } catch (error) {
+      console.error('Search error:', error);
+      toast({
+        title: "Search failed",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSearchLoading(false);
+    }
+  };
+  
+  const handleProductClick = (productId: string) => {
+    handleSearchClose();
+    setLocation(`/product/${productId}`);
+  };
+  
+  const handleViewAllResults = () => {
+    handleSearchClose();
+    setLocation(`/shop?search=${encodeURIComponent(searchQuery)}`);
+  };
+  
+  // Debounced search
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchQuery.trim()) {
+        performSearch(searchQuery);
+      } else {
+        setSearchResults([]);
+      }
+    }, 300);
+    
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
 
   return (
     <>
@@ -142,9 +212,13 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
               <div className={`absolute right-0 flex items-center space-x-6 ${
                 variant === "solid" ? "text-foreground" : "text-white"
               }`}>
-                <button className={`transition-colors duration-200 ${
-                  variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
-                }`} data-testid="button-search">
+                <button 
+                  className={`transition-colors duration-200 ${
+                    variant === "solid" ? "hover:text-terracotta" : "hover:text-cream"
+                  }`} 
+                  data-testid="button-search"
+                  onClick={handleSearchOpen}
+                >
                   <Search className="w-5 h-5" />
                 </button>
                 <button 
@@ -297,6 +371,85 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                 </div>
               </div>
             )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Search Modal */}
+      <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogTitle className="sr-only">Search Products</DialogTitle>
+          <div className="space-y-4">
+            {/* Search Header */}
+            <div className="border-b pb-4">
+              <h2 className="text-2xl font-serif font-bold">Search Products</h2>
+            </div>
+
+            {/* Search Input */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <Input
+                type="text"
+                placeholder="Search for products, collections, or categories..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-4 py-3 w-full rounded-lg border-2 focus:border-terracotta transition-colors"
+                autoFocus
+              />
+            </div>
+
+            {/* Search Results */}
+            <div className="space-y-4">
+              {isSearchLoading ? (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">Searching...</p>
+                </div>
+              ) : searchQuery && searchResults.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">No products found for "{searchQuery}"</p>
+                </div>
+              ) : searchResults.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-1 gap-4">
+                    {searchResults.map((product) => (
+                      <div 
+                        key={product._id} 
+                        className="flex items-center space-x-4 border rounded-lg p-4 hover:bg-gray-50 cursor-pointer transition-colors"
+                        onClick={() => handleProductClick(product._id)}
+                      >
+                        {/* Product Image */}
+                        <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                          <img 
+                            src={`https://via.placeholder.com/150x150/f0f0f0/666666?text=${encodeURIComponent(product.Product_Name.slice(0,3))}`}
+                            alt={product.Product_Name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        
+                        {/* Product Details */}
+                        <div className="flex-1">
+                          <h3 className="font-medium text-lg">{product.Product_Name}</h3>
+                          <p className="text-sm text-muted-foreground">{product.Collection} • {product.Category}</p>
+                          <p className="text-lg font-bold text-terracotta">
+                            {formatPrice(product.Selling_Price)}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* View All Results Button */}
+                  <div className="pt-4 border-t">
+                    <Button 
+                      className="w-full bg-terracotta hover:bg-terracotta-dark text-white"
+                      onClick={handleViewAllResults}
+                    >
+                      View All Results for "{searchQuery}" in Shop
+                    </Button>
+                  </div>
+                </>
+              ) : null}
+            </div>
           </div>
         </DialogContent>
       </Dialog>

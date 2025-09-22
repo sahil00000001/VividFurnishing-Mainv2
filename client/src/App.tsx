@@ -21,6 +21,7 @@ import Success from "@/pages/success";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import Returns from "@/pages/returns";
+import FAQs from "@/pages/faqs";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -40,6 +41,7 @@ function Router() {
       <Route path="/privacy" component={Privacy} />
       <Route path="/terms" component={Terms} />
       <Route path="/returns" component={Returns} />
+      <Route path="/faqs" component={FAQs} />
       <Route component={NotFound} />
     </Switch>
   );

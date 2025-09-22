@@ -136,7 +136,7 @@ export async function submitBulkOrder(data: BulkOrderData): Promise<void> {
 }
 
 // Submit newsletter subscription
-export async function submitNewsletter(data: NewsletterData): Promise<void> {
+export async function submitNewsletter(data: NewsletterData): Promise<{success: boolean, message: string}> {
   try {
     const response = await fetch('https://sm-furnishing-backend.onrender.com/api/newsletter-emails', {
       method: 'POST',
@@ -146,18 +146,18 @@ export async function submitNewsletter(data: NewsletterData): Promise<void> {
       body: JSON.stringify(data),
     });
     
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
     const result = await response.json();
     
-    if (!result.success) {
-      throw new Error('Failed to subscribe to newsletter');
+    if (response.ok && result.success) {
+      return { success: true, message: 'Successfully subscribed to newsletter!' };
+    } else if (result.message && result.message.includes('already subscribed')) {
+      return { success: true, message: 'You are already subscribed to our newsletter.' };
+    } else {
+      return { success: false, message: result.message || 'Failed to subscribe to newsletter' };
     }
   } catch (error) {
     console.error('Error subscribing to newsletter:', error);
-    throw error;
+    return { success: false, message: 'Network error. Please check your connection and try again.' };
   }
 }
 

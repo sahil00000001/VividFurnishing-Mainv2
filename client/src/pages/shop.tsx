@@ -74,7 +74,7 @@ export default function ShopPage() {
   const { addToCart: addToGlobalCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
   const { toast } = useToast();
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   
   // Dynamic filter options (calculated from API data)
   const [collections, setCollections] = useState<string[]>([]);
@@ -86,6 +86,15 @@ export default function ShopPage() {
   
   const productRefs = useRef<{[key: string]: HTMLDivElement | null}>({});
 
+  // Parse URL search parameters
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, [location]);
+  
   // Fetch products from API
   useEffect(() => {
     const loadProducts = async () => {

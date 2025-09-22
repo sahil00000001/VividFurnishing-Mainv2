@@ -120,12 +120,20 @@ export default function Home() {
     if (email && !isNewsletterSubmitting) {
       setIsNewsletterSubmitting(true);
       try {
-        await submitNewsletter({ email });
-        toast({
-          title: "Successfully subscribed!",
-          description: "Thank you for subscribing to our newsletter. You'll receive the latest updates and exclusive coupons.",
-        });
-        setEmail("");
+        const result = await submitNewsletter({ email });
+        if (result.success) {
+          toast({
+            title: "Success!",
+            description: result.message,
+          });
+          setEmail("");
+        } else {
+          toast({
+            title: "Subscription failed",
+            description: result.message,
+            variant: "destructive",
+          });
+        }
       } catch (error) {
         toast({
           title: "Subscription failed",
@@ -184,6 +192,7 @@ export default function Home() {
           <Button 
             variant="outline" 
             size="lg"
+            onClick={() => setLocation('/shop')}
             className="border-2 border-white bg-transparent text-terracotta font-semibold px-8 py-4 text-lg tracking-wide hover:bg-white hover:text-terracotta-dark transition-all duration-300"
             data-testid="button-explore-collection"
           >
@@ -194,7 +203,12 @@ export default function Home() {
 
 
       {/* Designing Luxury Hero Section */}
-      <section className="py-16 lg:py-20 bg-[#582308] text-center">
+      <section 
+        className="py-16 lg:py-20 text-center"
+        style={{
+          background: 'linear-gradient(180deg, #582308 -3.91%, rgba(175, 76, 15, 0.7) 11.73%, rgba(169, 142, 128, 0.708654) 41.34%, rgba(255, 255, 255, 0) 100%)'
+        }}
+      >
         <div className="container mx-auto px-6 max-w-5xl">
           {/* Primary Headline - "Designing Luxury" */}
           <h1 
@@ -374,8 +388,8 @@ export default function Home() {
 
 
 
-      {/* Premium Collection Section with Interactive Tabs */}
-      <PremiumTabs />
+      {/* Premium Collection Section with Interactive Tabs - Temporarily Hidden */}
+      {/* <PremiumTabs /> */}
 
       {/* Service Features Bar */}
       <ServiceFeaturesBar />
@@ -385,8 +399,8 @@ export default function Home() {
       <section 
         className="relative w-full overflow-hidden"
         style={{ 
-          minHeight: 'clamp(22rem, 45vh, 32rem)',
-          height: 'clamp(22rem, 45vh, 32rem)'
+          minHeight: 'clamp(28rem, 55vh, 42rem)',
+          height: 'clamp(28rem, 55vh, 42rem)'
         }}
       >
         {/* Background Image */}
@@ -397,11 +411,11 @@ export default function Home() {
               backgroundImage: `url(${newsletterBgImage})`
             }}
           />
-          {/* Light Overlay for better text readability */}
+          {/* Custom background overlay for LET'S STAY IN TOUCH */}
           <div 
             className="absolute inset-0"
             style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.3)'
+              background: 'rgba(219, 163, 82, 0.64)'
             }}
           />
         </div>
@@ -452,8 +466,8 @@ export default function Home() {
           <div className="flex flex-col items-center space-y-6">
             {/* Email Input and Submit Button Row */}
             <div className="flex flex-col items-center space-y-4">
-              {/* Email Input and Subscribe Button Row */}
-              <div className="flex items-center space-x-6">
+              {/* Email Input and Subscribe Button Row - 70% width */}
+              <div className="flex items-center space-x-6" style={{ width: '70vw', maxWidth: '800px' }}>
                 {/* Email Input */}
                 <div className="relative">
                   <input 
@@ -466,7 +480,7 @@ export default function Home() {
                       fontFamily: "'Anonymous Pro', monospace",
                       fontSize: '16px',
                       fontWeight: '700',
-                      width: 'clamp(220px, 35vw, 300px)',
+                      width: 'clamp(300px, 50vw, 500px)',
                       borderBottom: '2px solid white',
                       paddingBottom: '4px'
                     }}
