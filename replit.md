@@ -1,6 +1,17 @@
 # Overview
 
-This is a modern full-stack furniture e-commerce application called "SM Furnishings" built with React, Express, and PostgreSQL. The application showcases affordable luxury furniture with a sophisticated design system featuring warm terracotta and cream color schemes. It implements a complete e-commerce experience with product catalogs, collections, and user interactions.
+This is a modern full-stack furniture e-commerce application called "SM Furnishings" built with React and Express. The application showcases affordable luxury furniture with a sophisticated design system featuring warm terracotta and cream color schemes. It implements a complete e-commerce experience with product catalogs, collections, user interactions, and payment processing.
+
+**Last Updated**: September 23, 2025 - Successfully imported and configured for Replit environment
+
+# Recent Changes
+
+- **September 23, 2025**: Project imported from GitHub and configured for Replit
+  - Set up development workflow on port 5000 with webview output
+  - Configured Vite server with `allowedHosts: true` for Replit proxy compatibility
+  - Verified all dependencies installed correctly
+  - Set up deployment configuration for autoscale deployment target
+  - Application running successfully with external API integration
 
 # User Preferences
 
@@ -10,58 +21,83 @@ Preferred communication style: Simple, everyday language.
 
 ## Frontend Architecture
 - **Framework**: React 18 with TypeScript using Vite as the build tool
-- **Routing**: Wouter for client-side routing with a simple Switch/Route pattern
+- **Routing**: Wouter for client-side routing with multiple pages (home, shop, product, cart, etc.)
 - **UI Components**: Shadcn/ui component library built on Radix UI primitives
-- **Styling**: Tailwind CSS with custom CSS variables for theming
-- **State Management**: TanStack Query (React Query) for server state management
-- **Form Handling**: React Hook Form with Zod validation via @hookform/resolvers
-
-## Design System
-- **Typography**: Multiple font families including Playfair Display (serif), Inter (sans-serif), and Dancing Script (script)
-- **Color Palette**: Warm earth tones with terracotta primary colors and cream backgrounds
-- **Component Library**: Complete set of reusable UI components following consistent design patterns
-- **Responsive Design**: Mobile-first approach with comprehensive breakpoint handling
+- **Styling**: Tailwind CSS with custom color schemes (terracotta/cream theme)
+- **State Management**: 
+  - TanStack Query (React Query) for server state management
+  - Context API for cart and wishlist state
+  - Local storage for persistent cart and wishlist data
 
 ## Backend Architecture
-- **Framework**: Express.js with TypeScript running on Node.js
-- **API Pattern**: RESTful API with /api prefix for all endpoints
-- **Request Handling**: Express middleware for JSON parsing, URL encoding, and logging
-- **Error Handling**: Centralized error handling middleware with proper HTTP status codes
-- **Development Tools**: Hot reloading with Vite integration and custom logging
+- **Framework**: Express.js with TypeScript (minimal backend)
+- **Primary Function**: Payment processing via Razorpay integration
+- **API Integration**: Uses external API at `https://sm-furnishing-backend.onrender.com` for:
+  - Product catalog and data
+  - User authentication
+  - Cart management (when authenticated)
+  - Form submissions (bulk orders, newsletter)
+- **Local Features**: 
+  - Razorpay payment order creation and verification
+  - Request logging middleware
+  - Vite development server integration
 
-## Data Storage
-- **Database**: PostgreSQL with Drizzle ORM for type-safe database operations
-- **Schema Management**: Drizzle Kit for migrations and schema management
-- **Connection**: Neon Database serverless PostgreSQL connection
-- **Storage Interface**: Abstracted storage layer supporting both memory storage (development) and PostgreSQL (production)
+## Data Sources
+- **Products**: External API providing comprehensive product catalog
+- **Cart**: Hybrid approach - localStorage for guests, API for authenticated users
+- **Wishlist**: localStorage-based with context state management
+- **Forms**: External API for bulk order submissions and newsletter signups
 
-## Authentication & Session Management
-- **Session Storage**: PostgreSQL-backed sessions using connect-pg-simple
-- **User Management**: Basic user schema with username/password authentication
-- **Type Safety**: Zod schemas for request validation and TypeScript interfaces
+## Payment Integration
+- **Provider**: Razorpay (Indian payment gateway)
+- **Features**: Order creation, payment verification, secure signature validation
+- **Configuration**: Requires `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` environment variables
+
+## Key Features
+- **Product Catalog**: Full e-commerce product browsing with filtering and search
+- **Shopping Cart**: Add/remove/modify items with quantity management
+- **Wishlist**: Save favorite products for later
+- **User Authentication**: Login/signup with JWT token management
+- **Checkout Process**: Complete payment flow with Razorpay integration
+- **Responsive Design**: Mobile-first approach optimized for all devices
 
 # External Dependencies
 
-## Database Services
-- **Neon Database**: Serverless PostgreSQL hosting for production data storage
-- **Drizzle ORM**: Type-safe database toolkit with PostgreSQL dialect support
+## API Services
+- **SM Furnishing Backend**: External API at `sm-furnishing-backend.onrender.com` provides product data, user auth, and cart management
+- **Razorpay**: Payment gateway for secure transaction processing
 
-## UI/UX Libraries
-- **Radix UI**: Comprehensive set of low-level UI primitives for accessibility
+## Frontend Libraries
+- **Radix UI**: Comprehensive set of accessible UI primitives
 - **Tailwind CSS**: Utility-first CSS framework for rapid UI development
 - **Lucide React**: Icon library providing consistent iconography
-- **Embla Carousel**: Carousel/slider functionality for product displays
+- **React Query**: Data fetching, caching, and synchronization
+- **React Hook Form**: Form state management with Zod validation
 
-## Development & Build Tools
-- **Vite**: Fast build tool and development server
+## Development Tools
+- **Vite**: Fast build tool and development server with HMR
 - **TypeScript**: Static type checking across the entire codebase
 - **ESBuild**: Fast JavaScript bundler for production builds
-- **PostCSS**: CSS processing with Tailwind CSS and Autoprefixer
+- **Replit Integration**: Vite plugins for Replit-specific development features
 
-## Third-party Integrations
-- **React Query**: Data fetching and caching layer for API interactions
-- **React Hook Form**: Form state management and validation
-- **Date-fns**: Date manipulation and formatting utilities
-- **Wouter**: Lightweight routing solution for React applications
+# Project Structure
 
-The application follows modern full-stack development practices with strong separation of concerns, type safety throughout, and a focus on user experience and performance.
+```
+├── client/src/
+│   ├── components/     # Reusable React components
+│   ├── pages/         # Route-level page components
+│   ├── lib/           # Utilities, API functions, contexts
+│   └── data/          # Static data and configurations
+├── server/            # Express backend (minimal)
+├── attached_assets/   # Static assets and images
+└── package.json       # Dependencies and scripts
+```
+
+# Running the Application
+
+- **Development**: `npm run dev` - Starts both frontend and backend on port 5000
+- **Production Build**: `npm run build` - Creates optimized production bundle
+- **Production**: `npm run start` - Runs built application
+- **Type Checking**: `npm run check` - Validates TypeScript types
+
+The application is configured for Replit environment with proper host settings and proxy compatibility.
