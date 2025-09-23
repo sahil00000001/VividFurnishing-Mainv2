@@ -10,6 +10,7 @@ import { Header } from '@/components/Header';
 import { useCart } from '@/lib/cartContext';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/lib/authContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Minus, Plus, Package, CreditCard, MapPin, Phone, User, Mail, Truck, Wallet, Tag } from 'lucide-react';
 
 interface CheckoutFormData {
@@ -31,6 +32,7 @@ export default function CheckoutPage() {
   const { cartItems, cartCount, cart, updateQuantity, removeFromCart, clearCart, isLoading } = useCart();
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
+  const isMobile = useIsMobile();
   
   const [formData, setFormData] = useState<CheckoutFormData>({
     firstName: '',
@@ -465,9 +467,12 @@ export default function CheckoutPage() {
           <Package className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
           <h1 className="text-2xl font-serif font-bold mb-4">Your cart is empty</h1>
           <p className="text-muted-foreground mb-6">Add some items to your cart to proceed with checkout.</p>
-          <Button onClick={() => setLocation('/shop')} className="bg-terracotta hover:bg-terracotta-dark text-white">
-            Continue Shopping
-          </Button>
+          {/* Continue Shopping - Hidden on mobile */}
+          {!isMobile && (
+            <Button onClick={() => setLocation('/shop')} className="bg-terracotta hover:bg-terracotta-dark text-white">
+              Continue Shopping
+            </Button>
+          )}
         </div>
         <Footer />
       </div>
@@ -495,9 +500,9 @@ export default function CheckoutPage() {
           )}
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className={`grid lg:grid-cols-2 ${isMobile ? 'gap-4' : 'gap-6'}`}>
           {/* Order Summary - Left Side */}
-          <div className="space-y-6">
+          <div className={isMobile ? 'space-y-3' : 'space-y-4'}>
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -505,11 +510,11 @@ export default function CheckoutPage() {
                   Order Summary ({cartCount} items)
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className={`${isMobile ? 'space-y-2' : 'space-y-3'}`}>
                 {cartItems.map((item) => (
-                  <div key={item.productId} className="flex items-center space-x-4 border-b pb-4 last:border-b-0">
+                  <div key={item.productId} className={`flex items-center border-b last:border-b-0 ${isMobile ? 'space-x-2 pb-2' : 'space-x-3 pb-3'}`}>
                     {/* Product Image */}
-                    <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+                    <div className={`${isMobile ? 'w-12 h-12' : 'w-16 h-16'} rounded-lg overflow-hidden flex-shrink-0 bg-gray-100`}>
                       <img 
                         src={item.productImage}
                         alt={item.productName}
@@ -525,50 +530,83 @@ export default function CheckoutPage() {
                       />
                       {/* Fallback placeholder */}
                       <div className="hidden w-full h-full flex items-center justify-center">
-                        <span className="text-2xl font-serif font-bold text-gray-400">
+                        <span className={`font-serif font-bold text-gray-400 ${isMobile ? 'text-lg' : 'text-2xl'}`}>
                           {item.productName.charAt(0)}
                         </span>
                       </div>
                     </div>
                     
                     {/* Product Details */}
-                    <div className="flex-1">
-                      <h3 className="font-medium text-sm">{item.productName}</h3>
-                      <p className="text-terracotta font-bold">₹{item.priceAtTime.toLocaleString()}</p>
+                    <div className="flex-1 min-w-0">
+                      <h3 className={`font-medium truncate ${isMobile ? 'text-xs' : 'text-sm'}`}>{item.productName}</h3>
+                      <p className={`text-terracotta font-bold ${isMobile ? 'text-xs' : ''}`}>₹{item.priceAtTime.toLocaleString()}</p>
+                      {!isMobile && (
+                        <p className="text-xs text-muted-foreground">Qty: {item.quantity}</p>
+                      )}
                     </div>
                     
-                    {/* Quantity Controls */}
-                    <div className="flex items-center space-x-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
-                        className="h-8 w-8 p-0"
-                        disabled={isLoading}
-                      >
-                        <Minus className="w-3 h-3" />
-                      </Button>
-                      <span className="w-8 text-center font-medium">{item.quantity}</span>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
-                        className="h-8 w-8 p-0"
-                        disabled={isLoading}
-                      >
-                        <Plus className="w-3 h-3" />
-                      </Button>
-                    </div>
-                    
-                    {/* Line Total */}
-                    <div className="text-right">
-                      <p className="font-bold">₹{(item.priceAtTime * item.quantity).toLocaleString()}</p>
-                    </div>
+                    {/* Quantity Controls - Mobile Vertical Layout */}
+                    {isMobile ? (
+                      <div className="flex flex-col items-center space-y-1">
+                        <div className="flex items-center space-x-1">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
+                            className="h-5 w-5 p-0"
+                            disabled={isLoading}
+                          >
+                            <Minus className="w-2 h-2" />
+                          </Button>
+                          <span className="w-4 text-center text-xs font-medium">{item.quantity}</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
+                            className="h-5 w-5 p-0"
+                            disabled={isLoading}
+                          >
+                            <Plus className="w-2 h-2" />
+                          </Button>
+                        </div>
+                        <p className="text-xs font-bold text-center">₹{(item.priceAtTime * item.quantity).toLocaleString()}</p>
+                      </div>
+                    ) : (
+                      <>
+                        {/* Desktop Quantity Controls */}
+                        <div className="flex items-center space-x-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleQuantityChange(item.productId, item.quantity - 1)}
+                            className="h-8 w-8 p-0"
+                            disabled={isLoading}
+                          >
+                            <Minus className="w-3 h-3" />
+                          </Button>
+                          <span className="w-8 text-center font-medium">{item.quantity}</span>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleQuantityChange(item.productId, item.quantity + 1)}
+                            className="h-8 w-8 p-0"
+                            disabled={isLoading}
+                          >
+                            <Plus className="w-3 h-3" />
+                          </Button>
+                        </div>
+                        
+                        {/* Line Total */}
+                        <div className="text-right">
+                          <p className="font-bold">₹{(item.priceAtTime * item.quantity).toLocaleString()}</p>
+                        </div>
+                      </>
+                    )}
                   </div>
                 ))}
                 
                 {/* Pricing Breakdown */}
-                <div className="space-y-2 pt-4">
+                <div className={`${isMobile ? 'space-y-1 pt-2' : 'space-y-2 pt-3'}`}>
                   <div className="flex justify-between">
                     <span>Subtotal:</span>
                     <span>₹{subtotal.toLocaleString()}</span>
@@ -579,12 +617,12 @@ export default function CheckoutPage() {
                   </div>
                   
                   {/* Coupon Section */}
-                  <div className="border-t pt-4">
-                    <div className="flex items-center gap-2 mb-2">
+                  <div className={`border-t ${isMobile ? 'pt-2' : 'pt-3'}`}>
+                    <div className={`flex items-center gap-2 ${isMobile ? 'mb-1' : 'mb-2'}`}>
                       <Tag className="w-4 h-4" />
-                      <span className="font-medium">Have a coupon?</span>
+                      <span className={`font-medium ${isMobile ? 'text-sm' : ''}`}>Have a coupon?</span>
                     </div>
-                    <div className="flex gap-2">
+                    <div className={`flex ${isMobile ? 'gap-1' : 'gap-2'}`}>
                       <Input
                         placeholder="Enter coupon code"
                         value={couponCode}
@@ -592,12 +630,13 @@ export default function CheckoutPage() {
                           setCouponCode(e.target.value);
                           setCouponError('');
                         }}
-                        className={couponError ? 'border-red-500' : ''}
+                        className={`${couponError ? 'border-red-500' : ''} ${isMobile ? 'h-8 text-sm' : ''}`}
                       />
                       <Button 
                         variant="outline" 
                         onClick={handleApplyCoupon}
                         disabled={!couponCode.trim()}
+                        className={isMobile ? 'h-8 px-3 text-sm' : ''}
                       >
                         Apply
                       </Button>
@@ -618,7 +657,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Checkout Form - Right Side */}
-          <div className="space-y-6">
+          <div className={isMobile ? 'space-y-3' : 'space-y-4'}>
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -626,32 +665,34 @@ export default function CheckoutPage() {
                   Shipping Information
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <CardContent className={`${isMobile ? 'space-y-2' : 'space-y-3'}`}>
+                <div className={`grid grid-cols-2 ${isMobile ? 'gap-2' : 'gap-3'}`}>
                   <div>
-                    <Label htmlFor="firstName">First Name *</Label>
+                    <Label htmlFor="firstName" className={isMobile ? 'text-sm' : ''}>First Name *</Label>
                     <Input
                       id="firstName"
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
                       placeholder="Enter first name"
+                      className={isMobile ? 'h-8 text-sm' : ''}
                     />
                   </div>
                   <div>
-                    <Label htmlFor="lastName">Last Name *</Label>
+                    <Label htmlFor="lastName" className={isMobile ? 'text-sm' : ''}>Last Name *</Label>
                     <Input
                       id="lastName"
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
                       placeholder="Enter last name"
+                      className={isMobile ? 'h-8 text-sm' : ''}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="email">Email Address *</Label>
+                  <Label htmlFor="email" className={isMobile ? 'text-sm' : ''}>Email Address *</Label>
                   <div className="relative">
                     <Mail className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                     <Input

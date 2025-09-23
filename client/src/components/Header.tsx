@@ -450,19 +450,22 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                 <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
                 <h3 className="text-lg font-medium mb-2">Your cart is empty</h3>
                 <p className="text-muted-foreground mb-6">Let's fill it with beautiful furniture!</p>
-                <Button 
-                  onClick={handleContinueShopping}
-                  className="bg-terracotta hover:bg-terracotta-dark text-white"
-                >
-                  Continue Shopping
-                </Button>
+                {/* Continue Shopping - Hidden on mobile */}
+                {!isMobile && (
+                  <Button 
+                    onClick={handleContinueShopping}
+                    className="bg-terracotta hover:bg-terracotta-dark text-white"
+                  >
+                    Continue Shopping
+                  </Button>
+                )}
               </div>
             ) : (
               <div className="space-y-4">
                 {cartItems.map((item) => (
-                  <div key={item.productId} className="flex items-center space-x-4 border-b pb-4">
+                  <div key={item.productId} className={`flex items-center border-b pb-4 ${isMobile ? 'space-x-2' : 'space-x-4'}`}>
                     {/* Product Image */}
-                    <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className={`${isMobile ? 'w-12 h-12' : 'w-20 h-20'} rounded-lg overflow-hidden flex-shrink-0`}>
                       <img 
                         src={item.productImage} 
                         alt={item.productName}
@@ -471,45 +474,47 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                     </div>
                     
                     {/* Product Details */}
-                    <div className="flex-1">
-                      <h3 className="font-medium">{item.productName}</h3>
-                      <p className="text-lg font-bold text-terracotta">
+                    <div className="flex-1 min-w-0">
+                      <h3 className={`font-medium truncate ${isMobile ? 'text-sm' : ''}`}>{item.productName}</h3>
+                      <p className={`font-bold text-terracotta ${isMobile ? 'text-sm' : 'text-lg'}`}>
                         ₹{(item.priceAtTime * item.quantity).toLocaleString()}
                       </p>
-                      <p className="text-xs text-muted-foreground">
-                        Price when added: ₹{item.priceAtTime.toLocaleString()}
-                      </p>
+                      {!isMobile && (
+                        <p className="text-xs text-muted-foreground">
+                          Price when added: ₹{item.priceAtTime.toLocaleString()}
+                        </p>
+                      )}
                     </div>
                     
                     {/* Quantity Controls */}
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1 flex-shrink-0">
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => updateQuantity(item.productId, item.quantity - 1)}
-                        className="h-8 w-8 p-0"
+                        className={`p-0 ${isMobile ? 'h-6 w-6' : 'h-8 w-8'}`}
                         disabled={isLoading}
                       >
-                        <Minus className="w-3 h-3" />
+                        <Minus className={`${isMobile ? 'w-2 h-2' : 'w-3 h-3'}`} />
                       </Button>
-                      <span className="w-8 text-center font-medium">{item.quantity}</span>
+                      <span className={`text-center font-medium ${isMobile ? 'w-6 text-xs' : 'w-8'}`}>{item.quantity}</span>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                        className="h-8 w-8 p-0"
+                        className={`p-0 ${isMobile ? 'h-6 w-6' : 'h-8 w-8'}`}
                         disabled={isLoading}
                       >
-                        <Plus className="w-3 h-3" />
+                        <Plus className={`${isMobile ? 'w-2 h-2' : 'w-3 h-3'}`} />
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => removeFromCart(item.productId)}
-                        className="ml-2 text-red-500 hover:text-red-700"
+                        className={`text-red-500 hover:text-red-700 ${isMobile ? 'ml-1 h-6 w-6 p-0' : 'ml-2'}`}
                         disabled={isLoading}
                       >
-                        <X className="w-4 h-4" />
+                        <X className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
                       </Button>
                     </div>
                   </div>
@@ -524,20 +529,23 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex space-x-4 pt-4">
-                  <Button 
-                    variant="outline" 
-                    className="flex-1"
-                    onClick={handleContinueShopping}
-                    disabled={isLoading}
-                  >
-                    Continue Shopping
-                  </Button>
+                <div className={`flex pt-4 ${isMobile ? 'space-x-3' : 'space-x-4'}`}>
+                  {/* Continue Shopping - Hidden on mobile */}
+                  {!isMobile && (
+                    <Button 
+                      variant="outline" 
+                      className="flex-1"
+                      onClick={handleContinueShopping}
+                      disabled={isLoading}
+                    >
+                      Continue Shopping
+                    </Button>
+                  )}
                   <Button 
                     variant="outline" 
                     onClick={() => clearCart()}
                     disabled={isLoading || cartItems.length === 0}
-                    className="text-red-600 hover:text-red-700"
+                    className={`text-red-600 hover:text-red-700 ${isMobile ? 'flex-1' : ''}`}
                   >
                     Clear Cart
                   </Button>
