@@ -314,7 +314,7 @@ export default function ShopPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 9 }).map((_, i) => (
                   <Card key={i} className="overflow-hidden">
-                    <Skeleton className="aspect-square w-full" />
+                    <Skeleton className="aspect-[4/3] sm:aspect-square w-full" />
                     <CardContent className="p-4 space-y-2">
                       <Skeleton className="h-4 w-3/4" />
                       <Skeleton className="h-4 w-1/2" />
@@ -854,7 +854,7 @@ export default function ShopPage() {
                   data-testid={`product-card-${product._id}`}
                 >
                   {/* Product Image */}
-                  <div className="aspect-square overflow-hidden relative bg-gradient-to-br from-gray-100 to-gray-200">
+                  <div className="aspect-[4/3] sm:aspect-square overflow-hidden relative bg-gradient-to-br from-gray-100 to-gray-200">
                     <img 
                       src={getProductImageUrl(product, 0)}
                       alt={product.Product_Name}
