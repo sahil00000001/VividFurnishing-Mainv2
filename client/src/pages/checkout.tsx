@@ -500,7 +500,7 @@ export default function CheckoutPage() {
           )}
         </div>
 
-        <div className={`grid lg:grid-cols-2 ${isMobile ? 'gap-4' : 'gap-6'}`}>
+        <div className="max-w-5xl mx-auto space-y-4 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-8">
           {/* Order Summary - Left Side */}
           <div className={isMobile ? 'space-y-3' : 'space-y-4'}>
             <Card>
@@ -537,7 +537,7 @@ export default function CheckoutPage() {
                     </div>
                     
                     {/* Product Details */}
-                    <div className="flex-1 min-w-0">
+                    <div className="w-32 min-w-0">
                       <h3 className={`font-medium truncate ${isMobile ? 'text-xs' : 'text-sm'}`}>{item.productName}</h3>
                       <p className={`text-terracotta font-bold ${isMobile ? 'text-xs' : ''}`}>₹{item.priceAtTime.toLocaleString()}</p>
                       {!isMobile && (
@@ -607,11 +607,11 @@ export default function CheckoutPage() {
                 
                 {/* Pricing Breakdown */}
                 <div className={`${isMobile ? 'space-y-1 pt-2' : 'space-y-2 pt-3'}`}>
-                  <div className="flex justify-between">
+                  <div className="flex justify-start">
                     <span>Subtotal:</span>
                     <span>₹{subtotal.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex justify-start">
                     <span>Shipping:</span>
                     <span className="text-green-600 font-medium">Free</span>
                   </div>
@@ -647,7 +647,7 @@ export default function CheckoutPage() {
                   </div>
                   
                   <Separator />
-                  <div className="flex justify-between text-lg font-bold">
+                  <div className="flex justify-start text-lg font-bold">
                     <span>Total:</span>
                     <span className="text-terracotta">₹{totalAmount.toLocaleString()}</span>
                   </div>

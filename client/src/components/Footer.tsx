@@ -146,13 +146,13 @@ export function Footer() {
             </div>
 
             {/* Newsletter */}
-            <div className="space-y-6 text-center">
+            <div className="space-y-6 text-right">
               <h4 className="font-semibold text-lg" data-testid="footer-newsletter-title">Newsletter</h4>
               
               {/* Newsletter Signup */}
               <div className="space-y-3">
-                <h5 className="font-medium text-center" data-testid="footer-newsletter-title">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</h5>
-                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 justify-center items-center">
+                <h5 className="font-medium text-right" data-testid="footer-newsletter-title">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</h5>
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 justify-end items-end">
                   <Input
                     type="email"
                     placeholder="Enter your email"
