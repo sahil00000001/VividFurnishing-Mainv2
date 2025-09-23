@@ -352,7 +352,7 @@ export default function ShopPage() {
 
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Use shared header component */}
       <Header className="relative bg-white border-b shadow-sm" variant="solid" />
 
@@ -376,7 +376,7 @@ export default function ShopPage() {
           <p className="text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed mb-6" data-testid="hero-subtitle">
             Explore our entire world of furnishings. From daily essentials to statement pieces, discover luxury made affordable.
           </p>
-          <div className="flex items-center justify-center space-x-6 text-sm">
+          <div className="flex items-center justify-center flex-wrap gap-x-6 gap-y-2 text-sm">
             <div className="flex items-center">
               <Shield className="w-4 h-4 mr-1" />
               <span>Premium Quality</span>
@@ -393,7 +393,7 @@ export default function ShopPage() {
         </div>
       </section>
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="max-w-screen-xl mx-auto px-3 sm:px-6 py-6 sm:py-8 overflow-x-hidden">
         {/* Search Bar */}
         <div className="mb-8">
           <div className="relative max-w-md mx-auto">
@@ -836,8 +836,8 @@ export default function ShopPage() {
             
             {/* Product Grid */}
             <div className={`
-              grid gap-4 md:gap-6 transition-all duration-300
-              ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}
+              grid gap-2 sm:gap-4 md:gap-6 transition-all duration-300
+              ${viewMode === "grid" ? "grid-cols-1 min-[380px]:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}
             `}>
               {filteredProducts.map((product, index) => (
                 <Card 
@@ -942,59 +942,44 @@ export default function ShopPage() {
                   </div>
 
                   {/* Product Details */}
-                  <CardContent className="p-4 sm:p-6">
-                    <div className="mb-3 sm:mb-4">
-                      <h3 className="font-serif text-lg sm:text-xl font-bold group-hover:text-terracotta transition-colors duration-200 mb-2 line-clamp-2">
+                  <CardContent className="p-2 sm:p-4 md:p-6">
+                    <div className="mb-2 sm:mb-3">
+                      <h3 className="font-serif text-sm sm:text-lg font-bold group-hover:text-terracotta transition-colors duration-200 mb-1 sm:mb-2 line-clamp-2">
                         {product.Product_Name}
                       </h3>
-                      <div className="flex flex-wrap gap-1 mb-3">
+                      {/* Hide badges on mobile to save space */}
+                      <div className="hidden sm:flex flex-wrap gap-1 mb-3">
                         <Badge variant="outline" className="text-xs px-1.5 py-0.5 h-5">
                           {product.Category}
                         </Badge>
-                        {/* Show fewer badges on mobile */}
-                        <div className="hidden sm:contents">
-                          {product.Sub_Category.slice(0, 2).map((subCat) => (
-                            <Badge key={subCat} variant="outline" className="text-xs px-1.5 py-0.5 h-5">
-                              {subCat}
-                            </Badge>
-                          ))}
-                        </div>
-                        <div className="sm:hidden">
-                          {product.Sub_Category.slice(0, 1).map((subCat) => (
-                            <Badge key={subCat} variant="outline" className="text-xs px-1.5 py-0.5 h-5">
-                              {subCat}
-                            </Badge>
-                          ))}
-                        </div>
+                        {product.Sub_Category.slice(0, 1).map((subCat) => (
+                          <Badge key={subCat} variant="outline" className="text-xs px-1.5 py-0.5 h-5">
+                            {subCat}
+                          </Badge>
+                        ))}
                       </div>
-                      {/* Simplified details on mobile */}
-                      <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground mb-3">
+                      {/* Very minimal details on mobile */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm text-muted-foreground mb-2 sm:mb-3">
                         <div className="flex items-center">
                           <div 
-                            className="w-3 h-3 rounded-full mr-2 border"
+                            className="w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-1 sm:mr-2 border"
                             style={{ backgroundColor: colorDisplay[product.Color] || '#6B7280' }}
                           />
                           <span className="truncate">{product.Color}</span>
                         </div>
-                        <div className="truncate">{product.Size}</div>
-                        <div className="hidden sm:block truncate">{product.Fabric}</div>
-                        <div className="hidden sm:block">{product.Thread_Count} TC</div>
+                        <div className="hidden sm:block truncate">{product.Size}</div>
                       </div>
                     </div>
 
                     {/* Price */}
                     <div className="flex items-center justify-between">
                       <div className="flex flex-col">
-                        <span className="text-xl sm:text-2xl font-bold text-terracotta">
+                        <span className="text-base sm:text-xl md:text-2xl font-bold text-terracotta">
                           {formatPrice(product.Selling_Price)}
                         </span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-muted-foreground hidden sm:block">
                           {product.Net_Qty} piece set
                         </span>
-                      </div>
-                      <div className="text-right hidden sm:block">
-                        <div className="text-sm text-muted-foreground">Dimensions</div>
-                        <div className="text-xs font-medium">{product.Dimensions}</div>
                       </div>
                     </div>
                   </CardContent>
