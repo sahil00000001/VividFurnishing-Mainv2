@@ -836,8 +836,8 @@ export default function ShopPage() {
             
             {/* Product Grid */}
             <div className={`
-              grid gap-3 md:gap-6 transition-all duration-300
-              ${viewMode === "grid" ? "grid-cols-2 md:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}
+              grid gap-4 md:gap-6 transition-all duration-300
+              ${viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}
             `}>
               {filteredProducts.map((product, index) => (
                 <Card 
@@ -942,46 +942,57 @@ export default function ShopPage() {
                   </div>
 
                   {/* Product Details */}
-                  <CardContent className="p-6">
-                    <div className="mb-4">
-                      <h3 className="font-serif text-xl font-bold group-hover:text-terracotta transition-colors duration-200 mb-2">
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="mb-3 sm:mb-4">
+                      <h3 className="font-serif text-lg sm:text-xl font-bold group-hover:text-terracotta transition-colors duration-200 mb-2 line-clamp-2">
                         {product.Product_Name}
                       </h3>
                       <div className="flex flex-wrap gap-1 mb-3">
                         <Badge variant="outline" className="text-xs px-1.5 py-0.5 h-5">
                           {product.Category}
                         </Badge>
-                        {product.Sub_Category.map((subCat) => (
-                          <Badge key={subCat} variant="outline" className="text-xs px-1.5 py-0.5 h-5">
-                            {subCat}
-                          </Badge>
-                        ))}
+                        {/* Show fewer badges on mobile */}
+                        <div className="hidden sm:contents">
+                          {product.Sub_Category.slice(0, 2).map((subCat) => (
+                            <Badge key={subCat} variant="outline" className="text-xs px-1.5 py-0.5 h-5">
+                              {subCat}
+                            </Badge>
+                          ))}
+                        </div>
+                        <div className="sm:hidden">
+                          {product.Sub_Category.slice(0, 1).map((subCat) => (
+                            <Badge key={subCat} variant="outline" className="text-xs px-1.5 py-0.5 h-5">
+                              {subCat}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
+                      {/* Simplified details on mobile */}
                       <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground mb-3">
                         <div className="flex items-center">
                           <div 
                             className="w-3 h-3 rounded-full mr-2 border"
                             style={{ backgroundColor: colorDisplay[product.Color] || '#6B7280' }}
                           />
-                          {product.Color}
+                          <span className="truncate">{product.Color}</span>
                         </div>
-                        <div>{product.Fabric}</div>
-                        <div>{product.Size}</div>
-                        <div>{product.Thread_Count} TC</div>
+                        <div className="truncate">{product.Size}</div>
+                        <div className="hidden sm:block truncate">{product.Fabric}</div>
+                        <div className="hidden sm:block">{product.Thread_Count} TC</div>
                       </div>
                     </div>
 
                     {/* Price */}
                     <div className="flex items-center justify-between">
                       <div className="flex flex-col">
-                        <span className="text-2xl font-bold text-terracotta">
+                        <span className="text-xl sm:text-2xl font-bold text-terracotta">
                           {formatPrice(product.Selling_Price)}
                         </span>
                         <span className="text-xs text-muted-foreground">
                           {product.Net_Qty} piece set
                         </span>
                       </div>
-                      <div className="text-right">
+                      <div className="text-right hidden sm:block">
                         <div className="text-sm text-muted-foreground">Dimensions</div>
                         <div className="text-xs font-medium">{product.Dimensions}</div>
                       </div>
