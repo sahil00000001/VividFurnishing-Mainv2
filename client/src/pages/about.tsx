@@ -190,7 +190,7 @@ export default function About() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-[65vh] sm:h-screen flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -201,16 +201,16 @@ export default function About() {
         </div>
         
         <div className="relative z-10 text-center text-white px-6 max-w-4xl">
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-wide animate-fade-in-up">
+          <h1 className="font-serif text-2xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-3 sm:mb-6 tracking-wide animate-fade-in-up">
             OUR <span className="text-cream italic font-script">story</span>
           </h1>
-          <p className="text-xl md:text-2xl font-light mb-8 tracking-wider animate-fade-in-up animation-delay-300">
+          <p className="text-sm sm:text-xl md:text-2xl font-light mb-4 sm:mb-8 tracking-wider animate-fade-in-up animation-delay-300">
             Because a home is built not just with walls, but with warmth.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-600">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center animate-fade-in-up animation-delay-600">
             <Button 
               size="lg"
-              className="bg-terracotta text-white px-8 py-4 text-lg tracking-wide hover:bg-terracotta-dark transition-all duration-300 hover:scale-105"
+              className="bg-terracotta text-white px-4 py-2 text-xs sm:px-8 sm:py-4 sm:text-lg tracking-wide hover:bg-terracotta-dark transition-all duration-300 hover:scale-105"
               onClick={() => window.open('https://www.instagram.com/sm_furnishings/', '_blank')}
             >
               Join Our Journey
@@ -218,7 +218,7 @@ export default function About() {
             <Button 
               variant="outline" 
               size="lg"
-              className="border-2 border-white bg-transparent text-white font-semibold px-8 py-4 text-lg tracking-wide hover:bg-white hover:text-terracotta transition-all duration-300"
+              className="border-2 border-white bg-transparent text-white font-semibold px-4 py-2 text-xs sm:px-8 sm:py-4 sm:text-lg tracking-wide hover:bg-white hover:text-terracotta transition-all duration-300"
               onClick={() => window.location.href = '/shop'}
             >
               Shop Now
@@ -231,10 +231,10 @@ export default function About() {
       <section id="timeline" className="py-20 bg-background">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h2 className="font-serif text-lg sm:text-4xl md:text-5xl font-bold text-foreground mb-2 sm:mb-4">
               Our <span className="text-terracotta">Journey</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xs sm:text-xl text-muted-foreground max-w-2xl mx-auto">
               From family values to timeless furnishings — this is just the beginning of SM Furnishings.
             </p>
           </div>
@@ -264,11 +264,11 @@ export default function About() {
                       }`}
                       style={{ transitionDelay: `${index * 200}ms` }}
                     >
-                      <Card className="p-6 hover:shadow-lg transition-shadow duration-300">
+                      <Card className="p-3 sm:p-6 hover:shadow-lg transition-shadow duration-300">
                         <CardContent className="p-0">
-                          <div className="text-terracotta font-bold text-2xl mb-2">{item.year}</div>
-                          <h3 className="font-serif text-xl font-bold mb-2">{item.title}</h3>
-                          <p className="text-muted-foreground">{item.description}</p>
+                          <div className="text-terracotta font-bold text-sm sm:text-2xl mb-1 sm:mb-2">{item.year}</div>
+                          <h3 className="font-serif text-sm sm:text-xl font-bold mb-1 sm:mb-2">{item.title}</h3>
+                          <p className="text-xs sm:text-base text-muted-foreground">{item.description}</p>
                         </CardContent>
                       </Card>
                     </div>
@@ -295,14 +295,14 @@ export default function About() {
       <section id="why-shakuntala-manohar" className="py-20 bg-cream">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h2 className="font-serif text-[1.25rem] sm:text-4xl md:text-5xl font-bold text-foreground mb-2 sm:mb-4">
               Why <span className="text-terracotta">Shakuntala & Manohar?</span>
             </h2>
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="text-2xl md:text-3xl font-light text-foreground mb-8 leading-relaxed">
+            <div className="text-center mb-6 sm:mb-12">
+              <p className="text-sm sm:text-2xl md:text-3xl font-light text-foreground mb-1 sm:mb-8 leading-relaxed">
                 Our name isn't just a name — it's a promise.
               </p>
             </div>
@@ -313,11 +313,11 @@ export default function About() {
                   visibleSections.has('why-shakuntala-manohar') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                 }`}
               >
-                <div className="bg-terracotta text-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform duration-300">
-                  <Heart className="w-12 h-12" />
+                <div className="bg-terracotta text-white w-12 h-12 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-6 hover:scale-110 transition-transform duration-300">
+                  <Heart className="w-6 h-6 sm:w-12 sm:h-12" />
                 </div>
-                <h3 className="font-serif text-2xl font-bold mb-4 text-terracotta">Shakuntala</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <h3 className="font-serif text-sm sm:text-2xl font-bold mb-2 sm:mb-4 text-terracotta">Shakuntala</h3>
+                <p className="text-xs sm:text-lg text-muted-foreground leading-relaxed">
                   <span className="font-semibold">"The one protected by virtue"</span> — she embodied grace, warmth, and strength that turned every house into a home.
                 </p>
               </div>
@@ -328,11 +328,11 @@ export default function About() {
                 }`}
                 style={{ transitionDelay: '200ms' }}
               >
-                <div className="bg-terracotta text-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform duration-300">
-                  <Eye className="w-12 h-12" />
+                <div className="bg-terracotta text-white w-12 h-12 sm:w-24 sm:h-24 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-6 hover:scale-110 transition-transform duration-300">
+                  <Eye className="w-6 h-6 sm:w-12 sm:h-12" />
                 </div>
-                <h3 className="font-serif text-2xl font-bold mb-4 text-terracotta">Manohar</h3>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <h3 className="font-serif text-sm sm:text-2xl font-bold mb-2 sm:mb-4 text-terracotta">Manohar</h3>
+                <p className="text-xs sm:text-lg text-muted-foreground leading-relaxed">
                   <span className="font-semibold">"The one who captivates the heart"</span> — his eye for detail and love for quality touched everyone around him.
                 </p>
               </div>
@@ -344,7 +344,7 @@ export default function About() {
               }`}
               style={{ transitionDelay: '400ms' }}
             >
-              <p className="text-xl text-muted-foreground leading-relaxed font-medium">
+              <p className="text-xs sm:text-xl text-muted-foreground leading-relaxed font-medium">
                 Together, they are the soul of SM Furnishings — comfort that protects you, and beauty that captures your heart.
               </p>
             </div>
@@ -356,7 +356,7 @@ export default function About() {
       <section id="values" className="py-20 bg-gradient-to-br from-cream to-background">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h2 className="font-serif text-xl sm:text-4xl md:text-5xl font-bold text-foreground mb-2 sm:mb-4">
               Our <span className="text-terracotta">Foundation</span>
             </h2>
           </div>
@@ -367,11 +367,11 @@ export default function About() {
                 visibleSections.has('values') ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
               }`}
             >
-              <div className="bg-terracotta text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform duration-300">
-                <Target className="w-10 h-10" />
+              <div className="bg-terracotta text-white w-10 h-10 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-6 hover:scale-110 transition-transform duration-300">
+                <Target className="w-5 h-5 sm:w-10 sm:h-10" />
               </div>
-              <h3 className="font-serif text-2xl font-bold mb-4">Mission</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <h3 className="font-serif text-sm sm:text-2xl font-bold mb-2 sm:mb-4">Mission</h3>
+              <p className="text-xs sm:text-base text-muted-foreground leading-relaxed">
                 To make luxury furnishings accessible — blending timeless elegance with everyday comfort.
               </p>
             </div>
@@ -382,11 +382,11 @@ export default function About() {
               }`}
               style={{ transitionDelay: '200ms' }}
             >
-              <div className="bg-terracotta text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform duration-300">
-                <Eye className="w-10 h-10" />
+              <div className="bg-terracotta text-white w-10 h-10 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-6 hover:scale-110 transition-transform duration-300">
+                <Eye className="w-5 h-5 sm:w-10 sm:h-10" />
               </div>
-              <h3 className="font-serif text-2xl font-bold mb-4">Vision</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <h3 className="font-serif text-sm sm:text-2xl font-bold mb-2 sm:mb-4">Vision</h3>
+              <p className="text-xs sm:text-base text-muted-foreground leading-relaxed">
                 To become a household name in home furnishings by carrying forward a legacy rooted in love, quality, and trust.
               </p>
             </div>
@@ -397,11 +397,11 @@ export default function About() {
               }`}
               style={{ transitionDelay: '400ms' }}
             >
-              <div className="bg-terracotta text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 hover:scale-110 transition-transform duration-300">
-                <Heart className="w-10 h-10" />
+              <div className="bg-terracotta text-white w-10 h-10 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-6 hover:scale-110 transition-transform duration-300">
+                <Heart className="w-5 h-5 sm:w-10 sm:h-10" />
               </div>
-              <h3 className="font-serif text-2xl font-bold mb-4">Values</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <h3 className="font-serif text-sm sm:text-2xl font-bold mb-2 sm:mb-4">Values</h3>
+              <p className="text-xs sm:text-base text-muted-foreground leading-relaxed">
                 Heritage, affordability, and authenticity guide us — ensuring every piece feels personal, warm, and lasting.
               </p>
             </div>
@@ -481,7 +481,7 @@ export default function About() {
               <img 
                 src={differenceImage}
                 alt="Our Difference"
-                className="w-full h-96 object-cover rounded-lg shadow-xl"
+                className="w-full h-48 sm:h-96 object-cover rounded-lg shadow-xl"
               />
             </div>
             
@@ -491,10 +491,10 @@ export default function About() {
               }`}
             >
               <div>
-                <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4">
+                <h2 className="font-serif text-lg sm:text-4xl md:text-5xl font-bold text-foreground mb-2 sm:mb-4">
                   What Makes Us <span className="text-terracotta">Different</span>
                 </h2>
-                <p className="text-xl text-muted-foreground mb-8">
+                <p className="text-xs sm:text-xl text-muted-foreground mb-4 sm:mb-8">
                   Experience the SM Furnishings advantage
                 </p>
               </div>
@@ -508,8 +508,8 @@ export default function About() {
                     }`}
                     style={{ transitionDelay: `${index * 100 + 300}ms` }}
                   >
-                    <CheckCircle className="w-6 h-6 text-terracotta flex-shrink-0" />
-                    <span className="text-lg">{point}</span>
+                    <CheckCircle className="w-3 h-3 sm:w-6 sm:h-6 text-terracotta flex-shrink-0" />
+                    <span className="text-xs sm:text-lg">{point}</span>
                   </div>
                 ))}
               </div>

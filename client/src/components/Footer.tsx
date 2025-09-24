@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { submitNewsletter } from "@/lib/api";
-import smLogo from "@assets/2_1758536426953.png";
+import smLogo from "@assets/4_1758709631305.png";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -48,13 +48,13 @@ export function Footer() {
                 <img 
                   src={smLogo} 
                   alt="SM Furnishings Logo" 
-                  className="w-12 h-12 object-contain"
+                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
                 />
-                <h3 className="text-2xl font-bold tracking-wider" style={{ fontFamily: '"Fiona", serif' }} data-testid="footer-brand">
+                <h3 className="text-lg sm:text-2xl font-bold tracking-wider" style={{ fontFamily: '"Fiona", serif' }} data-testid="footer-brand">
                   SM FURNISHINGS
                 </h3>
               </div>
-              <p className="text-cream leading-relaxed" data-testid="footer-description">
+              <p className="text-xs sm:text-base text-cream leading-relaxed" data-testid="footer-description">
                 SM Furnishings is more than a home décor brand — it's a family legacy. Inspired by Shakuntala & Manohar's values of love, comfort, and quality, we design luxury that feels personal, timeless, and affordable.
               </p>
               <div className="flex space-x-4">
@@ -82,15 +82,15 @@ export function Footer() {
             </div>
 
             {/* Quick Links & Contact */}
-            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="lg:col-span-2 grid grid-cols-2 gap-4 md:gap-8">
               {/* Quick Links */}
               <div className="space-y-6">
-                <h4 className="font-semibold text-lg" data-testid="footer-links-title">Quick Links</h4>
+                <h4 className="font-semibold text-sm sm:text-lg" data-testid="footer-links-title">Quick Links</h4>
                 <ul className="space-y-3">
                   <li>
                     <Link 
                       href="/" 
-                      className="text-cream hover:text-white transition-colors duration-200"
+                      className="text-xs sm:text-base text-cream hover:text-white transition-colors duration-200"
                       data-testid="footer-link-home"
                     >
                       Home
@@ -99,7 +99,7 @@ export function Footer() {
                   <li>
                     <Link 
                       href="/shop" 
-                      className="text-cream hover:text-white transition-colors duration-200"
+                      className="text-xs sm:text-base text-cream hover:text-white transition-colors duration-200"
                       data-testid="footer-link-shop"
                     >
                       Shop
@@ -108,7 +108,7 @@ export function Footer() {
                   <li>
                     <Link 
                       href="/about" 
-                      className="text-cream hover:text-white transition-colors duration-200"
+                      className="text-xs sm:text-base text-cream hover:text-white transition-colors duration-200"
                       data-testid="footer-link-about"
                     >
                       About Us
@@ -117,7 +117,7 @@ export function Footer() {
                   <li>
                     <Link 
                       href="/faqs" 
-                      className="text-cream hover:text-white transition-colors duration-200"
+                      className="text-xs sm:text-base text-cream hover:text-white transition-colors duration-200"
                       data-testid="footer-link-faqs"
                     >
                       FAQs
@@ -128,15 +128,15 @@ export function Footer() {
 
               {/* Contact */}
               <div className="space-y-6">
-                <h4 className="font-semibold text-lg" data-testid="footer-contact-title">Contact Us</h4>
+                <h4 className="font-semibold text-sm sm:text-lg" data-testid="footer-contact-title">Contact Us</h4>
                 <div className="space-y-3">
                   <div className="flex items-center space-x-3 text-cream">
-                    <Mail className="w-4 h-4" />
-                    <span data-testid="footer-email">Info@smfurnishings.com</span>
+                    <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="text-xs sm:text-base" data-testid="footer-email">Info@smfurnishings.com</span>
                   </div>
                   <div className="flex items-start space-x-3 text-cream">
-                    <MapPin className="w-4 h-4 mt-1" />
-                    <span data-testid="footer-address">
+                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mt-1" />
+                    <span className="text-xs sm:text-base" data-testid="footer-address">
                       233, Model Town, Tosham Road<br />
                       Hisar, 1250001
                     </span>
@@ -147,11 +147,11 @@ export function Footer() {
 
             {/* Newsletter */}
             <div className="space-y-6 text-right">
-              <h4 className="font-semibold text-lg" data-testid="footer-newsletter-title">Newsletter</h4>
+              <h4 className="font-semibold text-sm sm:text-lg" data-testid="footer-newsletter-title">Newsletter</h4>
               
               {/* Newsletter Signup */}
               <div className="space-y-3">
-                <h5 className="font-medium text-right" data-testid="footer-newsletter-title">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</h5>
+                <h5 className="font-medium text-xs sm:text-base text-right" data-testid="footer-newsletter-title">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</h5>
                 <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 justify-end items-end">
                   <Input
                     type="email"
@@ -178,10 +178,10 @@ export function Footer() {
 
           {/* Bottom Footer */}
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="text-cream text-sm" data-testid="footer-copyright">
+            <div className="text-cream text-xs sm:text-sm" data-testid="footer-copyright">
               © 2025 SM Furnishings. All rights reserved.
             </div>
-            <div className="flex space-x-6 text-sm">
+            <div className="flex space-x-6 text-xs sm:text-sm">
               <Link 
                 href="/privacy" 
                 className="text-cream hover:text-white transition-colors duration-200"
