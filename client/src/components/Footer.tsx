@@ -84,7 +84,7 @@ export function Footer() {
             {/* Quick Links & Contact */}
             <div className="lg:col-span-2 grid grid-cols-2 gap-4 md:gap-8">
               {/* Quick Links */}
-              <div className="space-y-6">
+              <div className="space-y-6 ml-4 md:ml-8">
                 <h4 className="font-semibold text-sm sm:text-lg" data-testid="footer-links-title">Quick Links</h4>
                 <ul className="space-y-3">
                   <li>
@@ -138,7 +138,7 @@ export function Footer() {
                     <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mt-1" />
                     <span className="text-xs sm:text-base text-center" data-testid="footer-address">
                       233, Model Town, Tosham Road<br />
-                      Hisar, 1250001
+                      Hisar, 125001
                     </span>
                   </div>
                 </div>
@@ -153,7 +153,7 @@ export function Footer() {
                       placeholder="Enter your email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="bg-cream text-foreground border-cream-dark placeholder:text-muted-foreground w-full max-w-xs"
+                      className="bg-cream text-foreground border-cream-dark placeholder:text-muted-foreground text-center w-full max-w-xs"
                       data-testid="footer-newsletter-input"
                     />
                     <Button

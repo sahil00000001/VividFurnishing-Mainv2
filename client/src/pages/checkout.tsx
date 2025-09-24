@@ -807,9 +807,6 @@ export default function CheckoutPage() {
                       <p className="font-medium">Razorpay</p>
                       <p className="text-sm text-muted-foreground">UPI, Cards, Net Banking, Wallets</p>
                     </div>
-                    <div className="ml-auto">
-                      <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Available</span>
-                    </div>
                   </Button>
                 </div>
 
@@ -827,9 +824,6 @@ export default function CheckoutPage() {
                     <div className="text-left">
                       <p className="font-medium">Cash on Delivery (COD)</p>
                       <p className="text-sm text-muted-foreground">Pay when your order is delivered</p>
-                    </div>
-                    <div className="ml-auto">
-                      <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Available</span>
                     </div>
                   </Button>
                 </div>

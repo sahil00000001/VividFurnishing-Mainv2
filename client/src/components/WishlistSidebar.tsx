@@ -49,9 +49,12 @@ export function WishlistSidebar() {
       
       await addToCart(productId, 1);
       
+      // Automatically remove item from wishlist after successfully adding to cart
+      removeFromWishlist(productId);
+      
       toast({
         title: "Added to cart",
-        description: `${item.product.Product_Name} has been added to your cart`,
+        description: `${item.product.Product_Name} has been moved to your cart`,
       });
     } catch (error) {
       toast({

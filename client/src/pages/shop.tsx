@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
@@ -24,7 +23,6 @@ import {
   Filter, 
   Grid3X3, 
   List, 
-  Search,
   Package,
   Sparkles,
   Truck,
@@ -394,19 +392,6 @@ export default function ShopPage() {
       </section>
 
       <div className="max-w-screen-xl mx-auto px-3 sm:px-6 py-6 sm:py-8 overflow-x-hidden">
-        {/* Search Bar */}
-        <div className="mb-8">
-          <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              type="text"
-              placeholder="Search products, collections, or colors..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-3 w-full rounded-full border-2 focus:border-terracotta transition-colors"
-            />
-          </div>
-        </div>
         
         {/* Mobile Toolbar */}
         {isMobile && (
@@ -848,7 +833,8 @@ export default function ShopPage() {
                     ${animatingProducts.has(product._id) ? 'animate-pulse' : ''}
                   `}
                   style={{
-                    animationDelay: `${index * 0.1}s`
+                    animationDelay: `${index * 0.1}s`,
+                    width: '93vw !important'
                   }}
                   onClick={() => setLocation(`/product/${product._id}`)}
                   data-testid={`product-card-${product._id}`}
