@@ -365,11 +365,11 @@ export default function ShopPage() {
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         <div className="relative z-10 text-center text-white px-4">
           <div className="flex items-center justify-center mb-4">
-            <Sparkles className="w-6 h-6 mr-2 text-yellow-300" />
+            
             <h1 className="font-serif text-3xl md:text-5xl font-bold" data-testid="hero-title">
               COMPLETE YOUR SPACE
             </h1>
-            <Sparkles className="w-6 h-6 ml-2 text-yellow-300" />
+            
           </div>
           <p className="text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed mb-6" data-testid="hero-subtitle">
             Explore our entire world of furnishings. From daily essentials to statement pieces, discover luxury made affordable.
