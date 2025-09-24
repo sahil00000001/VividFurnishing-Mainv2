@@ -431,8 +431,8 @@ export default function ProductPage() {
                 <div className="flex items-start space-x-3">
                   <Shield className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" />
                   <div>
-                    <div className="font-medium text-sm">2 Year Warranty</div>
-                    <div className="text-xs text-muted-foreground">Comprehensive coverage</div>
+                    <div className="font-medium text-sm">Easy on pocket</div>
+                    <div className="text-xs text-muted-foreground">Affordable luxury pricing</div>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">

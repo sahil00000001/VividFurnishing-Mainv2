@@ -379,15 +379,15 @@ export default function ShopPage() {
           <div className="flex items-center justify-center flex-wrap gap-x-6 gap-y-2 text-sm">
             <div className="flex items-center">
               <Shield className="w-4 h-4 mr-1" />
-              <span>Premium Quality</span>
+              <span>Crafted with finest materials</span>
             </div>
             <div className="flex items-center">
               <Truck className="w-4 h-4 mr-1" />
-              <span>Free Shipping</span>
+              <span>Free Delivery</span>
             </div>
             <div className="flex items-center">
               <Award className="w-4 h-4 mr-1" />
-              <span>100% Cotton</span>
+              <span>Easy on pocket</span>
             </div>
           </div>
         </div>

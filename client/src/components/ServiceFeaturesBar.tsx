@@ -12,20 +12,20 @@ const features: Feature[] = [
   {
     id: 1,
     icon: Globe,
-    title: "Free Shipping",
-    description: "Free shipping for order above ₹3000"
+    title: "Free Delivery",
+    description: "On orders above ₹3,000"
   },
   {
     id: 2,
     icon: Wallet,
-    title: "Flexible Prices",
-    description: "Easy & secure options"
+    title: "Easy on pocket",
+    description: "Affordable luxury pricing"
   },
   {
     id: 3,
     icon: Headphones,
-    title: "24 x 7 Support",
-    description: "We support online all days"
+    title: "Easy Returns",
+    description: "7-day return policy"
   }
 ];
 

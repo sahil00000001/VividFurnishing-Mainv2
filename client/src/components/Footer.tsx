@@ -126,49 +126,45 @@ export function Footer() {
                 </ul>
               </div>
 
-              {/* Contact */}
-              <div className="space-y-6">
+              {/* Contact & Newsletter */}
+              <div className="space-y-6 text-center">
                 <h4 className="font-semibold text-sm sm:text-lg" data-testid="footer-contact-title">Contact Us</h4>
                 <div className="space-y-3">
-                  <div className="flex items-center space-x-3 text-cream">
+                  <div className="flex items-center justify-center space-x-3 text-cream">
                     <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span className="text-xs sm:text-base" data-testid="footer-email">Info@smfurnishings.com</span>
                   </div>
-                  <div className="flex items-start space-x-3 text-cream">
+                  <div className="flex items-start justify-center space-x-3 text-cream">
                     <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mt-1" />
-                    <span className="text-xs sm:text-base" data-testid="footer-address">
+                    <span className="text-xs sm:text-base text-center" data-testid="footer-address">
                       233, Model Town, Tosham Road<br />
                       Hisar, 1250001
                     </span>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Newsletter */}
-            <div className="space-y-6 text-right">
-              <h4 className="font-semibold text-sm sm:text-lg" data-testid="footer-newsletter-title">Newsletter</h4>
-              
-              {/* Newsletter Signup */}
-              <div className="space-y-3">
-                <h5 className="font-medium text-xs sm:text-base text-right" data-testid="footer-newsletter-title">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</h5>
-                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 justify-end items-end">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-cream text-foreground border-cream-dark placeholder:text-muted-foreground w-full sm:w-auto"
-                    data-testid="footer-newsletter-input"
-                  />
-                  <Button
-                    onClick={handleNewsletterSubmit}
-                    disabled={isSubmitting || !email.trim()}
-                    className="bg-cream text-terracotta hover:bg-cream-dark transition-colors duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
-                    data-testid="footer-newsletter-button"
-                  >
-                    {isSubmitting ? 'Subscribing...' : 'Subscribe'}
-                  </Button>
+                {/* Newsletter Section under Contact Us */}
+                <div className="space-y-4 pt-6 border-t border-cream-dark/30">
+                  <h5 className="font-semibold text-sm sm:text-lg">Newsletter</h5>
+                  <p className="font-medium text-xs sm:text-sm text-center text-cream">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</p>
+                  <div className="flex flex-col space-y-2 items-center">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="bg-cream text-foreground border-cream-dark placeholder:text-muted-foreground w-full max-w-xs"
+                      data-testid="footer-newsletter-input"
+                    />
+                    <Button
+                      onClick={handleNewsletterSubmit}
+                      disabled={isSubmitting || !email.trim()}
+                      className="bg-cream text-terracotta hover:bg-cream-dark transition-colors duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed w-full max-w-xs"
+                      data-testid="footer-newsletter-button"
+                    >
+                      {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
