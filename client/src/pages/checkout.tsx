@@ -302,6 +302,7 @@ export default function CheckoutPage() {
               
               pricing: {
                 subtotal: subtotal,
+                tax: 0,
                 shipping: shippingCost,
                 total: totalAmount
               },
@@ -495,6 +496,7 @@ export default function CheckoutPage() {
           
           pricing: {
             subtotal: subtotal,
+            tax: 0,
             shipping: shippingCost,
             total: totalAmount
           },
