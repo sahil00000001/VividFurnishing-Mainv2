@@ -831,10 +831,10 @@ export default function ShopPage() {
                   className={`
                     group cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-0 shadow-lg overflow-hidden
                     ${animatingProducts.has(product._id) ? 'animate-pulse' : ''}
+                    w-full max-w-[85vw] sm:max-w-none mx-auto
                   `}
                   style={{
-                    animationDelay: `${index * 0.1}s`,
-                    width: '93vw !important'
+                    animationDelay: `${index * 0.1}s`
                   }}
                   onClick={() => setLocation(`/product/${product._id}`)}
                   data-testid={`product-card-${product._id}`}
@@ -886,16 +886,16 @@ export default function ShopPage() {
                     </div> */}
 
                     {/* Quick Actions - Slide in on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-4">
-                      <div className="flex space-x-2">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-2 sm:pb-4">
+                      <div className="flex space-x-1 sm:space-x-2">
                         <Button
                           size="sm"
                           variant="secondary"
-                          className="rounded-full bg-white/90 text-black hover:bg-white shadow-lg backdrop-blur-sm"
+                          className="rounded-full bg-white/90 text-black hover:bg-white shadow-lg backdrop-blur-sm h-6 w-6 sm:h-8 sm:w-8 p-0"
                           onClick={(e) => handleToggleWishlist(product._id, e)}
                         >
                           <Heart 
-                            className={`w-4 h-4 ${
+                            className={`w-3 h-3 sm:w-4 sm:h-4 ${
                               isInWishlist(product._id) 
                                 ? 'fill-red-500 text-red-500' 
                                 : 'text-gray-600'
@@ -904,24 +904,25 @@ export default function ShopPage() {
                         </Button>
                         <Button
                           size="sm"
-                          className="rounded-full bg-terracotta text-white hover:bg-terracotta-dark shadow-lg"
+                          className="rounded-full bg-terracotta text-white hover:bg-terracotta-dark shadow-lg text-xs sm:text-sm px-2 sm:px-3 h-6 sm:h-8"
                           onClick={(e) => addToCart(product._id, e)}
                           disabled={product.Qty_in_Stock === 0}
                         >
-                          <ShoppingCart className="w-4 h-4 mr-1" />
-                          Add to Cart
+                          <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                          <span className="hidden sm:inline">Add to Cart</span>
+                          <span className="sm:hidden">Add</span>
                         </Button>
                         <Button
                           size="sm"
                           variant="secondary"
-                          className="rounded-full bg-white/90 text-black hover:bg-white shadow-lg backdrop-blur-sm"
+                          className="rounded-full bg-white/90 text-black hover:bg-white shadow-lg backdrop-blur-sm h-6 w-6 sm:h-8 sm:w-8 p-0"
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
                             setLocation(`/product/${product._id}`);
                           }}
                         >
-                          <Eye className="w-4 h-4" />
+                          <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
                         </Button>
                       </div>
                     </div>
