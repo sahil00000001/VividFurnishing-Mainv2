@@ -134,11 +134,6 @@ export default function Login() {
                   </Link>
                 </p>
                 
-                <p className="text-sm text-muted-foreground">
-                  <Link href="/forgot-password" className="text-terracotta hover:underline">
-                    Forgot your password?
-                  </Link>
-                </p>
               </div>
             </CardContent>
           </Card>

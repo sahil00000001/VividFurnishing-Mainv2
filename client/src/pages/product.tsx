@@ -425,21 +425,21 @@ export default function ProductPage() {
                   <Truck className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-medium text-sm">Free Delivery</div>
-                    <div className="text-xs text-muted-foreground">On orders above ₹25,000</div>
+                    <div className="text-xs text-muted-foreground">On orders above 3,000</div>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Shield className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-medium text-sm">Easy on pocket</div>
-                    <div className="text-xs text-muted-foreground">Affordable luxury pricing</div>
+                    <div className="text-xs text-muted-foreground">Affordable prices</div>
                   </div>
                 </div>
                 <div className="flex items-start space-x-3">
                   <RotateCcw className="w-5 h-5 text-terracotta flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="font-medium text-sm">Easy Returns</div>
-                    <div className="text-xs text-muted-foreground">30-day return policy</div>
+                    <div className="text-xs text-muted-foreground">7-day return policy</div>
                   </div>
                 </div>
               </div>

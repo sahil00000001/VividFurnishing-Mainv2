@@ -4,6 +4,7 @@ import { useCart } from "@/lib/cartContext";
 import { useWishlist } from "@/lib/wishlistContext";
 import { useAuth } from "@/lib/authContext";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +20,7 @@ interface HeaderProps {
 
 export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-transparent", variant = "transparent" }: HeaderProps) {
   const { cartCount, isCartOpen, setIsCartOpen, cart, cartItems, updateQuantity, removeFromCart, clearCart, isLoading } = useCart();
-  const { wishlistCount, setIsWishlistOpen } = useWishlist();
+  const { wishlistCount, setIsWishlistOpen, toggleWishlist } = useWishlist();
   const { user, isAuthenticated, logout } = useAuth();
   const { toast } = useToast();
   const [, setLocation] = useLocation();
@@ -27,6 +28,10 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
   
   // Mobile menu state
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Cart removal confirmation state
+  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
+  const [itemToRemove, setItemToRemove] = useState<{productId: string, productName: string} | null>(null);
   
   // Search functionality removed as requested
 
@@ -43,6 +48,32 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
   const handleContinueShopping = () => {
     setIsCartOpen(false);
     setLocation('/shop');
+  };
+  
+  const handleRemoveClick = (productId: string, productName: string) => {
+    setItemToRemove({ productId, productName });
+    setShowRemoveDialog(true);
+  };
+  
+  const handleConfirmRemove = () => {
+    if (itemToRemove) {
+      removeFromCart(itemToRemove.productId);
+      setShowRemoveDialog(false);
+      setItemToRemove(null);
+    }
+  };
+  
+  const handleMoveToWishlist = async () => {
+    if (itemToRemove) {
+      await toggleWishlist(itemToRemove.productId);
+      await removeFromCart(itemToRemove.productId);
+      setShowRemoveDialog(false);
+      setItemToRemove(null);
+      toast({
+        title: "Moved to wishlist",
+        description: `${itemToRemove.productName} has been moved to your wishlist`,
+      });
+    }
   };
   
   // Search functionality removed as requested
@@ -364,7 +395,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
               <div className="text-center py-12">
                 <ShoppingBag className="w-16 h-16 mx-auto text-muted-foreground mb-4" />
                 <h3 className="text-lg font-medium mb-2">Your cart is empty</h3>
-                <p className="text-muted-foreground mb-6">Let's fill it with beautiful furniture!</p>
+                <p className="text-muted-foreground mb-6">Let's fill it with beautiful furnishings!</p>
                 {/* Continue Shopping - Hidden on mobile */}
                 {!isMobile && (
                   <Button 
@@ -425,7 +456,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => removeFromCart(item.productId)}
+                        onClick={() => handleRemoveClick(item.productId, item.productName)}
                         className={`text-red-500 hover:text-red-700 ${isMobile ? 'ml-1 h-6 w-6 p-0' : 'ml-2'}`}
                         disabled={isLoading}
                       >
@@ -477,6 +508,34 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Cart Item Remove Confirmation Dialog */}
+      <AlertDialog open={showRemoveDialog} onOpenChange={setShowRemoveDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove Item</AlertDialogTitle>
+            <AlertDialogDescription>
+              What would you like to do with "{itemToRemove?.productName}"?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="flex space-x-2">
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleMoveToWishlist}
+              className="bg-pink-500 hover:bg-pink-600 text-white"
+            >
+              <Heart className="w-4 h-4 mr-2" />
+              Move to Wishlist
+            </AlertDialogAction>
+            <AlertDialogAction
+              onClick={handleConfirmRemove}
+              className="bg-red-500 hover:bg-red-600 text-white"
+            >
+              Remove
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Search functionality removed as requested */}
     </>

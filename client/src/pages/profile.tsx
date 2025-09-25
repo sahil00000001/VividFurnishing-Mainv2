@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Loader2, User, Mail, Calendar, Shield, LogOut, CheckCircle, AlertCircle, Settings, ShoppingBag, Heart, Award, Package, CreditCard, Truck, Phone, MapPin, Receipt, Calendar as CalendarIcon, CheckCircle2, Clock, XCircle } from "lucide-react";
 import { useAuth } from "@/lib/authContext";
+import { useWishlist } from "@/lib/wishlistContext";
 import { Header } from "@/components/Header";
 import { useQuery } from "@tanstack/react-query";
 
@@ -81,6 +82,7 @@ interface OrdersResponse {
 export default function Profile() {
   const [, setLocation] = useLocation();
   const { user, logout, sendOTP, verifyOTP, isAuthenticated } = useAuth();
+  const { setIsWishlistOpen } = useWishlist();
   const [otp, setOtp] = useState("");
   const [showOtpVerification, setShowOtpVerification] = useState(false);
   const [error, setError] = useState("");
@@ -192,7 +194,6 @@ export default function Profile() {
               <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground">Account Dashboard</h1>
               <div className="w-1 h-8 bg-terracotta rounded-full"></div>
             </div>
-            <p className="text-lg text-muted-foreground font-medium">Welcome back to your luxury furniture experience</p>
           </div>
 
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
@@ -280,7 +281,7 @@ export default function Profile() {
                       <div className="space-y-2">
                         <Label className="text-sm font-semibold text-terracotta uppercase tracking-wide">Email Address</Label>
                         <div className="bg-white rounded-lg p-3 border border-terracotta/20">
-                          <p className="text-lg font-medium text-foreground" data-testid="display-email">{user.email}</p>
+                          <p className="text-lg font-medium text-foreground break-all md:break-normal" data-testid="display-email">{user.email}</p>
                         </div>
                       </div>
                     </div>
@@ -442,9 +443,10 @@ export default function Profile() {
                           onClick={() => setSelectedOrder(order)}
                           data-testid={`order-${order.order_id}`}
                         >
-                          <div className="flex items-start justify-between mb-4">
+                          {/* Mobile-optimized order header */}
+                          <div className="space-y-3 md:space-y-0 md:flex md:items-start md:justify-between mb-4">
                             <div className="flex-1">
-                              <div className="flex items-center gap-2 mb-2">
+                              <div className="flex flex-wrap items-center gap-2 mb-2">
                                 <h3 className="font-bold text-lg text-foreground">
                                   Order #{order.order_id.slice(-8)}
                                 </h3>
@@ -463,17 +465,19 @@ export default function Profile() {
                                 </Badge>
                               </div>
                               <p className="text-sm text-muted-foreground flex items-center gap-1">
-                                <CalendarIcon className="w-4 h-4" />
-                                {new Date(order.order_date).toLocaleDateString('en-IN', {
-                                  year: 'numeric',
-                                  month: 'long',
-                                  day: 'numeric',
-                                  hour: '2-digit',
-                                  minute: '2-digit'
-                                })}
+                                <CalendarIcon className="w-4 h-4 flex-shrink-0" />
+                                <span className="break-words">
+                                  {new Date(order.order_date).toLocaleDateString('en-IN', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                  })}
+                                </span>
                               </p>
                             </div>
-                            <div className="text-right">
+                            <div className="text-left md:text-right">
                               <p className="text-2xl font-bold text-terracotta">
                                 ₹{order.pricing.total.toLocaleString()}
                               </p>
@@ -483,21 +487,22 @@ export default function Profile() {
                             </div>
                           </div>
                           
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                          {/* Mobile-friendly order details */}
+                          <div className="space-y-2 md:space-y-0 md:grid md:grid-cols-3 md:gap-4 text-sm">
                             <div className="flex items-center gap-2">
-                              <CreditCard className="w-4 h-4 text-muted-foreground" />
+                              <CreditCard className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                               <span className="capitalize text-muted-foreground">
                                 {order.payment.method === 'razorpay' ? 'Online Payment' : 'Cash on Delivery'}
                               </span>
                             </div>
                             <div className="flex items-center gap-2">
-                              <MapPin className="w-4 h-4 text-muted-foreground" />
+                              <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                               <span className="text-muted-foreground">
                                 {order.customer.city}, {order.customer.state}
                               </span>
                             </div>
                             <div className="flex items-center gap-2">
-                              <Receipt className="w-4 h-4 text-muted-foreground" />
+                              <Receipt className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                               <span className="text-muted-foreground">
                                 {order.invoice_number ? `INV-${order.invoice_number.slice(-8)}` : 'No Invoice'}
                               </span>
@@ -541,17 +546,28 @@ export default function Profile() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Link href="/shop" data-testid="link-shop">
-                      <Button variant="outline" className="w-full h-14 bg-gradient-to-br from-white to-cream/50 border-terracotta/30 hover:border-terracotta hover:bg-terracotta/5 transition-all duration-200">
-                        <ShoppingBag className="w-5 h-5 mr-2 text-terracotta" />
-                        <div className="text-left">
-                          <p className="font-medium">Continue Shopping</p>
-                          <p className="text-xs text-muted-foreground">Browse our collection</p>
-                        </div>
-                      </Button>
-                    </Link>
+                    <Button 
+                      variant="outline" 
+                      className="w-full h-14 bg-gradient-to-br from-white to-cream/50 border-terracotta/30 hover:border-terracotta hover:bg-terracotta/5 transition-all duration-200"
+                      onClick={() => {
+                        window.scrollTo(0, 0);
+                        setLocation('/shop');
+                      }}
+                      data-testid="button-continue-shopping"
+                    >
+                      <ShoppingBag className="w-5 h-5 mr-2 text-terracotta" />
+                      <div className="text-left">
+                        <p className="font-medium">Continue Shopping</p>
+                        <p className="text-xs text-muted-foreground">Browse our collection</p>
+                      </div>
+                    </Button>
                     
-                    <Button variant="outline" className="w-full h-14 bg-gradient-to-br from-white to-pink-50/50 border-pink-200 hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" data-testid="wishlist-button">
+                    <Button 
+                      variant="outline" 
+                      className="w-full h-14 bg-gradient-to-br from-white to-pink-50/50 border-pink-200 hover:border-pink-300 hover:bg-pink-50 transition-all duration-200" 
+                      onClick={() => setIsWishlistOpen(true)}
+                      data-testid="wishlist-button"
+                    >
                       <Heart className="w-5 h-5 mr-2 text-pink-500" />
                       <div className="text-left">
                         <p className="font-medium">My Wishlist</p>

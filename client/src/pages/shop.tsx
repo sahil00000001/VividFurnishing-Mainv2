@@ -46,7 +46,7 @@ const colorDisplay: { [key: string]: string } = {
   'Gray': '#6B7280',
   'White': '#F9FAFB',
   'Off White': '#F3F4F6',
-  'Beige': '#D6D3D1',
+  'Beige': '#F5F5DC',
   'Black': '#111827'
 };
 
@@ -367,7 +367,7 @@ export default function ShopPage() {
           <div className="flex items-center justify-center mb-4">
             
             <h1 className="font-serif text-3xl md:text-5xl font-bold" data-testid="hero-title">
-              COMPLETE YOUR SPACE
+              Complete your space
             </h1>
             
           </div>
