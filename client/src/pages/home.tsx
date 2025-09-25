@@ -9,7 +9,7 @@ import { PremiumTabs } from "@/components/PremiumTabs";
 import { ServiceFeaturesBar } from "@/components/ServiceFeaturesBar";
 import { bestSellers, luxuryProducts } from "@/data/products";
 import { Footer } from "@/components/Footer";
-import newsletterBgImage from "@assets/Group 48_1758371284588.png";
+import newsletterBgImage from "@assets/IMG_1276_1758801398074.PNG";
 import heroBgImage from "@assets/delicious-breakfast-bed-concept_1758535580577.jpg";
 import bulkOrderImage from "@assets/minimal-linen-cushion-covers-sofa_1758535928415.jpg";
 import { useForm } from "react-hook-form";
