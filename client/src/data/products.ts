@@ -36,51 +36,53 @@ export interface ShopProduct {
 // Best Sellers dataset - maintains current home page styling
 export const bestSellers: HomeProduct[] = [
   {
-    id: 2,
-    name: "Papasan Chair",
-    price: "$899",
-    image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-    alt: "Cream papasan chair with rattan base"
+    id: 101,
+    name: "LEHER",
+    price: "$2,199",
+    image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%20%20105.png",
+    alt: "LEHER - Premium furniture collection"
   },
   {
-    id: 3,
-    name: "Modern Accent Chair",
-    price: "$649",
-    image: "https://images.unsplash.com/photo-1549497538-303791108f95?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-    alt: "Powder blue modern accent chair with wooden legs"
+    id: 102,
+    name: "NEELADRI",
+    price: "$2,199",
+    image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%20%20109.png",
+    alt: "NEELADRI - Premium furniture collection"
   },
   {
-    id: 4,
-    name: "Artisan Velvet Sofa",
-    price: "$3,499",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-    alt: "Luxurious beige velvet sofa with brass legs"
+    id: 103,
+    name: "MANJARI",
+    price: "$2,199",
+    image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%20%2099.png",
+    alt: "MANJARI - Premium furniture collection"
   }
 ];
 
 // Luxury Choice dataset - distinct high-end products
 export const luxuryProducts: HomeProduct[] = [
   {
-    id: 4,
-    name: "Royal Throne Chair",
-    price: "$2,199",
-    image: premiumImg4,
-    alt: "Luxury red velvet throne chair with gold frame",
+    id: 201,
+    name: "GULDAAN",
+    price: "$2,099",
+    image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/6.png",
+    alt: "GULDAAN - Luxury furniture collection",
     category: "Luxury"
   },
   {
-    id: 5,
-    name: "Artisan Velvet Sofa",
-    price: "$3,499",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-    alt: "Luxurious beige velvet sofa with brass legs"
+    id: 202,
+    name: "KESARIYAA",
+    price: "$2,999",
+    image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%2065.png",
+    alt: "KESARIYAA - Luxury furniture collection",
+    category: "Luxury"
   },
   {
-    id: 6,
-    name: "Designer Ottoman Set",
-    price: "$1,299",
-    image: "https://images.unsplash.com/photo-1540932239986-30128078f3c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300",
-    alt: "Premium leather ottoman collection"
+    id: 203,
+    name: "GHANERI",
+    price: "$2,199",
+    image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%20%20132.png",
+    alt: "GHANERI - Luxury furniture collection",
+    category: "Luxury"
   }
 ];
 

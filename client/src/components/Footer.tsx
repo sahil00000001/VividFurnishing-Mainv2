@@ -128,15 +128,15 @@ export function Footer() {
 
               {/* Contact & Newsletter */}
               <div className="space-y-6 text-center">
-                <h4 className="font-semibold text-sm sm:text-lg" data-testid="footer-contact-title">Contact Us</h4>
+                <h4 className="font-semibold text-xs sm:text-sm" data-testid="footer-contact-title">Contact Us</h4>
                 <div className="space-y-3">
                   <div className="flex items-center justify-center space-x-3 text-cream">
                     <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
-                    <span className="text-xs sm:text-base" data-testid="footer-email">Info@smfurnishings.com</span>
+                    <span className="text-xs sm:text-sm" data-testid="footer-email">Info@smfurnishings.com</span>
                   </div>
                   <div className="flex items-start justify-center space-x-3 text-cream">
                     <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mt-1" />
-                    <span className="text-xs sm:text-base text-center" data-testid="footer-address">
+                    <span className="text-xs sm:text-sm text-center" data-testid="footer-address">
                       233, Model Town, Tosham Road<br />
                       Hisar, 125001
                     </span>
@@ -144,9 +144,9 @@ export function Footer() {
                 </div>
 
                 {/* Newsletter Section under Contact Us */}
-                <div className="space-y-4 pt-6 border-t border-cream-dark/30">
-                  <h5 className="font-semibold text-sm sm:text-lg">Newsletter</h5>
-                  <p className="font-medium text-xs sm:text-sm text-center text-cream">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</p>
+                <div className="space-y-4 pt-2">
+                  <h5 className="font-semibold text-xs sm:text-sm">Newsletter</h5>
+                  <p className="font-medium text-xs text-center text-cream">Subscribe to our newsletter to receive the latest collections, special drops, and exclusive coupons.</p>
                   <div className="flex flex-col space-y-2 items-center">
                     <Input
                       type="email"

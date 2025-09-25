@@ -272,9 +272,10 @@ export default function Home() {
               }}
               className="px-8 md:px-12 py-4 md:py-6 w-full"
             >
-              <div className="flex flex-col lg:flex-row gap-12 items-center">
+              {/* Desktop Layout (lg and above) */}
+              <div className="hidden lg:flex flex-row gap-12 items-center">
                 {/* Left Content Area - 30% */}
-                <div className="lg:w-[30%] space-y-6 text-center lg:text-left">
+                <div className="lg:w-[30%] space-y-6 text-left">
                   <h3 
                     className="text-3xl md:text-4xl font-bold text-foreground" 
                     style={{ fontFamily: '"Playfair Display", serif' }}
@@ -289,7 +290,7 @@ export default function Home() {
                   >
                     Discover the pieces our customers can't get enough of. These bestselling designs combine comfort, elegance, and everyday luxury.
                   </p>
-                  <div className="flex justify-center lg:justify-start">
+                  <div className="flex justify-start">
                     <Button 
                       variant="outline"
                       onClick={() => setLocation('/shop')}
@@ -312,7 +313,7 @@ export default function Home() {
                 
                 {/* Right Product Showcase - 70% */}
                 <div className="lg:w-[70%] w-full">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                  <div className="grid grid-cols-3 gap-6">
                     {bestSellers.map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -322,6 +323,70 @@ export default function Home() {
                         showAddToCart={false}
                       />
                     ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Layout (below lg) - 2x2 Grid */}
+              <div className="lg:hidden">
+                <div className="grid grid-cols-2 gap-2 h-96">
+                  {/* Top Left - First Image */}
+                  <div className="relative overflow-hidden rounded-3xl">
+                    <img 
+                      src={bestSellers[0]?.image}
+                      alt={bestSellers[0]?.alt}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  {/* Top Right - Text Content */}
+                  <div className="flex flex-col justify-center space-y-3 px-2">
+                    <h3 
+                      className="text-lg font-bold text-foreground" 
+                      style={{ fontFamily: '"Playfair Display", serif' }}
+                      data-testid="bestsellers-title-mobile"
+                    >
+                      BEST SELLERS
+                    </h3>
+                    <p 
+                      className="text-xs text-muted-foreground leading-relaxed" 
+                      style={{ fontFamily: '"Playfair Display", serif' }}
+                      data-testid="bestsellers-description-mobile"
+                    >
+                      Discover the pieces our customers can't get enough of.
+                    </p>
+                    <Button 
+                      variant="outline"
+                      onClick={() => setLocation('/shop')}
+                      className="text-terracotta font-semibold text-xs px-3 py-2 h-8"
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.47)',
+                        border: '2px solid #FFD0B3',
+                        borderRadius: '8px',
+                        fontFamily: 'var(--font-quiche)'
+                      }}
+                      data-testid="button-explore-more-mobile"
+                    >
+                      Explore More
+                    </Button>
+                  </div>
+                  
+                  {/* Bottom Left - Second Image */}
+                  <div className="relative overflow-hidden rounded-3xl">
+                    <img 
+                      src={bestSellers[1]?.image}
+                      alt={bestSellers[1]?.alt}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  {/* Bottom Right - Third Image */}
+                  <div className="relative overflow-hidden rounded-3xl">
+                    <img 
+                      src={bestSellers[2]?.image}
+                      alt={bestSellers[2]?.alt}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
               </div>
@@ -341,10 +406,11 @@ export default function Home() {
               }}
               className="px-8 md:px-12 py-4 md:py-6 bg-white shadow-xl w-full"
             >
-              <div className="flex flex-col lg:flex-row gap-8 items-center">
+              {/* Desktop Layout (lg and above) */}
+              <div className="hidden lg:flex flex-row gap-8 items-center">
                 {/* Left Product Showcase - 70% */}
-                <div className="lg:w-[70%] w-full order-2 lg:order-1">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-4">
+                <div className="lg:w-[70%] w-full">
+                  <div className="grid grid-cols-3 gap-4">
                     {luxuryProducts.map((product) => (
                       <ProductCard 
                         key={product.id}
@@ -358,7 +424,7 @@ export default function Home() {
                 </div>
                 
                 {/* Right Content Area - 30% */}
-                <div className="lg:w-[30%] space-y-4 order-1 lg:order-2 text-center lg:text-left">
+                <div className="lg:w-[30%] space-y-4 text-left">
                   <h3 
                     className="text-3xl md:text-4xl font-bold text-foreground tracking-wider" 
                     style={{ fontFamily: '"Playfair Display", serif' }}
@@ -373,7 +439,7 @@ export default function Home() {
                   >
                     Handpicked selections that embody luxury and sophistication, thoughtfully crafted to bring warmth and style to your home.
                   </p>
-                  <div className="flex justify-center lg:justify-start">
+                  <div className="flex justify-start">
                     <Button 
                       variant="outline"
                       onClick={() => setLocation('/shop')}
@@ -391,6 +457,70 @@ export default function Home() {
                     >
                       EXPLORE LUXURY
                     </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Layout (below lg) - 2x2 Grid */}
+              <div className="lg:hidden">
+                <div className="grid grid-cols-2 gap-2 h-96">
+                  {/* Top Left - First Image */}
+                  <div className="relative overflow-hidden rounded-3xl">
+                    <img 
+                      src={luxuryProducts[0]?.image}
+                      alt={luxuryProducts[0]?.alt}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  {/* Top Right - Text Content */}
+                  <div className="flex flex-col justify-center space-y-3 px-2">
+                    <h3 
+                      className="text-lg font-bold text-foreground tracking-wider" 
+                      style={{ fontFamily: '"Playfair Display", serif' }}
+                      data-testid="luxury-choice-title-mobile"
+                    >
+                      LUXURY CHOICE
+                    </h3>
+                    <p 
+                      className="text-xs text-muted-foreground leading-relaxed" 
+                      style={{ fontFamily: '"Playfair Display", serif' }}
+                      data-testid="luxury-choice-description-mobile"
+                    >
+                      Handpicked selections that embody luxury and sophistication.
+                    </p>
+                    <Button 
+                      variant="outline"
+                      onClick={() => setLocation('/shop')}
+                      className="text-terracotta font-semibold text-xs px-2 py-2 h-8"
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.47)',
+                        border: '2px solid #FFD0B3',
+                        borderRadius: '8px',
+                        fontFamily: 'var(--font-quiche)'
+                      }}
+                      data-testid="button-luxury-explore-more-mobile"
+                    >
+                      EXPLORE
+                    </Button>
+                  </div>
+                  
+                  {/* Bottom Left - Second Image */}
+                  <div className="relative overflow-hidden rounded-3xl">
+                    <img 
+                      src={luxuryProducts[1]?.image}
+                      alt={luxuryProducts[1]?.alt}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  {/* Bottom Right - Third Image */}
+                  <div className="relative overflow-hidden rounded-3xl">
+                    <img 
+                      src={luxuryProducts[2]?.image}
+                      alt={luxuryProducts[2]?.alt}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
               </div>
