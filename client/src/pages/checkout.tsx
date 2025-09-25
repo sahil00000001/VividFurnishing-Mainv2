@@ -50,8 +50,8 @@ export default function CheckoutPage() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod | null>(null);
   const [couponCode, setCouponCode] = useState('');
   const [couponError, setCouponError] = useState('');
-  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
-  const [couponDiscount, setCouponDiscount] = useState(0);
+  const [appliedCoupons, setAppliedCoupons] = useState<string[]>([]);
+  const [couponDiscounts, setCouponDiscounts] = useState<{[key: string]: number}>({});
   const [razorpayResponse, setRazorpayResponse] = useState<any>(null);
 
   // Available coupons
@@ -85,7 +85,10 @@ export default function CheckoutPage() {
   // Calculate totals
   const subtotal = cart?.totalAmount || 0;
   const shippingCost = 0; // Always free shipping
-  const discountAmount = appliedCoupon ? Math.round((subtotal * couponDiscount) / 100) : 0;
+  const discountAmount = appliedCoupons.reduce((total, couponCode) => {
+    const discount = couponDiscounts[couponCode] || 0;
+    return total + Math.round((subtotal * discount) / 100);
+  }, 0);
   const totalAmount = subtotal + shippingCost - discountAmount;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,35 +115,40 @@ export default function CheckoutPage() {
       return;
     }
 
-    // Check if it's a valid applicable coupon
+    // Check if coupon is already applied
+    if (appliedCoupons.includes(code)) {
+      setCouponError('This coupon is already applied');
+      toast({
+        title: "Coupon Already Applied",
+        description: "This coupon code is already active on your order.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check if maximum coupons (2) are already applied
+    if (appliedCoupons.length >= 2) {
+      setCouponError('Maximum 2 coupons allowed per order');
+      toast({
+        title: "Maximum Coupons Reached",
+        description: "You can apply up to 2 coupons per order. Remove one to add another.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check if it's a valid coupon
     const coupon = availableCoupons[code as keyof typeof availableCoupons];
     
-    if (coupon && coupon.canApply) {
-      if (appliedCoupon) {
-        setCouponError('You already have a coupon applied');
-        toast({
-          title: "Coupon Already Applied",
-          description: "Please remove the current coupon before applying a new one.",
-          variant: "destructive",
-        });
-        return;
-      }
-      
-      setAppliedCoupon(code);
-      setCouponDiscount(coupon.discount);
+    if (coupon) {
+      setAppliedCoupons(prev => [...prev, code]);
+      setCouponDiscounts(prev => ({ ...prev, [code]: coupon.discount }));
       setCouponError('');
       setCouponCode('');
       
       toast({
         title: "Coupon Applied! 🎉",
         description: `${coupon.description}. You saved ₹${Math.round((subtotal * coupon.discount) / 100).toLocaleString()}!`,
-      });
-    } else if (coupon && !coupon.canApply) {
-      setCouponError('This coupon cannot be applied through this section');
-      toast({
-        title: "Coupon Not Applicable",
-        description: "This coupon code is not available for direct application.",
-        variant: "destructive",
       });
     } else {
       setCouponError('Invalid coupon code');
@@ -152,12 +160,16 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleRemoveCoupon = () => {
-    setAppliedCoupon(null);
-    setCouponDiscount(0);
+  const handleRemoveCoupon = (couponCode: string) => {
+    setAppliedCoupons(prev => prev.filter(code => code !== couponCode));
+    setCouponDiscounts(prev => {
+      const updated = { ...prev };
+      delete updated[couponCode];
+      return updated;
+    });
     toast({
       title: "Coupon Removed",
-      description: "The coupon has been removed from your order.",
+      description: `The coupon ${couponCode} has been removed from your order.`,
     });
   };
 
@@ -690,37 +702,39 @@ export default function CheckoutPage() {
                     <span>Shipping:</span>
                     <span className="text-green-600 font-medium">Free</span>
                   </div>
-                  {appliedCoupon && (
+                  {appliedCoupons.length > 0 && (
                     <div className="flex justify-between text-green-600">
-                      <span>Discount ({appliedCoupon}):</span>
+                      <span>Discount ({appliedCoupons.join(', ')}):</span>
                       <span>-₹{discountAmount.toLocaleString()}</span>
                     </div>
                   )}
                   
                   {/* Applied Coupon Display */}
-                  {appliedCoupon && (
-                    <div className={`border-t ${isMobile ? 'pt-2' : 'pt-3'}`}>
-                      <div className="flex items-center justify-between bg-green-50 p-2 rounded border border-green-200">
-                        <div className="flex items-center gap-2">
-                          <Tag className="w-4 h-4 text-green-600" />
-                          <span className={`font-medium text-green-700 ${isMobile ? 'text-sm' : ''}`}>
-                            {appliedCoupon} Applied
-                          </span>
+                  {appliedCoupons.length > 0 && (
+                    <div className={`border-t ${isMobile ? 'pt-2' : 'pt-3'} space-y-2`}>
+                      {appliedCoupons.map((coupon) => (
+                        <div key={coupon} className="flex items-center justify-between bg-green-50 p-2 rounded border border-green-200">
+                          <div className="flex items-center gap-2">
+                            <Tag className="w-4 h-4 text-green-600" />
+                            <span className={`font-medium text-green-700 ${isMobile ? 'text-sm' : ''}`}>
+                              {coupon} Applied
+                            </span>
+                          </div>
+                          <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={() => handleRemoveCoupon(coupon)}
+                            className="text-red-600 hover:text-red-700 h-auto p-1"
+                          >
+                            Remove
+                          </Button>
                         </div>
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          onClick={handleRemoveCoupon}
-                          className="text-red-600 hover:text-red-700 h-auto p-1"
-                        >
-                          Remove
-                        </Button>
-                      </div>
+                      ))}
                     </div>
                   )}
                   
                   {/* Coupon Section */}
-                  {!appliedCoupon && (
+                  {appliedCoupons.length < 2 && (
                     <div className={`border-t ${isMobile ? 'pt-2' : 'pt-3'}`}>
                       <div className={`flex items-center gap-2 ${isMobile ? 'mb-1' : 'mb-2'}`}>
                         <Tag className="w-4 h-4" />
@@ -760,23 +774,6 @@ export default function CheckoutPage() {
                   <div className="flex justify-between text-lg font-bold">
                     <span>Total:</span>
                     <span className="text-terracotta">₹{totalAmount.toLocaleString()}</span>
-                  </div>
-                  
-                  {/* Other Available Coupons - Not in Apply Section */}
-                  <div className={`border-t ${isMobile ? 'pt-2' : 'pt-3'} space-y-2`}>
-                    <div className="text-sm font-medium text-muted-foreground">
-                      Other Special Offers:
-                    </div>
-                    <div className="space-y-1">
-                      <div className={`bg-blue-50 p-2 rounded border border-blue-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                        <p className="font-medium text-blue-700">REELLOVE10</p>
-                        <p className="text-blue-600">10% off as a thank-you for commenting on our Instagram reel</p>
-                      </div>
-                      <div className={`bg-purple-50 p-2 rounded border border-purple-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                        <p className="font-medium text-purple-700">VIP10</p>
-                        <p className="text-purple-600">10% off for members of our VIP list</p>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </CardContent>

@@ -340,16 +340,16 @@ export default function Home() {
                   </div>
                   
                   {/* Top Right - Text Content */}
-                  <div className="flex flex-col justify-center space-y-3 px-2">
+                  <div className="flex flex-col justify-center space-y-2 px-1">
                     <h3 
-                      className="text-lg font-bold text-foreground" 
+                      className="text-sm font-bold text-foreground leading-tight" 
                       style={{ fontFamily: '"Playfair Display", serif' }}
                       data-testid="bestsellers-title-mobile"
                     >
                       BEST SELLERS
                     </h3>
                     <p 
-                      className="text-xs text-muted-foreground leading-relaxed" 
+                      className="text-[10px] text-muted-foreground leading-tight" 
                       style={{ fontFamily: '"Playfair Display", serif' }}
                       data-testid="bestsellers-description-mobile"
                     >
@@ -358,11 +358,11 @@ export default function Home() {
                     <Button 
                       variant="outline"
                       onClick={() => setLocation('/shop')}
-                      className="text-terracotta font-semibold text-xs px-3 py-2 h-8"
+                      className="text-terracotta font-semibold text-[9px] px-2 py-1 h-6"
                       style={{
                         background: 'rgba(255, 255, 255, 0.47)',
-                        border: '2px solid #FFD0B3',
-                        borderRadius: '8px',
+                        border: '1px solid #FFD0B3',
+                        borderRadius: '6px',
                         fontFamily: 'var(--font-quiche)'
                       }}
                       data-testid="button-explore-more-mobile"
@@ -474,16 +474,16 @@ export default function Home() {
                   </div>
                   
                   {/* Top Right - Text Content */}
-                  <div className="flex flex-col justify-center space-y-3 px-2">
+                  <div className="flex flex-col justify-center space-y-2 px-1">
                     <h3 
-                      className="text-lg font-bold text-foreground tracking-wider" 
+                      className="text-sm font-bold text-foreground leading-tight tracking-wide" 
                       style={{ fontFamily: '"Playfair Display", serif' }}
                       data-testid="luxury-choice-title-mobile"
                     >
                       LUXURY CHOICE
                     </h3>
                     <p 
-                      className="text-xs text-muted-foreground leading-relaxed" 
+                      className="text-[10px] text-muted-foreground leading-tight" 
                       style={{ fontFamily: '"Playfair Display", serif' }}
                       data-testid="luxury-choice-description-mobile"
                     >
@@ -492,11 +492,11 @@ export default function Home() {
                     <Button 
                       variant="outline"
                       onClick={() => setLocation('/shop')}
-                      className="text-terracotta font-semibold text-xs px-2 py-2 h-8"
+                      className="text-terracotta font-semibold text-[9px] px-2 py-1 h-6"
                       style={{
                         background: 'rgba(255, 255, 255, 0.47)',
-                        border: '2px solid #FFD0B3',
-                        borderRadius: '8px',
+                        border: '1px solid #FFD0B3',
+                        borderRadius: '6px',
                         fontFamily: 'var(--font-quiche)'
                       }}
                       data-testid="button-luxury-explore-more-mobile"
