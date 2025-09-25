@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -9,6 +9,7 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { useCart } from '@/lib/cartContext';
@@ -53,7 +54,6 @@ const colorDisplay: { [key: string]: string } = {
 export default function ShopPage() {
   // API State
   const [products, setProducts] = useState<ApiProduct[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<ApiProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
@@ -71,6 +71,10 @@ export default function ShopPage() {
   const [sortBy, setSortBy] = useState<"featured" | "price-low" | "price-high" | "newest">("featured");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [animatingProducts, setAnimatingProducts] = useState<Set<string>>(new Set());
+  
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(24); // Show 24 products per page
   
   // Mobile state
   const isMobile = useIsMobile();
@@ -137,8 +141,8 @@ export default function ShopPage() {
     loadProducts();
   }, []);
 
-  // Apply filters and search
-  useEffect(() => {
+  // Memoized filtered and sorted products for better performance
+  const filteredProducts = useMemo(() => {
     let filtered = products.filter(product => {
       // Search filter
       const searchMatch = !searchQuery || 
@@ -189,13 +193,31 @@ export default function ShopPage() {
         break;
     }
 
-    setFilteredProducts(filtered);
+    return filtered;
   }, [products, searchQuery, selectedCollections, selectedCategories, selectedSubCategories, 
       selectedColors, selectedFabrics, selectedSizes, priceRange, sortBy]);
 
+  // Memoized paginated products
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    return filteredProducts.slice(startIndex, endIndex);
+  }, [filteredProducts, currentPage, productsPerPage]);
 
-  // Add to Cart with Animation
-  const addToCart = async (productId: string, event: React.MouseEvent) => {
+  // Total pages calculation
+  const totalPages = useMemo(() => {
+    return Math.ceil(filteredProducts.length / productsPerPage);
+  }, [filteredProducts.length, productsPerPage]);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedCollections, selectedCategories, selectedSubCategories, 
+      selectedColors, selectedFabrics, selectedSizes, priceRange, sortBy]);
+
+
+  // Add to Cart with Animation (optimized with useCallback)
+  const addToCart = useCallback(async (productId: string, event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
     
@@ -262,7 +284,7 @@ export default function ShopPage() {
         variant: "destructive",
       });
     }
-  };
+  }, [products, addToGlobalCart, toast, setAnimatingProducts]);
 
   // Toggle Wishlist using global context
   const handleToggleWishlist = async (productId: string, event: React.MouseEvent) => {
@@ -820,11 +842,14 @@ export default function ShopPage() {
             )}
             
             {/* Product Grid */}
-            <div className={`
-              grid gap-2 sm:gap-4 md:gap-6 transition-all duration-300
-              ${viewMode === "grid" ? "grid-cols-1 min-[380px]:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}
-            `}>
-              {filteredProducts.map((product, index) => (
+            <div 
+              className={`
+                grid gap-2 sm:gap-4 md:gap-6 transition-all duration-300
+                ${viewMode === "grid" ? "grid-cols-1 min-[380px]:grid-cols-2 lg:grid-cols-3" : "grid-cols-1"}
+              `}
+              style={{ maxWidth: '93vw' }}
+            >
+              {paginatedProducts.map((product, index) => (
                 <Card 
                   key={product._id}
                   ref={(el) => productRefs.current[product._id] = el}
@@ -974,10 +999,79 @@ export default function ShopPage() {
               ))}
             </div>
 
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex justify-center mt-8">
+                <Pagination>
+                  <PaginationContent>
+                    {currentPage > 1 && (
+                      <PaginationItem>
+                        <PaginationPrevious 
+                          href="#" 
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(currentPage - 1);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                        />
+                      </PaginationItem>
+                    )}
+                    
+                    {/* Page numbers */}
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                      let pageNum;
+                      if (totalPages <= 5) {
+                        pageNum = i + 1;
+                      } else {
+                        // Smart pagination - show current page and surrounding pages
+                        if (currentPage <= 3) {
+                          pageNum = i + 1;
+                        } else if (currentPage >= totalPages - 2) {
+                          pageNum = totalPages - 4 + i;
+                        } else {
+                          pageNum = currentPage - 2 + i;
+                        }
+                      }
+                      
+                      return (
+                        <PaginationItem key={pageNum}>
+                          <PaginationLink
+                            href="#"
+                            isActive={currentPage === pageNum}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setCurrentPage(pageNum);
+                              window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                          >
+                            {pageNum}
+                          </PaginationLink>
+                        </PaginationItem>
+                      );
+                    })}
+                    
+                    {currentPage < totalPages && (
+                      <PaginationItem>
+                        <PaginationNext 
+                          href="#" 
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCurrentPage(currentPage + 1);
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                          }}
+                        />
+                      </PaginationItem>
+                    )}
+                  </PaginationContent>
+                </Pagination>
+              </div>
+            )}
+
             {/* Product Count - Bottom */}
             <div className="text-center mt-8 pt-6 border-t">
               <div className="text-sm text-muted-foreground">
-                Showing {filteredProducts.length} of {products.length} products
+                Showing {((currentPage - 1) * productsPerPage) + 1} - {Math.min(currentPage * productsPerPage, filteredProducts.length)} of {filteredProducts.length} products
+                {filteredProducts.length !== products.length && ` (filtered from ${products.length} total)`}
               </div>
             </div>
           </div>

@@ -969,17 +969,6 @@ export default function CheckoutPage() {
                   </div>
                 )}
 
-                {/* Auto-download info */}
-                {razorpayResponse && (
-                  <div className="mt-4 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-400">
-                    <p className="text-sm text-blue-800">
-                      📁 API Response automatically downloaded as TXT file
-                    </p>
-                    <p className="text-xs text-blue-600 mt-1">
-                      Step: {razorpayResponse.step} • {new Date().toLocaleTimeString()}
-                    </p>
-                  </div>
-                )}
 
                 <div className="text-center pt-2">
                   <p className="text-lg font-bold text-terracotta">
