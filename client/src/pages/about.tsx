@@ -231,7 +231,7 @@ export default function About() {
       <section id="timeline" className="py-20 bg-background">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-lg sm:text-4xl md:text-5xl font-bold text-foreground mb-2 sm:mb-4">
+            <h2 className="font-serif text-2xl sm:text-5xl md:text-6xl font-bold text-foreground mb-2 sm:mb-4">
               Our <span className="text-terracotta">Journey</span>
             </h2>
             <p className="text-xs sm:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -266,9 +266,9 @@ export default function About() {
                     >
                       <Card className="p-3 sm:p-6 hover:shadow-lg transition-shadow duration-300">
                         <CardContent className="p-0">
-                          <div className="text-terracotta font-bold text-sm sm:text-2xl mb-1 sm:mb-2">{item.year}</div>
-                          <h3 className="font-serif text-sm sm:text-xl font-bold mb-1 sm:mb-2">{item.title}</h3>
-                          <p className="text-xs sm:text-base text-muted-foreground">{item.description}</p>
+                          <div className="text-terracotta font-bold text-sm sm:text-xl mb-1 sm:mb-2">{item.year}</div>
+                          <h3 className="font-serif text-sm sm:text-lg font-bold mb-1 sm:mb-2">{item.title}</h3>
+                          <p className="text-sm sm:text-base text-muted-foreground">{item.description}</p>
                         </CardContent>
                       </Card>
                     </div>
@@ -295,7 +295,7 @@ export default function About() {
       <section id="why-shakuntala-manohar" className="py-20 bg-cream">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-[1.25rem] sm:text-4xl md:text-5xl font-bold text-foreground mb-2 sm:mb-4">
+            <h2 className="font-serif text-2xl sm:text-5xl md:text-6xl font-bold text-foreground mb-2 sm:mb-4">
               Why <span className="text-terracotta">Shakuntala & Manohar?</span>
             </h2>
           </div>
@@ -356,7 +356,7 @@ export default function About() {
       <section id="values" className="py-20 bg-gradient-to-br from-cream to-background">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="font-serif text-xl sm:text-4xl md:text-5xl font-bold text-foreground mb-2 sm:mb-4">
+            <h2 className="font-serif text-2xl sm:text-5xl md:text-6xl font-bold text-foreground mb-2 sm:mb-4">
               Our <span className="text-terracotta">Foundation</span>
             </h2>
           </div>
@@ -491,7 +491,7 @@ export default function About() {
               }`}
             >
               <div>
-                <h2 className="font-serif text-lg sm:text-4xl md:text-5xl font-bold text-foreground mb-2 sm:mb-4">
+                <h2 className="font-serif text-2xl sm:text-5xl md:text-6xl font-bold text-foreground mb-2 sm:mb-4">
                   What Makes Us <span className="text-terracotta">Different</span>
                 </h2>
                 <p className="text-xs sm:text-xl text-muted-foreground mb-4 sm:mb-8">

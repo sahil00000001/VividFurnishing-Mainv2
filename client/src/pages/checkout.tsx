@@ -50,12 +50,43 @@ export default function CheckoutPage() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethod | null>(null);
   const [couponCode, setCouponCode] = useState('');
   const [couponError, setCouponError] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [couponDiscount, setCouponDiscount] = useState(0);
   const [razorpayResponse, setRazorpayResponse] = useState<any>(null);
+
+  // Available coupons
+  const availableCoupons = {
+    WELCOME10: {
+      code: 'WELCOME10',
+      discount: 10,
+      type: 'percentage',
+      description: '10% off on your first order',
+      terms: 'Valid only for first-time customers. Applicable sitewide. One-time use per customer. Can be combined with one other coupon, not more.',
+      canApply: true
+    },
+    REELLOVE10: {
+      code: 'REELLOVE10',
+      discount: 10,
+      type: 'percentage',
+      description: '10% off as a thank-you for commenting on our Instagram reel',
+      terms: 'Can be combined with one other coupon, not more.',
+      canApply: false
+    },
+    VIP10: {
+      code: 'VIP10',
+      discount: 10,
+      type: 'percentage',
+      description: '10% off for members of our VIP list',
+      terms: 'One-time use per subscriber. Non-transferable. Can be combined with one other coupon, not more.',
+      canApply: false
+    }
+  };
 
   // Calculate totals
   const subtotal = cart?.totalAmount || 0;
   const shippingCost = 0; // Always free shipping
-  const totalAmount = subtotal + shippingCost;
+  const discountAmount = appliedCoupon ? Math.round((subtotal * couponDiscount) / 100) : 0;
+  const totalAmount = subtotal + shippingCost - discountAmount;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -74,16 +105,60 @@ export default function CheckoutPage() {
   };
 
   const handleApplyCoupon = () => {
-    if (couponCode.trim()) {
+    const code = couponCode.trim().toUpperCase();
+    
+    if (!code) {
+      setCouponError('Please enter a coupon code');
+      return;
+    }
+
+    // Check if it's a valid applicable coupon
+    const coupon = availableCoupons[code as keyof typeof availableCoupons];
+    
+    if (coupon && coupon.canApply) {
+      if (appliedCoupon) {
+        setCouponError('You already have a coupon applied');
+        toast({
+          title: "Coupon Already Applied",
+          description: "Please remove the current coupon before applying a new one.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      setAppliedCoupon(code);
+      setCouponDiscount(coupon.discount);
+      setCouponError('');
+      setCouponCode('');
+      
+      toast({
+        title: "Coupon Applied! 🎉",
+        description: `${coupon.description}. You saved ₹${Math.round((subtotal * coupon.discount) / 100).toLocaleString()}!`,
+      });
+    } else if (coupon && !coupon.canApply) {
+      setCouponError('This coupon cannot be applied through this section');
+      toast({
+        title: "Coupon Not Applicable",
+        description: "This coupon code is not available for direct application.",
+        variant: "destructive",
+      });
+    } else {
       setCouponError('Invalid coupon code');
       toast({
         title: "Invalid Coupon",
         description: "The coupon code you entered is not valid.",
         variant: "destructive",
       });
-    } else {
-      setCouponError('');
     }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponDiscount(0);
+    toast({
+      title: "Coupon Removed",
+      description: "The coupon has been removed from your order.",
+    });
   };
 
   const saveOrderToBackend = async (orderData: any) => {
@@ -607,49 +682,101 @@ export default function CheckoutPage() {
                 
                 {/* Pricing Breakdown */}
                 <div className={`${isMobile ? 'space-y-1 pt-2' : 'space-y-2 pt-3'}`}>
-                  <div className="flex justify-start">
+                  <div className="flex justify-between">
                     <span>Subtotal:</span>
                     <span>₹{subtotal.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-start">
+                  <div className="flex justify-between">
                     <span>Shipping:</span>
                     <span className="text-green-600 font-medium">Free</span>
                   </div>
+                  {appliedCoupon && (
+                    <div className="flex justify-between text-green-600">
+                      <span>Discount ({appliedCoupon}):</span>
+                      <span>-₹{discountAmount.toLocaleString()}</span>
+                    </div>
+                  )}
+                  
+                  {/* Applied Coupon Display */}
+                  {appliedCoupon && (
+                    <div className={`border-t ${isMobile ? 'pt-2' : 'pt-3'}`}>
+                      <div className="flex items-center justify-between bg-green-50 p-2 rounded border border-green-200">
+                        <div className="flex items-center gap-2">
+                          <Tag className="w-4 h-4 text-green-600" />
+                          <span className={`font-medium text-green-700 ${isMobile ? 'text-sm' : ''}`}>
+                            {appliedCoupon} Applied
+                          </span>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={handleRemoveCoupon}
+                          className="text-red-600 hover:text-red-700 h-auto p-1"
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Coupon Section */}
-                  <div className={`border-t ${isMobile ? 'pt-2' : 'pt-3'}`}>
-                    <div className={`flex items-center gap-2 ${isMobile ? 'mb-1' : 'mb-2'}`}>
-                      <Tag className="w-4 h-4" />
-                      <span className={`font-medium ${isMobile ? 'text-sm' : ''}`}>Have a coupon?</span>
+                  {!appliedCoupon && (
+                    <div className={`border-t ${isMobile ? 'pt-2' : 'pt-3'}`}>
+                      <div className={`flex items-center gap-2 ${isMobile ? 'mb-1' : 'mb-2'}`}>
+                        <Tag className="w-4 h-4" />
+                        <span className={`font-medium ${isMobile ? 'text-sm' : ''}`}>Have a coupon?</span>
+                      </div>
+                      <div className={`flex ${isMobile ? 'gap-1' : 'gap-2'}`}>
+                        <Input
+                          placeholder="Enter coupon code"
+                          value={couponCode}
+                          onChange={(e) => {
+                            setCouponCode(e.target.value);
+                            setCouponError('');
+                          }}
+                          className={`${couponError ? 'border-red-500' : ''} ${isMobile ? 'h-8 text-sm' : ''}`}
+                        />
+                        <Button 
+                          variant="outline" 
+                          onClick={handleApplyCoupon}
+                          disabled={!couponCode.trim()}
+                          className={isMobile ? 'h-8 px-3 text-sm' : ''}
+                        >
+                          Apply
+                        </Button>
+                      </div>
+                      {couponError && (
+                        <p className="text-red-500 text-sm mt-1">{couponError}</p>
+                      )}
+                      
+                      {/* Available Coupon for Apply Section */}
+                      <div className="mt-2 text-xs text-muted-foreground">
+                        <p>Available: <span className="font-medium text-terracotta">WELCOME10</span> - 10% off on your first order</p>
+                      </div>
                     </div>
-                    <div className={`flex ${isMobile ? 'gap-1' : 'gap-2'}`}>
-                      <Input
-                        placeholder="Enter coupon code"
-                        value={couponCode}
-                        onChange={(e) => {
-                          setCouponCode(e.target.value);
-                          setCouponError('');
-                        }}
-                        className={`${couponError ? 'border-red-500' : ''} ${isMobile ? 'h-8 text-sm' : ''}`}
-                      />
-                      <Button 
-                        variant="outline" 
-                        onClick={handleApplyCoupon}
-                        disabled={!couponCode.trim()}
-                        className={isMobile ? 'h-8 px-3 text-sm' : ''}
-                      >
-                        Apply
-                      </Button>
-                    </div>
-                    {couponError && (
-                      <p className="text-red-500 text-sm mt-1">{couponError}</p>
-                    )}
-                  </div>
+                  )}
                   
                   <Separator />
-                  <div className="flex justify-start text-lg font-bold">
+                  <div className="flex justify-between text-lg font-bold">
                     <span>Total:</span>
                     <span className="text-terracotta">₹{totalAmount.toLocaleString()}</span>
+                  </div>
+                  
+                  {/* Other Available Coupons - Not in Apply Section */}
+                  <div className={`border-t ${isMobile ? 'pt-2' : 'pt-3'} space-y-2`}>
+                    <div className="text-sm font-medium text-muted-foreground">
+                      Other Special Offers:
+                    </div>
+                    <div className="space-y-1">
+                      <div className={`bg-blue-50 p-2 rounded border border-blue-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                        <p className="font-medium text-blue-700">REELLOVE10</p>
+                        <p className="text-blue-600">10% off as a thank-you for commenting on our Instagram reel</p>
+                      </div>
+                      <div className={`bg-purple-50 p-2 rounded border border-purple-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                        <p className="font-medium text-purple-700">VIP10</p>
+                        <p className="text-purple-600">10% off for members of our VIP list</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -702,13 +829,13 @@ export default function CheckoutPage() {
                       value={formData.email}
                       onChange={handleInputChange}
                       placeholder="your@email.com"
-                      className="pl-10"
+                      className={`pl-10 ${isMobile ? 'h-8 text-sm' : ''}`}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Label htmlFor="phone" className={isMobile ? 'text-sm' : ''}>Phone Number *</Label>
                   <div className="relative">
                     <Phone className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                     <Input
@@ -717,66 +844,72 @@ export default function CheckoutPage() {
                       type="tel"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      placeholder="10-digit mobile number"
-                      className="pl-10"
+                      placeholder={isMobile ? "Mobile number" : "10-digit mobile number"}
+                      className={`pl-10 ${isMobile ? 'h-8 text-sm' : ''}`}
+                      maxLength={10}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="address">Address *</Label>
+                  <Label htmlFor="address" className={isMobile ? 'text-sm' : ''}>Address *</Label>
                   <Input
                     id="address"
                     name="address"
                     value={formData.address}
                     onChange={handleInputChange}
                     placeholder="Enter full address"
+                    className={isMobile ? 'h-8 text-sm' : ''}
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className={`grid grid-cols-2 ${isMobile ? 'gap-2' : 'gap-4'}`}>
                   <div>
-                    <Label htmlFor="city">City *</Label>
+                    <Label htmlFor="city" className={isMobile ? 'text-sm' : ''}>City *</Label>
                     <Input
                       id="city"
                       name="city"
                       value={formData.city}
                       onChange={handleInputChange}
                       placeholder="Enter city"
+                      className={isMobile ? 'h-8 text-sm' : ''}
                     />
                   </div>
                   <div>
-                    <Label htmlFor="state">State *</Label>
+                    <Label htmlFor="state" className={isMobile ? 'text-sm' : ''}>State *</Label>
                     <Input
                       id="state"
                       name="state"
                       value={formData.state}
                       onChange={handleInputChange}
                       placeholder="Enter state"
+                      className={isMobile ? 'h-8 text-sm' : ''}
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className={`grid grid-cols-2 ${isMobile ? 'gap-2' : 'gap-4'}`}>
                   <div>
-                    <Label htmlFor="zipCode">PIN Code *</Label>
+                    <Label htmlFor="zipCode" className={isMobile ? 'text-sm' : ''}>PIN Code *</Label>
                     <Input
                       id="zipCode"
                       name="zipCode"
                       value={formData.zipCode}
                       onChange={handleInputChange}
-                      placeholder="6-digit PIN code"
+                      placeholder={isMobile ? "PIN code" : "6-digit PIN code"}
+                      className={isMobile ? 'h-8 text-sm' : ''}
+                      maxLength={6}
                     />
                   </div>
                   <div>
-                    <Label htmlFor="country">Country</Label>
+                    <Label htmlFor="country" className={isMobile ? 'text-sm' : ''}>Country</Label>
                     <Input
                       id="country"
                       name="country"
                       value={formData.country}
                       onChange={handleInputChange}
                       readOnly
-                      className="bg-muted"
+                      className={`bg-muted ${isMobile ? 'h-8 text-sm' : ''}`}
                     />
                   </div>
                 </div>
@@ -791,39 +924,39 @@ export default function CheckoutPage() {
                   Choose Payment Method
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className={isMobile ? 'space-y-2' : 'space-y-4'}>
                 {/* Razorpay Option */}
-                <div className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                <div className={`border rounded-lg hover:bg-gray-50 transition-colors ${isMobile ? 'p-2' : 'p-4'}`}>
                   <Button
                     onClick={() => handlePaymentMethodSelect('razorpay')}
                     disabled={isProcessing || isLoading}
                     variant="outline"
-                    className="w-full justify-start gap-3 h-auto py-4"
+                    className={`w-full justify-start h-auto ${isMobile ? 'gap-2 py-2' : 'gap-3 py-4'}`}
                   >
-                    <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
-                      <Wallet className="w-4 h-4 text-white" />
+                    <div className={`${isMobile ? 'w-6 h-6' : 'w-8 h-8'} bg-blue-600 rounded flex items-center justify-center flex-shrink-0`}>
+                      <Wallet className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} text-white`} />
                     </div>
-                    <div className="text-left">
-                      <p className="font-medium">Razorpay</p>
-                      <p className="text-sm text-muted-foreground">UPI, Cards, Net Banking, Wallets</p>
+                    <div className="text-left min-w-0 flex-1">
+                      <p className={`font-medium ${isMobile ? 'text-sm' : ''}`}>Razorpay</p>
+                      <p className={`text-muted-foreground break-words ${isMobile ? 'text-xs' : 'text-sm'}`}>UPI, Cards, Net Banking, Wallets</p>
                     </div>
                   </Button>
                 </div>
 
                 {/* Cash on Delivery */}
-                <div className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                <div className={`border rounded-lg hover:bg-gray-50 transition-colors ${isMobile ? 'p-2' : 'p-4'}`}>
                   <Button
                     onClick={() => handlePaymentMethodSelect('cod')}
                     disabled={isProcessing || isLoading}
                     variant="outline"
-                    className="w-full justify-start gap-3 h-auto py-4"
+                    className={`w-full justify-start h-auto ${isMobile ? 'gap-2 py-2' : 'gap-3 py-4'}`}
                   >
-                    <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center">
-                      <Truck className="w-4 h-4 text-white" />
+                    <div className={`${isMobile ? 'w-6 h-6' : 'w-8 h-8'} bg-green-600 rounded flex items-center justify-center flex-shrink-0`}>
+                      <Truck className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} text-white`} />
                     </div>
-                    <div className="text-left">
-                      <p className="font-medium">Cash on Delivery (COD)</p>
-                      <p className="text-sm text-muted-foreground">Pay when your order is delivered</p>
+                    <div className="text-left min-w-0 flex-1">
+                      <p className={`font-medium ${isMobile ? 'text-sm' : ''}`}>Cash on Delivery (COD)</p>
+                      <p className={`text-muted-foreground break-words ${isMobile ? 'text-xs' : 'text-sm'}`}>Pay when your order is delivered</p>
                     </div>
                   </Button>
                 </div>
