@@ -18,7 +18,7 @@ const features: Feature[] = [
   {
     id: 2,
     icon: Wallet,
-    title: "Easy on pocket",
+    title: "Affordable prices",
     description: "Affordable luxury pricing"
   },
   {

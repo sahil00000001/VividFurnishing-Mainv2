@@ -50,7 +50,7 @@ export function Footer() {
                   alt="SM Furnishings Logo" 
                   className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
                 />
-                <h3 className="text-lg sm:text-2xl font-bold tracking-wider" style={{ fontFamily: '"Fiona", serif' }} data-testid="footer-brand">
+                <h3 className="text-lg sm:text-2xl font-bold tracking-wider" style={{ fontFamily: 'var(--font-quiche)' }} data-testid="footer-brand">
                   SM FURNISHINGS
                 </h3>
               </div>

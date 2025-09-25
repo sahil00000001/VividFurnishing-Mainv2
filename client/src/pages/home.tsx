@@ -299,7 +299,8 @@ export default function Home() {
                         background: 'rgba(255, 255, 255, 0.47)',
                         border: '9px solid #FFD0B3',
                         borderRadius: '14px',
-                        boxSizing: 'border-box'
+                        boxSizing: 'border-box',
+                        fontFamily: 'var(--font-quiche)'
                       }}
                       className="text-terracotta font-semibold"
                       data-testid="button-explore-more"
@@ -382,7 +383,8 @@ export default function Home() {
                         background: 'rgba(255, 255, 255, 0.47)',
                         border: '9px solid #FFD0B3',
                         borderRadius: '14px',
-                        boxSizing: 'border-box'
+                        boxSizing: 'border-box',
+                        fontFamily: 'var(--font-quiche)'
                       }}
                       className="text-terracotta font-semibold"
                       data-testid="button-luxury-explore-more"
