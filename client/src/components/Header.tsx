@@ -344,7 +344,7 @@ export function Header({ className = "absolute top-0 left-0 right-0 z-50 bg-tran
                     </button>
                   </SheetTrigger>
                   <SheetContent side="right" className="w-80">
-                    <SheetHeader>
+                    <SheetHeader className="hidden">
                       <SheetTitle>Menu</SheetTitle>
                       <SheetDescription>
                         Navigate through SM Furnishings

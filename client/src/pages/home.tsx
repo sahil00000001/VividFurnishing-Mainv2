@@ -190,10 +190,10 @@ export default function Home() {
         </div>
         
         <div className="relative z-10 text-center text-white px-6">
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-wide" style={{ fontFamily: '"Prata", serif' }} data-testid="hero-headline">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 tracking-wide" style={{ fontFamily: '"Prata", serif' }} data-testid="hero-headline">
             AFFORDABLE LUXURY
           </h2>
-          <p className="text-xl md:text-2xl font-light mb-8 tracking-wider" data-testid="hero-subheading">
+          <p className="text-lg sm:text-xl md:text-2xl font-light mb-8 tracking-wider" data-testid="hero-subheading">
             Where Comfort Meets Elegance
           </p>
           <Button 
@@ -204,7 +204,7 @@ export default function Home() {
               background: 'rgba(255, 255, 255, 0.47)',
               border: '9px solid #FFFFFF'
             }}
-            className="text-terracotta font-semibold px-8 py-4 text-lg tracking-wide hover:bg-white hover:text-terracotta-dark transition-all duration-300"
+            className="text-terracotta font-semibold px-8 py-4 text-base sm:text-lg tracking-wide hover:bg-white hover:text-terracotta-dark transition-all duration-300"
             data-testid="button-explore-collection"
           >
             Explore Collection
@@ -215,7 +215,7 @@ export default function Home() {
 
       {/* Designing Luxury Hero Section */}
       <section 
-        className="py-16 lg:py-20 text-center"
+        className="py-16 lg:py-20 text-center rounded-none"
         style={{
           backgroundColor: '#582308'
         }}
@@ -250,7 +250,7 @@ export default function Home() {
           {/* Supporting Text */}
           <div className="max-w-3xl mx-auto">
             <p 
-              className="text-white font-bold leading-relaxed text-base md:text-lg lg:text-xl"
+              className="text-white font-bold leading-relaxed text-sm sm:text-base md:text-lg lg:text-xl"
               style={{
                 fontFamily: '"Playfair Display", serif'
               }}
