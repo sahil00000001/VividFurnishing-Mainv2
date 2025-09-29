@@ -63,7 +63,7 @@ export const luxuryProducts: HomeProduct[] = [
   {
     id: 201,
     name: "GULDAAN",
-    price: "$2,099",
+    price: "₹2,099",
     image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/6.png",
     alt: "GULDAAN - Luxury furniture collection",
     category: "Luxury"
@@ -71,7 +71,7 @@ export const luxuryProducts: HomeProduct[] = [
   {
     id: 202,
     name: "KESARIYAA",
-    price: "$2,999",
+    price: "₹2,999",
     image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%2065.png",
     alt: "KESARIYAA - Luxury furniture collection",
     category: "Luxury"
@@ -79,7 +79,7 @@ export const luxuryProducts: HomeProduct[] = [
   {
     id: 203,
     name: "GHANERI",
-    price: "$2,199",
+    price: "₹2,199",
     image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%20%20132.png",
     alt: "GHANERI - Luxury furniture collection",
     category: "Luxury"
