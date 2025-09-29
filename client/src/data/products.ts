@@ -38,21 +38,21 @@ export const bestSellers: HomeProduct[] = [
   {
     id: 101,
     name: "LEHER",
-    price: "$2,199",
+    price: "₹2,199",
     image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%20%20105.png",
     alt: "LEHER - Premium furniture collection"
   },
   {
     id: 102,
     name: "NEELADRI",
-    price: "$2,199",
+    price: "₹2,199",
     image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%20%20109.png",
     alt: "NEELADRI - Premium furniture collection"
   },
   {
     id: 103,
     name: "MANJARI",
-    price: "$2,199",
+    price: "₹2,199",
     image: "https://cdn.jsdelivr.net/gh/SMfurnishings/Images@main/%20%2099.png",
     alt: "MANJARI - Premium furniture collection"
   }
